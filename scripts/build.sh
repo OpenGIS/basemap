@@ -28,11 +28,13 @@ docker run --rm --user="$(id -u):$(id -g)" \
     && spreet --retina /style/icons build/style/sprite@2x'
 
 # Rewrite the built style to point at the published URLs, then publish the
-# final artifacts to the repo root.
+# final artifacts to the repo root. URLs use www.ogis.org (the org's Pages
+# custom domain) directly — opengis.github.io 301-redirects to it, and Chrome
+# blocks cross-origin fetches that hit a redirect hop without a CORS header.
 jq '
   .name = "Basemap"
-  | .glyphs = "https://opengis.github.io/basemap/fonts/{fontstack}/{range}.pbf"
-  | .sprite = "https://opengis.github.io/basemap/sprite"
+  | .glyphs = "https://www.ogis.org/basemap/fonts/{fontstack}/{range}.pbf"
+  | .sprite = "https://www.ogis.org/basemap/sprite"
   | .sources.openmaptiles.url = "https://tiles.openfreemap.org/planet"
   | .sources.attribution.attribution = "<a href=\"https://openfreemap.org\" target=\"_blank\">OpenFreeMap</a> <a href=\"https://www.openmaptiles.org/\" target=\"_blank\">&copy; OpenMapTiles</a> Data from <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a>"
 ' "$ROOT/build/style/style.json" > "$ROOT/build/style/style.json.tmp"

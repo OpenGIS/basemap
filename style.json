@@ -19,8 +19,8 @@
       "type": "vector"
     }
   },
-  "glyphs": "https://opengis.github.io/basemap/fonts/{fontstack}/{range}.pbf",
-  "sprite": "https://opengis.github.io/basemap/sprite",
+  "glyphs": "https://www.ogis.org/basemap/fonts/{fontstack}/{range}.pbf",
+  "sprite": "https://www.ogis.org/basemap/sprite",
   "layers": [
     {
       "id": "Background",
