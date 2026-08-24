@@ -1,106 +1,125 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Basemap — demo</title>
-  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.css">
-  <style>
-    html, body { margin: 0; padding: 0; height: 100%; }
-    #map { position: fixed; inset: 0; }
-    #state {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      z-index: 10;
-      padding: 6px 10px;
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: 6px;
-      font-family: system-ui, sans-serif;
-      font-size: 12px;
-      line-height: 1.4;
-      pointer-events: none;
-      user-select: none;
-    }
-  </style>
-</head>
-<body>
-  <div id="map"></div>
-  <div id="state"></div>
-  <script type="module">
-    import * as maplibregl from 'https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.mjs';
-
-    const params = new URLSearchParams(location.search);
-    const finite = (value, fallback) => {
-      const n = Number(value);
-      return Number.isFinite(n) ? n : fallback;
-    };
-
-    const lat = finite(params.get('lat'), 0);
-    const lng = finite(params.get('lng'), 20);
-    const zoom = finite(params.get('zoom'), 2);
-    const pitch = finite(params.get('pitch'), 0);
-    const rotation = finite(params.get('rotation'), 0);
-    const width = finite(params.get('width'), NaN);
-    const height = finite(params.get('height'), NaN);
-    const styleUrl = params.get('style') || './style.json';
-    const qualityMode = Boolean(params.get('quality'));
-
-    const mapEl = document.getElementById('map');
-    if (Number.isFinite(width) && Number.isFinite(height)) {
-      mapEl.style.width = `${Math.min(4000, Math.max(100, Math.round(width)))}px`;
-      mapEl.style.height = `${Math.min(4000, Math.max(100, Math.round(height)))}px`;
-    }
-
-    const map = new maplibregl.Map({
-      container: 'map',
-      style: styleUrl,
-      center: [lng, lat],
-      zoom,
-      pitch,
-      bearing: rotation,
-      preserveDrawingBuffer: qualityMode
-    });
-
-    map.addControl(new maplibregl.NavigationControl());
-
-    const stateEl = document.getElementById('state');
-    const renderState = () => {
-      const c = map.getCenter();
-      stateEl.textContent =
-        `${c.lat.toFixed(4)}, ${c.lng.toFixed(4)}` +
-        ` · z ${map.getZoom().toFixed(1)}` +
-        ` · pitch ${Math.round(map.getPitch())}°` +
-        ` · bearing ${Math.round(map.getBearing())}°`;
-    };
-    renderState();
-    map.on('move', renderState);
-
-    map.once('idle', () => {
-      document.body.dataset.mapReady = '1';
-      if (qualityMode) {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          canvas.width = 32;
-          canvas.height = 32;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, 32, 32);
-          const { data } = ctx.getImageData(0, 0, 32, 32);
-          const n = data.length / 4;
-          const luminance = new Array(n);
-          for (let i = 0; i < n; i++) {
-            luminance[i] = 0.299 * data[i * 4] + 0.587 * data[i * 4 + 1] + 0.114 * data[i * 4 + 2];
-          }
-          const mean = luminance.reduce((a, b) => a + b, 0) / n;
-          const variance = luminance.reduce((a, lum) => a + (lum - mean) * (lum - mean), 0) / n;
-          const stddev = Math.sqrt(variance) / 255;
-          document.body.dataset.mapQuality = stddev.toFixed(4);
-        };
-        img.src = map.getCanvas().toDataURL();
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Basemap — demo</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.css"
+    />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
       }
-    });
-    map.on('error', () => { document.body.dataset.mapError = '1'; });
-  </script>
-</body>
+      #map {
+        position: fixed;
+        inset: 0;
+      }
+      #state {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 10;
+        padding: 6px 10px;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 6px;
+        font-family: system-ui, sans-serif;
+        font-size: 12px;
+        line-height: 1.4;
+        pointer-events: none;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="state"></div>
+    <script type="module">
+      import * as maplibregl from "https://unpkg.com/maplibre-gl@6.5.0/dist/maplibre-gl.mjs";
+
+      const params = new URLSearchParams(location.search);
+      const finite = (value, fallback) => {
+        if (value === null || value === "") return fallback;
+        const n = Number(value);
+        return Number.isFinite(n) ? n : fallback;
+      };
+
+      const lat = finite(params.get("lat"), 0);
+      const lng = finite(params.get("lng"), 20);
+      const zoom = finite(params.get("zoom"), 2);
+      const pitch = finite(params.get("pitch"), 0);
+      const rotation = finite(params.get("rotation"), 0);
+      const width = finite(params.get("width"), NaN);
+      const height = finite(params.get("height"), NaN);
+      const styleUrl = params.get("style") || "./style.json";
+      const qualityMode = Boolean(params.get("quality"));
+
+      const mapEl = document.getElementById("map");
+      if (Number.isFinite(width) && Number.isFinite(height)) {
+        mapEl.style.width = `${Math.min(4000, Math.max(100, Math.round(width)))}px`;
+        mapEl.style.height = `${Math.min(4000, Math.max(100, Math.round(height)))}px`;
+      }
+
+      const map = new maplibregl.Map({
+        container: "map",
+        style: styleUrl,
+        center: [lng, lat],
+        zoom,
+        pitch,
+        bearing: rotation,
+        preserveDrawingBuffer: qualityMode,
+      });
+
+      map.addControl(new maplibregl.NavigationControl());
+
+      const stateEl = document.getElementById("state");
+      const renderState = () => {
+        const c = map.getCenter();
+        stateEl.textContent =
+          `${c.lat.toFixed(4)}, ${c.lng.toFixed(4)}` +
+          ` · z ${map.getZoom().toFixed(1)}` +
+          ` · pitch ${Math.round(map.getPitch())}°` +
+          ` · bearing ${Math.round(map.getBearing())}°`;
+      };
+      renderState();
+      map.on("move", renderState);
+
+      map.once("idle", () => {
+        document.body.dataset.mapReady = "1";
+        if (qualityMode) {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = 32;
+            canvas.height = 32;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, 32, 32);
+            const { data } = ctx.getImageData(0, 0, 32, 32);
+            const n = data.length / 4;
+            const luminance = new Array(n);
+            for (let i = 0; i < n; i++) {
+              luminance[i] =
+                0.299 * data[i * 4] +
+                0.587 * data[i * 4 + 1] +
+                0.114 * data[i * 4 + 2];
+            }
+            const mean = luminance.reduce((a, b) => a + b, 0) / n;
+            const variance =
+              luminance.reduce((a, lum) => a + (lum - mean) * (lum - mean), 0) /
+              n;
+            const stddev = Math.sqrt(variance) / 255;
+            document.body.dataset.mapQuality = stddev.toFixed(4);
+          };
+          img.src = map.getCanvas().toDataURL();
+        }
+      });
+      map.on("error", () => {
+        document.body.dataset.mapError = "1";
+      });
+    </script>
+  </body>
 </html>
