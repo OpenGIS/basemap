@@ -1,0 +1,13 @@
+{
+  "name": "basemap",
+  "private": true,
+  "description": "Self-hosted MapLibre GL style — OpenMapTiles OSM repointed at OpenFreeMap tiles",
+  "scripts": {
+    "build": "./scripts/build.sh",
+    "screenshot": "node scripts/screenshot.js",
+    "screenshot:random": "node scripts/random-map.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

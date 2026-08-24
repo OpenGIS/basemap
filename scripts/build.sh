@@ -11,6 +11,9 @@
 #
 # with image openmaptiles/openmaptiles-tools:${TOOLS_VERSION} (7.2 from .env),
 # workdir /tileset, project root mounted at /tileset, and ./style mounted at /style.
+#
+# The build also renders a fresh random basemap screenshot for the README (via
+# scripts/random-map.js), so that one artifact is intentionally non-deterministic.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -50,3 +53,6 @@ cp "$ROOT/vendor/openmaptiles/style/icons/"*.svg "$ROOT/icons/"
 # Merge comma-joined text-font stacks from style.json into single comma-named
 # glyph directories so GitHub Pages can serve them without server-side merging.
 node "$ROOT/scripts/merge-fonts.js"
+
+# Render a fresh random basemap screenshot for the README (see scripts/random-map.js).
+node "$ROOT/scripts/random-map.js"
