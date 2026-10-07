@@ -1,7 +1,3 @@
----
-last_commit: "e8f95412c15b4b2f79d73487802e88db0957e87b"
----
-
 # Basemap
 
 > A self-hosted MapLibre GL style: the OpenMapTiles "OSM" vector style (v3.16) repointed at OpenFreeMap's worldwide vector tiles, with all fonts, sprites and icons served from GitHub Pages.
