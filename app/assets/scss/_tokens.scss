@@ -4,8 +4,6 @@
 // system through prefers-color-scheme; a page can force a scheme by setting
 // data-theme="light" or data-theme="dark" on the root element. Auto (no
 // attribute) is the only state that follows the OS, and nothing is persisted.
-// Pico variable overrides live separately in _pico.scss and reference these
-// tokens.
 
 :root {
   --ogis-font:

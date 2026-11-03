@@ -12,6 +12,9 @@
 // Zero-dependency aside from Playwright. Exports capture() so that
 // scripts/random-map.js can reuse the same flow for a series of states.
 //
+// Map state (lat, lng, zoom, pitch, rotation) is written to the URL hash;
+// width, height, style and quality are the only query parameters.
+//
 // Usage:
 //   node scripts/screenshot.js [--lat <n>] [--lng <n>] [--zoom <n>]
 //     [--pitch <n>] [--rotation <n>] [--width <n>] [--height <n>]
@@ -21,6 +24,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { pathToFileURL } = require('url');
 const { chromium } = require('playwright');
 const {
   SITE_PREFIX,
@@ -31,9 +35,9 @@ const {
 const ROOT = path.join(__dirname, '..');
 const SITE_ROOT = path.join(ROOT, '.output', 'public');
 const DEFAULTS = {
-  lat: 0,
-  lng: 20,
-  zoom: 2,
+  lat: 51.5154,
+  lng: -0.1755,
+  zoom: 17,
   pitch: 0,
   rotation: 0,
   width: 1200,
@@ -49,28 +53,53 @@ function imageFormat(out) {
   return extension === '.jpg' || extension === '.jpeg' ? 'jpeg' : 'png';
 }
 
+function prepareLocalStyle(style, port) {
+  if (style !== './style.json' && style !== 'style.json') return style;
+
+  const source = path.join(SITE_ROOT, 'style.json');
+  if (!fs.existsSync(source)) {
+    throw new Error(`Missing ${source}; run npm run site:build first`);
+  }
+
+  const local = JSON.parse(fs.readFileSync(source, 'utf8'));
+  local.sprite = `http://127.0.0.1:${port}${SITE_PREFIX}sprite`;
+  local.glyphs = `http://127.0.0.1:${port}${SITE_PREFIX}fonts/{fontstack}/{range}.pbf`;
+
+  const name = 'screenshot-style.json';
+  fs.writeFileSync(path.join(SITE_ROOT, name), `${JSON.stringify(local)}\n`);
+  return `./${name}`;
+}
+
 async function capture(opts) {
   const state = { ...DEFAULTS, ...opts };
   const qualityMode = Boolean(state.quality);
   const format = imageFormat(state.out);
+
+  const mapStateUrl = pathToFileURL(
+    path.join(ROOT, 'app', 'utils', 'mapState.js')
+  ).href;
+  const { formatMapHash } = await import(mapStateUrl);
 
   assertSiteRoot(SITE_ROOT);
   fs.mkdirSync(path.dirname(path.resolve(state.out)), { recursive: true });
 
   const server = await startSiteServer({ siteRoot: SITE_ROOT });
   const port = server.address().port;
+  state.style = prepareLocalStyle(state.style, port);
   const query = new URLSearchParams({
-    lat: state.lat,
-    lng: state.lng,
-    zoom: state.zoom,
-    pitch: state.pitch,
-    rotation: state.rotation,
     width: state.width,
     height: state.height,
     style: state.style,
   });
   if (qualityMode) query.set('quality', '1');
-  const url = `http://127.0.0.1:${port}${SITE_PREFIX}index.html?${query}`;
+  const hash = formatMapHash({
+    zoom: state.zoom,
+    lat: state.lat,
+    lng: state.lng,
+    pitch: state.pitch,
+    rotation: state.rotation,
+  });
+  const url = `http://127.0.0.1:${port}${SITE_PREFIX}index.html?${query}${hash}`;
 
   let quality = null;
   const browser = await chromium.launch();
@@ -114,6 +143,10 @@ function printUsage() {
   console.log(`Usage: node scripts/screenshot.js [options]
 
 Serves .output/public under /basemap/; run npm run site:build first.
+
+Map state (lat, lng, zoom, pitch, rotation) is written to the URL hash.
+Only rendering options — width, height, style and quality — are query
+parameters.
 
 Options:
   --lat <n>       latitude in degrees (default ${DEFAULTS.lat})
@@ -177,4 +210,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { capture };
+module.exports = { capture, prepareLocalStyle };

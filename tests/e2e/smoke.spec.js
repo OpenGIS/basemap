@@ -5,14 +5,7 @@ const path = require('node:path');
 const { test, expect } = require('@playwright/test');
 
 const SCREENSHOT_DIR = path.join(__dirname, '..', '..', 'screenshots');
-
-const SUMMARY_COUNTS = [
-  ['Roles', 11],
-  ['Icons', 129],
-  ['Classes', 68],
-  ['Missing', 91],
-  ['Phantoms', 3],
-];
+const TMP_DIR = path.join(__dirname, '..', '..', '.opencode', 'tmp');
 
 function collectErrors(page) {
   const errors = [];
@@ -27,45 +20,30 @@ function collectErrors(page) {
   return errors;
 }
 
-async function waitForLazyImages(page, selector) {
-  await page.evaluate(async (imageSelector) => {
-    const step = Math.max(200, Math.round(window.innerHeight * 0.8));
-    for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
-      window.scrollTo(0, y);
-      await new Promise((resolve) => setTimeout(resolve, 60));
-    }
-    window.scrollTo(0, 0);
-  }, selector);
-
-  await page.waitForFunction(
-    (imageSelector) => {
-      const images = Array.from(document.querySelectorAll(imageSelector));
-      return (
-        images.length > 0 &&
-        images.every((image) => image.complete && image.naturalWidth > 0)
-      );
-    },
-    selector,
-    { timeout: 60000 }
-  );
-}
-
 test.beforeAll(() => {
   fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });
+  fs.mkdirSync(TMP_DIR, { recursive: true });
 });
 
 test('homepage renders the map with a readable state readout', async ({ page }) => {
   const errors = collectErrors(page);
 
-  await page.goto('./');
-  await expect(page).toHaveTitle('Basemap — demo');
+  await page.goto('./?style=./screenshot-style.json#map=17/51.515400/-0.175500/0/0');
+  await expect(page).toHaveTitle('Basemap — Open GIS');
   await page.waitForSelector('body[data-map-ready="1"]', { timeout: 60000 });
 
   await expect(page.locator('#map canvas')).toBeVisible();
 
+  const hash = await page.evaluate(() => window.location.hash);
+  expect(hash).toMatch(
+    /^#map=\d+\/-?\d+\.\d{6}\/-?\d+\.\d{6}\/-?\d+\/-?\d+$/
+  );
+
   const state = page.locator('#state');
-  await expect(state).toContainText('0.0000, 20.0000');
-  await expect(state).toHaveCSS('color', 'rgb(24, 40, 26)');
+  await expect(state).toBeVisible();
+  await expect(state).toContainText('51.5154, -0.1755');
+  await expect(state).toContainText('z 17.0');
+  expect((await state.textContent()).trim().length).toBeGreaterThan(0);
 
   expect(await page.getAttribute('body', 'data-map-error')).toBeNull();
 
@@ -78,32 +56,52 @@ test('homepage renders the map with a readable state readout', async ({ page }) 
   expect(errors, errors.join('\n')).toEqual([]);
 });
 
-test('palette page lists the full icon set without errors', async ({ page }) => {
+test('homepage inspector recolours a role and exports the palette', async ({ page }) => {
   const errors = collectErrors(page);
 
-  await page.goto('./palette/');
-  await expect(page).toHaveTitle('Basemap palette');
-  await expect(
-    page.getByRole('heading', { name: 'Basemap palette', level: 1 })
-  ).toBeVisible();
+  await page.goto('./?style=./screenshot-style.json#map=17/51.515400/-0.175500/0/0');
+  await page.waitForSelector('body[data-map-ready="1"]', { timeout: 60000 });
 
-  for (const [label, value] of SUMMARY_COUNTS) {
-    const count = page
-      .locator('.palette-summary__counts div')
-      .filter({ has: page.locator('dt', { hasText: label }) })
-      .locator('dd');
-    await expect(count).toHaveText(String(value));
-  }
+  await page.getByRole('button', { name: 'Inspect POIs' }).click();
+  await page.locator('#map canvas').click({ position: { x: 500, y: 120 } });
 
-  await expect(page.locator('.palette-role-row')).toHaveCount(11);
-  await expect(page.locator('.palette-icon')).toHaveCount(130);
+  const inspector = page.locator('.home-inspector');
+  await expect(inspector).toBeVisible();
+  await expect(page.locator('.home-selection')).toBeVisible();
+  await expect(page.locator('.home-inspector__icon')).toBeVisible();
+  await expect(page.locator('.home-inspector__name')).not.toHaveText('');
+  await expect(page.locator('.home-inspector__facts')).toContainText('Health');
+  await expect(page.locator('.home-note')).toContainText(
+    'Editing this role updates 4 icons.'
+  );
 
-  await waitForLazyImages(page, '.palette-icon__image');
+  const mapClip = { x: 340, y: 0, width: 500, height: 400 };
+  const beforeColour = await page.screenshot({ clip: mapClip, type: 'png' });
 
-  await page.evaluate(() => document.fonts.ready.then(() => true));
+  const hex = page.locator('.home-hex-input');
+  await expect(hex).toHaveValue('#FF004D');
+  await hex.fill('#12AB34');
+  await hex.press('Enter');
+
+  await page.waitForTimeout(400);
+  const afterColour = await page.screenshot({ clip: mapClip, type: 'png' });
+  expect(afterColour.equals(beforeColour)).toBe(false);
+
+  await expect(hex).toHaveValue('#12AB34');
+  await expect(page.locator('.home-colour-input')).toHaveValue('#12ab34');
+
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.getByRole('button', { name: 'Export palette' }).click(),
+  ]);
+
+  const exported = JSON.parse(fs.readFileSync(await download.path(), 'utf8'));
+  const health = exported.roles.find((role) => role.id === 'health');
+  expect(health.color).toBe('#12AB34');
+  await expect(page.locator('.home-status')).toContainText('Palette exported.');
 
   await page.screenshot({
-    path: path.join(SCREENSHOT_DIR, 'palette.png'),
+    path: path.join(TMP_DIR, 'home-inspector.png'),
     type: 'png',
   });
 

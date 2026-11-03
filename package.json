@@ -18,7 +18,6 @@
     "screenshot:random": "node scripts/random-map.js"
   },
   "dependencies": {
-    "@picocss/pico": "2.1.1",
     "maplibre-gl": "6.5.0",
     "nuxt": "4.3.1"
   },

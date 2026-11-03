@@ -38,7 +38,12 @@ function cleanup(directory) {
 }
 
 function paletteCopy() {
-  return JSON.parse(JSON.stringify(model.palette));
+  const copy = JSON.parse(JSON.stringify(model.palette));
+  for (const role of copy.roles) {
+    role.color = role.sourceColors[0];
+  }
+  copy.overrides = {};
+  return copy;
 }
 
 function readOutput(directory, name) {
@@ -78,7 +83,7 @@ test('identity apply writes every icon byte-identically', (t) => {
   t.after(() => cleanup(outDir));
   fs.writeFileSync(path.join(outDir, 'stale.svg'), '<svg/>');
 
-  const result = recolourIcons({ root, outDir });
+  const result = recolourIcons({ root, palette: paletteCopy(), outDir });
 
   assert.equal(result.files, 306);
   assert.equal(result.recoloured.length, 0);
@@ -427,14 +432,15 @@ test('empty --out values are rejected before writing', () => {
 test('consecutive runs into the same directory produce identical output', (t) => {
   const outDir = scratch('repeat');
   t.after(() => cleanup(outDir));
+  const palette = paletteCopy();
 
-  const first = recolourIcons({ root, outDir });
+  const first = recolourIcons({ root, palette, outDir });
   const firstOutput = new Map(
     fs.readdirSync(outDir).sort().map((file) => [file, fs.readFileSync(path.join(outDir, file))])
   );
   fs.writeFileSync(path.join(outDir, 'stale.svg'), '<svg/>');
 
-  const second = recolourIcons({ root, outDir });
+  const second = recolourIcons({ root, palette, outDir });
 
   assert.equal(first.files, 306);
   assert.equal(second.files, 306);

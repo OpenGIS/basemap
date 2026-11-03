@@ -52,11 +52,6 @@ function createArtifact(name) {
         '<link rel="icon" href="/basemap/branding/logo-green.png">'
     )
   );
-  write(
-    root,
-    'palette/index.html',
-    pageHtml('<link rel="stylesheet" href="/basemap/nuxt-assets/app.css">')
-  );
   for (const file of MAP_FILES) {
     write(root, file, file.endsWith('.json') ? '{}' : '');
   }
@@ -143,7 +138,7 @@ test('artifact checks report missing required paths', (t) => {
 test('artifact checks reject _payload.json anywhere in the output', (t) => {
   const root = createArtifact('payload');
   cleanup(t, root);
-  write(root, 'palette/_payload.json', '{}');
+  write(root, 'nested/_payload.json', '{}');
 
   const errors = validateArtifact(root);
 
@@ -157,9 +152,9 @@ test('request mapping strips the /basemap/ prefix and maps directories to index.
     status: 200,
     filePath: path.join(outputDir, 'index.html')
   });
-  assert.deepEqual(mapRequestToFile('/basemap/palette/', outputDir), {
+  assert.deepEqual(mapRequestToFile('/basemap/icons/example.svg', outputDir), {
     status: 200,
-    filePath: path.join(outputDir, 'palette', 'index.html')
+    filePath: path.join(outputDir, 'icons', 'example.svg')
   });
   assert.deepEqual(mapRequestToFile('/basemap/nuxt-assets/app.js', outputDir), {
     status: 200,

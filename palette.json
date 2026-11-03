@@ -4,81 +4,105 @@
     {
       "id": "transport",
       "label": "Transport, travel and lodging",
-      "color": "#0092DA",
-      "sourceColors": ["#0092DA"],
+      "color": "#5CF05C",
+      "sourceColors": [
+        "#0092DA"
+      ],
       "order": 10
     },
     {
       "id": "food",
       "label": "Food and drink",
-      "color": "#C77400",
-      "sourceColors": ["#C77400"],
+      "color": "#FF7A00",
+      "sourceColors": [
+        "#C77400"
+      ],
       "order": 20
     },
     {
       "id": "health",
       "label": "Health",
-      "color": "#BF0000",
-      "sourceColors": ["#BF0000"],
+      "color": "#FF004D",
+      "sourceColors": [
+        "#BF0000"
+      ],
       "order": 30
     },
     {
       "id": "shops",
       "label": "Shops and commercial",
-      "color": "#AC39AC",
-      "sourceColors": ["#AC39AC"],
+      "color": "#C400FF",
+      "sourceColors": [
+        "#AC39AC"
+      ],
       "order": 40
     },
     {
       "id": "public",
       "label": "Public and cultural",
-      "color": "#734A08",
-      "sourceColors": ["#734A08"],
+      "color": "#FFE600",
+      "sourceColors": [
+        "#734A08"
+      ],
       "order": 50
     },
     {
       "id": "infrastructure",
       "label": "Infrastructure",
-      "color": "#666666",
-      "sourceColors": ["#666666"],
+      "color": "#00D5FF",
+      "sourceColors": [
+        "#666666"
+      ],
       "order": 60
     },
     {
       "id": "barriers",
       "label": "Barriers",
-      "color": "#3F3F3F",
-      "sourceColors": ["#3F3F3F"],
+      "color": "#FF3D00",
+      "sourceColors": [
+        "#3F3F3F"
+      ],
       "order": 70
     },
     {
       "id": "leisure",
       "label": "Leisure",
-      "color": "#2F6133",
-      "sourceColors": ["#2F6133"],
+      "color": "#00D26A",
+      "sourceColors": [
+        "#2F6133"
+      ],
       "order": 80
     },
     {
       "id": "sport",
       "label": "Sport and play",
-      "color": "#008C0D",
-      "sourceColors": ["#008C0D"],
+      "color": "#B6FF00",
+      "sourceColors": [
+        "#008C0D"
+      ],
       "order": 90
     },
     {
       "id": "terminals",
       "label": "Transport terminals",
-      "color": "#8461C4",
-      "sourceColors": ["#8461C4"],
+      "color": "#6A00FF",
+      "sourceColors": [
+        "#8461C4"
+      ],
       "order": 100
     },
     {
       "id": "worship",
       "label": "Places of worship",
-      "color": "#000000",
-      "sourceColors": ["#000000"],
+      "color": "#FF00B8",
+      "sourceColors": [
+        "#000000"
+      ],
       "order": 110
     }
   ],
-  "preserve": ["#FFFFFF"],
+  "preserve": [
+    "#FFFFFF"
+  ],
   "overrides": {}
 }

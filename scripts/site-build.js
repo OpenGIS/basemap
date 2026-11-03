@@ -24,7 +24,7 @@ const ROOT = path.resolve(__dirname, '..');
 const OUTPUT_DIR = path.join(ROOT, '.output', 'public');
 const SITE_PREFIX = '/basemap/';
 const ASSET_DIR = 'nuxt-assets';
-const PAGES = ['index.html', 'palette/index.html'];
+const PAGES = ['index.html'];
 
 const MAP_FILES = [
   'style.json',

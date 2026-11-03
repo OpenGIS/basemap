@@ -17,12 +17,12 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'en-GB'
       },
-      title: 'Open GIS basemap',
+      title: 'Basemap — Open GIS',
       meta: [
         {
           name: 'description',
           content:
-            'Self-hosted MapLibre GL basemap style and icon palette editor for Open GIS.'
+            'Self-hosted MapLibre GL basemap with a live palette inspector for Open GIS.'
         },
         {
           name: 'color-scheme',

@@ -1,0 +1,354 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--ogis-font);
+}
+
+#map {
+  position: fixed;
+  inset: 0;
+}
+
+.home-selection {
+  box-sizing: border-box;
+  width: 18px;
+  height: 18px;
+  background: transparent;
+  border: 2px solid var(--ogis-accent);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.25),
+    0 1px 4px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.home-overlay,
+.home-overlay * {
+  box-sizing: border-box;
+}
+
+.home-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  color: var(--ogis-fg);
+  font-family: var(--ogis-font);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.home-brand,
+.home-inspector {
+  pointer-events: auto;
+  background: var(--ogis-surface);
+  border: 1px solid var(--ogis-border);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+}
+
+.home-brand {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  width: min(20rem, calc(100vw - 1.5rem));
+  padding: 0.85rem 0.9rem;
+  border-radius: var(--ogis-radius);
+}
+
+.home-brand__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.home-brand__logo {
+  display: block;
+  width: 28px;
+  height: 28px;
+  padding: 2px;
+  background: var(--ogis-brand-mark);
+  border-radius: 4px;
+}
+
+.home-brand__wordmark {
+  color: var(--ogis-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-brand__title {
+  margin: 0 0 0.25rem;
+  color: var(--ogis-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.home-brand__description {
+  margin: 0 0 0.7rem;
+  color: var(--ogis-muted);
+  font-size: 0.75rem;
+}
+
+.home-brand__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.65rem;
+}
+
+.home-button {
+  padding: 0.4rem 0.6rem;
+  color: var(--ogis-cta-fg);
+  background: var(--ogis-cta-bg);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.home-button:hover {
+  background: var(--ogis-cta-hover-bg);
+}
+
+.home-button--secondary {
+  color: var(--ogis-fg);
+  background: var(--ogis-btn-secondary-bg);
+  border-color: var(--ogis-border);
+}
+
+.home-button--secondary:hover {
+  background: var(--ogis-btn-secondary-hover);
+}
+
+.home-button[aria-pressed="true"] {
+  color: var(--ogis-cta-fg);
+  background: var(--ogis-orange);
+  border-color: var(--ogis-orange);
+}
+
+.home-button[aria-pressed="true"]:hover {
+  background: var(--ogis-orange-hover);
+}
+
+.home-button:focus-visible,
+.home-inspector__close:focus-visible,
+.home-colour-input:focus-visible,
+.home-hex-input:focus-visible {
+  outline: 2px solid var(--ogis-focus);
+  outline-offset: 1px;
+}
+
+.home-state {
+  margin: 0;
+  color: var(--ogis-muted);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+}
+
+.home-hint,
+.home-status {
+  margin: 0.3rem 0 0;
+  font-size: 0.6875rem;
+}
+
+.home-hint {
+  color: var(--ogis-orange);
+}
+
+.home-status {
+  color: var(--ogis-accent);
+}
+
+.home-hint:empty,
+.home-status:empty {
+  display: none;
+}
+
+.home-inspector {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 3rem;
+  width: min(20rem, calc(100vw - 1.5rem));
+  max-height: calc(100vh - 6rem);
+  padding: 0.75rem 0.9rem 0.85rem;
+  overflow: auto;
+  border-radius: var(--ogis-radius);
+}
+
+.home-inspector__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.home-inspector__title {
+  margin: 0;
+  color: var(--ogis-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-inspector__close {
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  color: var(--ogis-muted);
+  background: transparent;
+  border: 1px solid var(--ogis-border);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.home-inspector__close:hover {
+  color: var(--ogis-fg);
+  background: var(--ogis-btn-secondary-hover);
+}
+
+.home-inspector__summary {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.6rem;
+}
+
+.home-inspector__icon {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  padding: 4px;
+  background: var(--ogis-bg-alt);
+  border: 1px solid var(--ogis-border);
+  border-radius: 4px;
+  image-rendering: auto;
+}
+
+.home-inspector__name {
+  margin: 0;
+  color: var(--ogis-heading);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.home-inspector__meta {
+  margin: 0.1rem 0 0;
+  color: var(--ogis-muted);
+  font-size: 0.6875rem;
+  overflow-wrap: anywhere;
+}
+
+.home-inspector__facts {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0 0 0.65rem;
+  padding: 0.5rem 0 0;
+  border-top: 1px solid var(--ogis-border);
+}
+
+.home-inspector__facts div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.home-inspector__facts dt {
+  color: var(--ogis-muted);
+  font-size: 0.6875rem;
+}
+
+.home-inspector__facts dd {
+  margin: 0;
+  color: var(--ogis-fg);
+  font-size: 0.6875rem;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.home-inspector__colour {
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--ogis-border);
+}
+
+.home-inspector__label {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--ogis-muted);
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.home-inspector__controls {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.home-colour-input {
+  flex: none;
+  width: 2.2rem;
+  height: 2rem;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--ogis-border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.home-hex-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.3rem 0.45rem;
+  color: var(--ogis-fg);
+  background: var(--ogis-bg);
+  border: 1px solid var(--ogis-border);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 0.75rem;
+}
+
+.home-error {
+  margin: 0 0 0.4rem;
+  color: var(--ogis-caution);
+  font-size: 0.6875rem;
+}
+
+.home-note {
+  margin: 0 0 0.55rem;
+  color: var(--ogis-muted);
+  font-size: 0.6875rem;
+}
+
+@media (max-width: 560px) {
+  .home-inspector {
+    left: 0;
+    right: 0;
+    bottom: 4rem;
+    width: auto;
+    max-height: min(60vh, 26rem);
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: var(--ogis-radius) var(--ogis-radius) 0 0;
+  }
+}

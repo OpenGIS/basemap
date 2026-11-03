@@ -16,14 +16,13 @@
 
 Basemap vendors the OpenMapTiles "OSM" vector style (v3.16 — the vector equivalent of the official openstreetmap-carto raster) and repoints it at OpenFreeMap's worldwide, free OpenMapTiles-schema vector tiles. All fonts, sprites and icons are self-hosted on GitHub Pages with open CORS, so anyone can use the style or its assets directly.
 
-The same root Nuxt site serves the map demo at `/` and the palette editor at `/palette/` under the `/basemap/` base path. The style is built from vendored upstream sources with the same docker tooling OpenMapTiles uses (`openmaptiles-tools:7.2`), then rewritten to point at the published URLs. See [docs/2.build.md](docs/2.build.md) for the pipeline.
+The repository is one root Nuxt site. Its only consumer-facing route is `/` — a full-screen MapLibre basemap at London Paddington (zoom 17) with a compact Open GIS overlay. The overlay carries the live camera readout, an **Inspect POIs** toggle and an **Export palette** button. Inspecting a POI opens an inspector with its icon, name, class/subclass, layer and palette role; editing the role colour recolours every icon in that role live on the map. **Export palette** downloads the current colours as `palette.json`. Browser edits are live only — to make them permanent, update the root [`palette.json`](palette.json) and rebuild. The style itself is built from vendored upstream sources with the same docker tooling OpenMapTiles uses (`openmaptiles-tools:7.2`), then rewritten to point at the published URLs. See [docs/2.build.md](docs/2.build.md) for the pipeline.
 
 ## Live URLs
 
 | Asset   | URL                                                        |
 | ------- | ---------------------------------------------------------- |
 | Demo    | https://www.ogis.org/basemap/                              |
-| Palette | https://www.ogis.org/basemap/palette/ ([source](app/))     |
 | Style   | https://www.ogis.org/basemap/style.json                    |
 | Glyphs  | https://www.ogis.org/basemap/fonts/{fontstack}/{range}.pbf |
 | Sprite  | https://www.ogis.org/basemap/sprite                        |
@@ -65,11 +64,13 @@ Edit the vendored layer styles under `vendor/openmaptiles/layers/*/style.json` f
 ./scripts/build.sh
 ```
 
-To rebuild the site and palette editor after changing the palette, run `npm run site:build`; use `npm run dev` for a live preview at <http://127.0.0.1:11100/basemap/>. See [docs/3.remixing.md](docs/3.remixing.md), [docs/5.palette.md](docs/5.palette.md) and [docs/6.site.md](docs/6.site.md).
+To preview palette changes without a build, open the [demo](https://www.ogis.org/basemap/), turn on **Inspect POIs**, click a POI and change its role colour. Every icon in the role updates live; **Export palette** downloads a `palette.json` containing the current colours. Those browser edits are live only, so copy them into the root `palette.json` before running the full build.
+
+To rebuild only the deployable site after app or palette-data changes that do not need new map artefacts, run `npm run site:build`; use `npm run dev` for a live preview at <http://127.0.0.1:11100/basemap/>. See [docs/3.remixing.md](docs/3.remixing.md), [docs/5.palette.md](docs/5.palette.md) and [docs/6.site.md](docs/6.site.md).
 
 ### Screenshots
 
-Render the demo page to a PNG with Playwright after building the site:
+Render the homepage to a PNG with Playwright after building the site:
 
 ```bash
 npm run site:build
@@ -100,5 +101,5 @@ Attribution is baked into the published style: **OpenFreeMap · © OpenMapTiles 
 - [Remixing the style](docs/3.remixing.md)
 - [Screenshot pipeline](docs/4.screenshots.md)
 - [Icon palette](docs/5.palette.md)
-- [Site and palette editor](docs/6.site.md)
+- [Site and palette inspector](docs/6.site.md)
 - [Full docs index](docs/README.md)

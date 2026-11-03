@@ -1,4 +1,4 @@
-# Deploys only the consumer-facing map and palette to GitHub Pages.
+# Deploys only the consumer-facing map to GitHub Pages.
 # Technical repository docs stay in the repository and are not published.
 #
 # Repository Settings → Pages → Source must be set to "GitHub Actions" once.

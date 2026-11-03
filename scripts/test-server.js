@@ -13,6 +13,7 @@ const {
   assertSiteRoot,
   startSiteServer,
 } = require('./lib/site-server.js');
+const { prepareLocalStyle } = require('./screenshot.js');
 
 const ROOT = path.join(__dirname, '..');
 const SITE_ROOT = path.join(ROOT, '.output', 'public');
@@ -21,6 +22,7 @@ const PORT = 11101;
 
 async function main() {
   assertSiteRoot(SITE_ROOT);
+  prepareLocalStyle('./style.json', PORT);
 
   const server = await startSiteServer({
     siteRoot: SITE_ROOT,
