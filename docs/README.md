@@ -12,9 +12,9 @@ Developer-focused documentation for the [Basemap](../README.md) codebase — a s
 1. [Getting started](1.start.md) — what this is, the published URLs, and the repository layout
 2. [Build pipeline](2.build.md) — how `scripts/build.sh` produces the map artefacts and the deployable site
 3. [Remixing the style](3.remixing.md) — modifying layers, rebuilding and republishing
-4. [Screenshot pipeline](4.screenshots.md) — the state-driven demo page and Playwright capture tools
+4. [Screenshot pipeline](4.screenshots.md) — the state-driven demo page, Playwright capture tools and end-to-end smoke tests
 5. [Icon palette](5.palette.md) — how icon colours are defined, mapped to POI classes, and changed
-6. [Site and palette editor](6.site.md) — the single Nuxt site, generated palette data, site build and Pages deployment
+6. [Site and palette editor](6.site.md) — the single Nuxt site, generated palette data, site build, testing and Pages deployment
 
 ## Quick Links
 
@@ -27,6 +27,9 @@ Developer-focused documentation for the [Basemap](../README.md) codebase — a s
 - [Generated palette data](../app/assets/data/)
 - [Palette data script](../scripts/palette-data.js)
 - [Site build script](../scripts/site-build.js)
+- [Playwright config](../playwright.config.js)
+- [End-to-end smoke tests](../tests/e2e/smoke.spec.js)
+- [Test server](../scripts/test-server.js)
 - [Pages workflow](../.github/workflows/pages.yml)
 - [CI workflow](../.github/workflows/ci.yml)
 - [Build script](../scripts/build.sh)
@@ -43,9 +46,9 @@ This documentation covers:
 - Project purpose, published endpoints and repository layout
 - The full map build pipeline (palette staging, docker recompose, sprite generation, URL rewrite, font merging, site build, random screenshot)
 - The palette model, role mapping and SVG recolour pipeline
-- The single Nuxt site, its routes, generated palette data and Pages deployment
+- The single Nuxt site, its routes, generated palette data, tests and Pages deployment
 - How to customise the style and republish
-- The demo page state URL API and the Playwright screenshot tools
+- The demo page state URL API, the Playwright screenshot tools and the end-to-end smoke suite
 - Icon palette groups, POI class/subclass mapping, and the palette editing workflow
 
 For API references and inline documentation, see source code comments.

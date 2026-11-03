@@ -7,7 +7,7 @@
 
 ## Screenshot
 
-![Random basemap render](screenshot.png)
+![Random basemap render](screenshots/random.jpg)
 
 > [!NOTE]
 > Regenerated on every build — each `./scripts/build.sh` run renders a fresh random map (a random land point anywhere on Earth, quality-gated). To make a new one without the full map build, run `npm run site:build` first, then `npm run screenshot:random`.
@@ -76,7 +76,7 @@ npm run site:build
 npm run screenshot -- --lat 51.5074 --lng -0.1278 --zoom 12 --pitch 45 --rotation 20 --width 1200 --height 630 --out london.png
 ```
 
-`npm run screenshot:random` renders a random land point anywhere on Earth (quality-gated) to `screenshot.png`. Full flag reference and the harness URL API: [docs/4.screenshots.md](docs/4.screenshots.md).
+`npm run screenshot:random` renders a random land point anywhere on Earth (quality-gated) to `screenshots/random.jpg`. Full flag reference and the harness URL API: [docs/4.screenshots.md](docs/4.screenshots.md).
 
 ## Attribution and Licences
 

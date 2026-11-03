@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //
-// Captures a PNG screenshot of the built basemap site for a given map state,
-// using Playwright.
+// Captures a PNG or JPEG screenshot of the built basemap site for a given map
+// state, using Playwright. The format is inferred from the output extension.
 //
 // Chromium blocks file:// fetches of style.json, so this script serves the
 // generated artifact in .output/public over a tiny throwaway static server
@@ -20,14 +20,16 @@
 'use strict';
 
 const fs = require('fs');
-const http = require('http');
 const path = require('path');
 const { chromium } = require('playwright');
-const { mapRequestToFile, SITE_PREFIX } = require('./site-build.js');
+const {
+  SITE_PREFIX,
+  assertSiteRoot,
+  startSiteServer,
+} = require('./lib/site-server.js');
 
 const ROOT = path.join(__dirname, '..');
 const SITE_ROOT = path.join(ROOT, '.output', 'public');
-const SITE_INDEX = path.join(SITE_ROOT, 'index.html');
 const DEFAULTS = {
   lat: 0,
   lng: 20,
@@ -37,69 +39,25 @@ const DEFAULTS = {
   width: 1200,
   height: 630,
   style: './style.json',
-  out: 'screenshot.png',
+  out: 'screenshots/home.png',
 };
-
-const MIME = {
-  '.html': 'text/html; charset=utf-8',
-  '.json': 'application/json',
-  '.js': 'text/javascript; charset=utf-8',
-  '.mjs': 'text/javascript; charset=utf-8',
-  '.css': 'text/css; charset=utf-8',
-  '.png': 'image/png',
-  '.svg': 'image/svg+xml',
-  '.pbf': 'application/x-protobuf',
-};
-
-// --- throwaway static server ----------------------------------------------
-
-function startServer() {
-  const server = http.createServer((req, res) => {
-    let requestPath;
-    try {
-      requestPath = decodeURIComponent(new URL(req.url, 'http://127.0.0.1').pathname);
-    } catch (err) {
-      res.writeHead(400);
-      res.end('Bad request');
-      return;
-    }
-
-    const mapped = mapRequestToFile(requestPath, SITE_ROOT);
-    if (mapped.status !== 200) {
-      res.writeHead(mapped.status);
-      res.end(mapped.status === 404 ? 'Not found' : 'Forbidden');
-      return;
-    }
-
-    fs.readFile(mapped.filePath, (err, data) => {
-      if (err) {
-        res.writeHead(404);
-        res.end('Not found');
-        return;
-      }
-      const type = MIME[path.extname(mapped.filePath)] || 'application/octet-stream';
-      res.writeHead(200, { 'Content-Type': type });
-      res.end(data);
-    });
-  });
-  return new Promise((resolve) => {
-    server.listen(0, '127.0.0.1', () => resolve(server));
-  });
-}
 
 // --- screenshot flow ------------------------------------------------------
+
+function imageFormat(out) {
+  const extension = path.extname(out).toLowerCase();
+  return extension === '.jpg' || extension === '.jpeg' ? 'jpeg' : 'png';
+}
 
 async function capture(opts) {
   const state = { ...DEFAULTS, ...opts };
   const qualityMode = Boolean(state.quality);
+  const format = imageFormat(state.out);
 
-  if (!fs.existsSync(SITE_INDEX)) {
-    throw new Error(
-      `Missing site build at ${SITE_INDEX} — run npm run site:build first`
-    );
-  }
+  assertSiteRoot(SITE_ROOT);
+  fs.mkdirSync(path.dirname(path.resolve(state.out)), { recursive: true });
 
-  const server = await startServer();
+  const server = await startSiteServer({ siteRoot: SITE_ROOT });
   const port = server.address().port;
   const query = new URLSearchParams({
     lat: state.lat,
@@ -137,13 +95,17 @@ async function capture(opts) {
     }
 
     await new Promise((resolve) => setTimeout(resolve, 750));
-    await page.screenshot({ path: state.out });
+    if (format === 'jpeg') {
+      await page.screenshot({ path: state.out, type: 'jpeg', quality: 80 });
+    } else {
+      await page.screenshot({ path: state.out, type: 'png' });
+    }
   } finally {
     await browser.close();
     server.close();
   }
 
-  return { url, out: state.out, quality };
+  return { url, out: state.out, format, quality };
 }
 
 // --- CLI ------------------------------------------------------------------
@@ -162,7 +124,8 @@ Options:
   --width <n>     viewport width in px (default ${DEFAULTS.width})
   --height <n>    viewport height in px (default ${DEFAULTS.height})
   --style <url>   style JSON URL (default ${DEFAULTS.style})
-  --out <path>    output PNG path (default ${DEFAULTS.out})
+  --out <path>    output image path; .jpg/.jpeg uses JPEG quality 80
+                  (default ${DEFAULTS.out})
   --help          show this message`);
 }
 

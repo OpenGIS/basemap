@@ -4,7 +4,7 @@
 //
 // Picks a random land point anywhere on Earth using Natural Earth 110m land
 // polygons (fetched once and cached in build/land-110m.geojson), then reuses
-// the capture() pipeline from scripts/screenshot.js to produce a 1200x630 PNG.
+// the capture() pipeline from scripts/screenshot.js to produce a 1200x630 JPEG.
 // Each render is quality-gated — the harness reports a data-map-quality score
 // — and re-rolled up to fifteen times if it falls below the threshold. The
 // script fails loudly when land data is unavailable or no render clears the
@@ -183,7 +183,7 @@ function printUsage() {
   console.log(`Usage: node scripts/random-map.js [options]
 
 Options:
-  --out <path>  output PNG path (default screenshot.png)
+  --out <path>  output image path (default screenshots/random.jpg)
   --help        show this message`);
 }
 
@@ -209,7 +209,7 @@ async function main() {
     printUsage();
     return;
   }
-  const out = opts.out || 'screenshot.png';
+  const out = opts.out || 'screenshots/random.jpg';
   const { state, quality } = await pickState(out);
   console.log(
     `Captured ${out} (${state.width}x${state.height}) — lat ${state.lat}, ` +

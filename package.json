@@ -9,6 +9,8 @@
     "site:build": "node scripts/site-build.js",
     "build": "./scripts/build.sh",
     "test": "node --test scripts/*.test.js",
+    "test:e2e": "playwright test",
+    "test:e2e:build": "npm run site:build && playwright test",
     "palette:apply": "node scripts/palette.js --apply",
     "palette:data": "node scripts/palette-data.js",
     "palette:data:check": "node scripts/palette-data.js --check",
@@ -21,6 +23,7 @@
     "nuxt": "4.3.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "playwright": "^1.62.1",
     "sass": "^1.105.1"
   }

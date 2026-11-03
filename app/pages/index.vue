@@ -135,11 +135,15 @@ body {
   left: 10px;
   z-index: 10;
   padding: 6px 10px;
-  background: rgba(255, 255, 255, 0.85);
+  color: #18281a;
+  background: rgba(255, 254, 251, 0.94);
+  border: 1px solid rgba(24, 40, 26, 0.18);
   border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(24, 40, 26, 0.18);
   font-family: system-ui, sans-serif;
   font-size: 12px;
   line-height: 1.4;
+  font-variant-numeric: tabular-nums;
   pointer-events: none;
   user-select: none;
 }
