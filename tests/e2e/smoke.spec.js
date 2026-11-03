@@ -6,6 +6,10 @@ const { test, expect } = require('@playwright/test');
 
 const SCREENSHOT_DIR = path.join(__dirname, '..', '..', 'screenshots');
 const TMP_DIR = path.join(__dirname, '..', '..', '.opencode', 'tmp');
+const paletteData = require('../../app/assets/data/palette.json');
+const healthColour = paletteData.palette.roles.find(
+  (role) => role.id === 'health'
+).color;
 
 function collectErrors(page) {
   const errors = [];
@@ -79,7 +83,7 @@ test('homepage inspector recolours a role and exports the palette', async ({ pag
   const beforeColour = await page.screenshot({ clip: mapClip, type: 'png' });
 
   const hex = page.locator('.home-hex-input');
-  await expect(hex).toHaveValue('#FF004D');
+  await expect(hex).toHaveValue(healthColour);
   await hex.fill('#12AB34');
   await hex.press('Enter');
 

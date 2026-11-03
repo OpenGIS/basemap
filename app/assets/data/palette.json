@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "inputsHash": "sha256:0c3856ed2a5566fe045074bc1db72f72fdf8b883e7bc2d3360b17a3cb7500fe8",
+  "inputsHash": "sha256:007aef0ab4dc7bc902d6c662f10b93d69737262ae0f79c695b3686ac505be31d",
   "palette": {
     "version": 1,
     "roles": [
       {
         "id": "transport",
         "label": "Transport, travel and lodging",
-        "color": "#5CF05C",
+        "color": "#0092DA",
         "sourceColors": [
           "#0092DA"
         ],
@@ -16,7 +16,7 @@
       {
         "id": "food",
         "label": "Food and drink",
-        "color": "#FF7A00",
+        "color": "#C77400",
         "sourceColors": [
           "#C77400"
         ],
@@ -25,7 +25,7 @@
       {
         "id": "health",
         "label": "Health",
-        "color": "#FF004D",
+        "color": "#BF0000",
         "sourceColors": [
           "#BF0000"
         ],
@@ -34,7 +34,7 @@
       {
         "id": "shops",
         "label": "Shops and commercial",
-        "color": "#C400FF",
+        "color": "#AC39AC",
         "sourceColors": [
           "#AC39AC"
         ],
@@ -43,7 +43,7 @@
       {
         "id": "public",
         "label": "Public and cultural",
-        "color": "#FFE600",
+        "color": "#734A08",
         "sourceColors": [
           "#734A08"
         ],
@@ -52,7 +52,7 @@
       {
         "id": "infrastructure",
         "label": "Infrastructure",
-        "color": "#00D5FF",
+        "color": "#666666",
         "sourceColors": [
           "#666666"
         ],
@@ -61,7 +61,7 @@
       {
         "id": "barriers",
         "label": "Barriers",
-        "color": "#FF3D00",
+        "color": "#3F3F3F",
         "sourceColors": [
           "#3F3F3F"
         ],
@@ -70,7 +70,7 @@
       {
         "id": "leisure",
         "label": "Leisure",
-        "color": "#00D26A",
+        "color": "#2F6133",
         "sourceColors": [
           "#2F6133"
         ],
@@ -79,7 +79,7 @@
       {
         "id": "sport",
         "label": "Sport and play",
-        "color": "#B6FF00",
+        "color": "#008C0D",
         "sourceColors": [
           "#008C0D"
         ],
@@ -88,7 +88,7 @@
       {
         "id": "terminals",
         "label": "Transport terminals",
-        "color": "#6A00FF",
+        "color": "#8461C4",
         "sourceColors": [
           "#8461C4"
         ],
@@ -97,7 +97,7 @@
       {
         "id": "worship",
         "label": "Places of worship",
-        "color": "#FF00B8",
+        "color": "#000000",
         "sourceColors": [
           "#000000"
         ],
@@ -113,7 +113,7 @@
     {
       "id": "transport",
       "label": "Transport, travel and lodging",
-      "color": "#5CF05C",
+      "color": "#0092DA",
       "sourceColors": [
         "#0092DA"
       ],
@@ -438,7 +438,7 @@
     {
       "id": "food",
       "label": "Food and drink",
-      "color": "#FF7A00",
+      "color": "#C77400",
       "sourceColors": [
         "#C77400"
       ],
@@ -635,7 +635,7 @@
     {
       "id": "health",
       "label": "Health",
-      "color": "#FF004D",
+      "color": "#BF0000",
       "sourceColors": [
         "#BF0000"
       ],
@@ -764,7 +764,7 @@
     {
       "id": "shops",
       "label": "Shops and commercial",
-      "color": "#C400FF",
+      "color": "#AC39AC",
       "sourceColors": [
         "#AC39AC"
       ],
@@ -1806,7 +1806,7 @@
     {
       "id": "public",
       "label": "Public and cultural",
-      "color": "#FFE600",
+      "color": "#734A08",
       "sourceColors": [
         "#734A08"
       ],
@@ -2387,7 +2387,7 @@
     {
       "id": "infrastructure",
       "label": "Infrastructure",
-      "color": "#00D5FF",
+      "color": "#666666",
       "sourceColors": [
         "#666666"
       ],
@@ -2473,7 +2473,7 @@
     {
       "id": "barriers",
       "label": "Barriers",
-      "color": "#FF3D00",
+      "color": "#3F3F3F",
       "sourceColors": [
         "#3F3F3F"
       ],
@@ -2544,7 +2544,7 @@
     {
       "id": "leisure",
       "label": "Leisure",
-      "color": "#00D26A",
+      "color": "#2F6133",
       "sourceColors": [
         "#2F6133"
       ],
@@ -2587,7 +2587,7 @@
     {
       "id": "sport",
       "label": "Sport and play",
-      "color": "#B6FF00",
+      "color": "#008C0D",
       "sourceColors": [
         "#008C0D"
       ],
@@ -2713,7 +2713,7 @@
     {
       "id": "terminals",
       "label": "Transport terminals",
-      "color": "#6A00FF",
+      "color": "#8461C4",
       "sourceColors": [
         "#8461C4"
       ],
@@ -2785,7 +2785,7 @@
     {
       "id": "worship",
       "label": "Places of worship",
-      "color": "#FF00B8",
+      "color": "#000000",
       "sourceColors": [
         "#000000"
       ],
