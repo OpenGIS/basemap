@@ -1,5 +1,5 @@
 ---
-git_hash: "52e0ea07aa5891cc06fb2478f778ffa1e00cffd7"
+git_hash: "3c4ce40b8c55cab337e3f32fe95fb26e7f7333c9"
 modified: "2026-11-03"
 ---
 
@@ -38,7 +38,6 @@ Developer-focused documentation for the [Basemap](../README.md) codebase — a s
 - [Build script](../scripts/build.sh)
 - [Font merge script](../scripts/merge-fonts.js)
 - [Screenshot script](../scripts/screenshot.js)
-- [Random map script](../scripts/random-map.js)
 - [Vendored upstream source](../vendor/openmaptiles/)
 - [Third-party notices](../THIRD_PARTY_NOTICES.md)
 
@@ -47,7 +46,7 @@ Developer-focused documentation for the [Basemap](../README.md) codebase — a s
 This documentation covers:
 
 - Project purpose, published endpoints and repository layout
-- The full map build pipeline (palette staging, docker recompose, sprite generation, URL rewrite, font merging, site build, random screenshot)
+- The full map build pipeline (palette staging, docker recompose, sprite generation, URL rewrite, font merging, site build)
 - The palette model, role mapping and SVG recolour pipeline
 - The single Nuxt site, its homepage route and inspector, generated palette data, tests and Pages deployment
 - How to customise the style and republish

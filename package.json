@@ -14,8 +14,7 @@
     "palette:apply": "node scripts/palette.js --apply",
     "palette:data": "node scripts/palette-data.js",
     "palette:data:check": "node scripts/palette-data.js --check",
-    "screenshot": "node scripts/screenshot.js",
-    "screenshot:random": "node scripts/random-map.js"
+    "screenshot": "node scripts/screenshot.js"
   },
   "dependencies": {
     "maplibre-gl": "6.5.0",

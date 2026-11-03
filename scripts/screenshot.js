@@ -9,8 +9,8 @@
 // under /basemap/, matching GitHub Pages, and the prefix is stripped to map
 // onto the artifact directory. Run `npm run site:build` first.
 //
-// Zero-dependency aside from Playwright. Exports capture() so that
-// scripts/random-map.js can reuse the same flow for a series of states.
+// Zero-dependency aside from Playwright. Exports capture() for programmatic
+// screenshots.
 //
 // Map state (lat, lng, zoom, pitch, rotation) is written to the URL hash;
 // width, height, style and quality are the only query parameters.

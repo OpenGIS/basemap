@@ -11,9 +11,6 @@
 #
 # with image openmaptiles/openmaptiles-tools:${TOOLS_VERSION} (7.2 from .env),
 # workdir /tileset, project root mounted at /tileset, and ./style mounted at /style.
-#
-# The build also renders a fresh random basemap screenshot for the README (via
-# scripts/random-map.js), so that one artifact is intentionally non-deterministic.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -70,6 +67,3 @@ node "$ROOT/scripts/merge-fonts.js"
 # Build the static site artifact so the screenshot harness serves the published
 # layout (.output/public under /basemap/).
 node "$ROOT/scripts/site-build.js"
-
-# Render a fresh random basemap screenshot for the README (see scripts/random-map.js).
-node "$ROOT/scripts/random-map.js"
