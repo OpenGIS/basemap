@@ -1,0 +1,172 @@
+// ogis design tokens (--ogis-*).
+//
+// Light is the default. With no attribute the theme follows the operating
+// system through prefers-color-scheme; a page can force a scheme by setting
+// data-theme="light" or data-theme="dark" on the root element. Auto (no
+// attribute) is the only state that follows the OS, and nothing is persisted.
+// Pico variable overrides live separately in _pico.scss and reference these
+// tokens.
+
+:root {
+  --ogis-font:
+    ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  --ogis-content-width: 1080px;
+  --ogis-body-size: 15px;
+  --ogis-code-size: 13px;
+  --ogis-radius: 6px;
+
+  // The site header is the same near-black bar in both themes, so its
+  // chrome tokens are theme-independent.
+  --ogis-header-bg: #0a120a;
+  --ogis-header-border: rgba(13, 215, 13, 0.18);
+  --ogis-header-fg: #98a69d;
+  --ogis-header-fg-hover: #0dd70d;
+  --ogis-header-fg-current: #ffffff;
+  --ogis-brand-mark: #ffffff;
+  --ogis-brand-accent: #0dd70d;
+}
+
+// --- Light theme (default, and forced via data-theme="light") --------------
+
+@mixin ogis-light-tokens {
+  --ogis-bg: #fcfaf5;
+  --ogis-bg-alt: #f0f1e6;
+  --ogis-surface: #fffefb;
+  --ogis-fg: #2b3129;
+  --ogis-heading: #18281a;
+  --ogis-muted: #61685b;
+  --ogis-border: #dddccd;
+
+  // Neon #0dd70d fails contrast on light surfaces; links and accents use a
+  // same-family green measured at 5.2:1 on --ogis-bg.
+  --ogis-accent: #0a7d0a;
+  --ogis-accent-hover: #06630a;
+  --ogis-accent-soft: rgba(10, 125, 10, 0.1);
+  --ogis-focus: rgba(10, 125, 10, 0.35);
+
+  --ogis-footer-bg: #f4f2ea;
+  --ogis-footer-fg: #61685b;
+  --ogis-footer-link: #0a7d0a;
+
+  --ogis-code-bg: #edece5;
+  --ogis-code-block-bg: #e7e4d6;
+  --ogis-code-block-border: #cbc8b5;
+  --ogis-code-color: #34423a;
+
+  --ogis-cta-bg: #0d6e0d;
+  --ogis-cta-fg: #ffffff;
+  --ogis-cta-hover-bg: #06630a;
+
+  // Secondary buttons step back from the green CTA with a quiet neutral
+  // fill. Orange stays a first-class palette accent; it just no longer
+  // carries the secondary button.
+  --ogis-btn-secondary-bg: #eef0ea;
+  --ogis-btn-secondary-hover: #e4e7df;
+
+  // Orange is a first-class accent beside the green primary, used for
+  // swatches and accents rather than the secondary button.
+  --ogis-orange: #b3571f;
+  --ogis-orange-hover: #914417;
+  --ogis-orange-soft: rgba(179, 87, 31, 0.12);
+  --ogis-orange-fg: #ffffff;
+
+  // Zebra stripes are translucent so they read on any band surface (page
+  // or alt); the header gets its own faint tint.
+  --ogis-table-stripe: rgba(0, 0, 0, 0.045);
+  --ogis-table-head: rgba(0, 0, 0, 0.03);
+
+  // Alerts share one neutral grey surface and keep their colour coding
+  // entirely in the accent (border, icon and label).
+  --ogis-alert-bg: #f4f3ee;
+  --ogis-note: #0550ae;
+  --ogis-note-bg: var(--ogis-alert-bg);
+  --ogis-tip: #1a7f37;
+  --ogis-tip-bg: var(--ogis-alert-bg);
+  --ogis-important: #6639ba;
+  --ogis-important-bg: var(--ogis-alert-bg);
+  --ogis-warning: #7d4e00;
+  --ogis-warning-bg: var(--ogis-alert-bg);
+  --ogis-caution: #a40e26;
+  --ogis-caution-bg: var(--ogis-alert-bg);
+}
+
+// --- Dark theme (org surfaces) --------------------------------------------
+
+@mixin ogis-dark-tokens {
+  --ogis-bg: #000b00;
+  --ogis-bg-alt: #001800;
+  --ogis-surface: #001300;
+  --ogis-fg: #eeeeee;
+  --ogis-heading: #e8f5ea;
+  --ogis-muted: #9bb0a3;
+  --ogis-border: #0e3111;
+
+  --ogis-accent: #0dd70d;
+  --ogis-accent-hover: #5cf05c;
+  --ogis-accent-soft: rgba(13, 215, 13, 0.12);
+  --ogis-focus: rgba(13, 215, 13, 0.35);
+
+  --ogis-footer-bg: #000500;
+  --ogis-footer-fg: #8fa295;
+  --ogis-footer-link: #0dd70d;
+
+  --ogis-code-bg: #1a1a1a;
+  --ogis-code-block-bg: #1a1a1a;
+  --ogis-code-block-border: #333333;
+  --ogis-code-color: #cbd8cd;
+
+  --ogis-cta-bg: #0d6e0d;
+  --ogis-cta-fg: #ffffff;
+  --ogis-cta-hover-bg: #0a8a0a;
+
+  // Secondary buttons step back from the green CTA with a quiet neutral
+  // fill. Orange stays a first-class palette accent; it just no longer
+  // carries the secondary button.
+  --ogis-btn-secondary-bg: #1c1c1c;
+  --ogis-btn-secondary-hover: #262626;
+
+  // Orange is a first-class accent beside the green primary, used for
+  // swatches and accents rather than the secondary button.
+  --ogis-orange: #dc8f4e;
+  --ogis-orange-hover: #e8a869;
+  --ogis-orange-soft: rgba(220, 143, 78, 0.15);
+  --ogis-orange-fg: #000b00;
+
+  // Zebra stripes are translucent so they read on any band surface (page
+  // or alt); the header gets its own faint tint.
+  --ogis-table-stripe: rgba(255, 255, 255, 0.06);
+  --ogis-table-head: rgba(255, 255, 255, 0.04);
+
+  // Alerts share one neutral grey surface and keep their colour coding
+  // entirely in the accent (border, icon and label).
+  --ogis-alert-bg: #1c1c1c;
+  --ogis-note: #79c0ff;
+  --ogis-note-bg: var(--ogis-alert-bg);
+  --ogis-tip: #3fb950;
+  --ogis-tip-bg: var(--ogis-alert-bg);
+  --ogis-important: #a371f7;
+  --ogis-important-bg: var(--ogis-alert-bg);
+  --ogis-warning: #d29922;
+  --ogis-warning-bg: var(--ogis-alert-bg);
+  --ogis-caution: #f85149;
+  --ogis-caution-bg: var(--ogis-alert-bg);
+}
+
+// Light is the default and also applies when the attribute explicitly asks
+// for it, whatever the OS says.
+:root:not([data-theme="dark"]) {
+  @include ogis-light-tokens;
+}
+
+// Dark follows the OS only while no attribute is set.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    @include ogis-dark-tokens;
+  }
+}
+
+// Dark forced by the attribute wins over the OS in either direction.
+:root[data-theme="dark"] {
+  @include ogis-dark-tokens;
+}

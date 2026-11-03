@@ -1,0 +1,3933 @@
+{
+  "version": 1,
+  "inputsHash": "sha256:007aef0ab4dc7bc902d6c662f10b93d69737262ae0f79c695b3686ac505be31d",
+  "palette": {
+    "version": 1,
+    "roles": [
+      {
+        "id": "transport",
+        "label": "Transport, travel and lodging",
+        "color": "#0092DA",
+        "sourceColors": [
+          "#0092DA"
+        ],
+        "order": 10
+      },
+      {
+        "id": "food",
+        "label": "Food and drink",
+        "color": "#C77400",
+        "sourceColors": [
+          "#C77400"
+        ],
+        "order": 20
+      },
+      {
+        "id": "health",
+        "label": "Health",
+        "color": "#BF0000",
+        "sourceColors": [
+          "#BF0000"
+        ],
+        "order": 30
+      },
+      {
+        "id": "shops",
+        "label": "Shops and commercial",
+        "color": "#AC39AC",
+        "sourceColors": [
+          "#AC39AC"
+        ],
+        "order": 40
+      },
+      {
+        "id": "public",
+        "label": "Public and cultural",
+        "color": "#734A08",
+        "sourceColors": [
+          "#734A08"
+        ],
+        "order": 50
+      },
+      {
+        "id": "infrastructure",
+        "label": "Infrastructure",
+        "color": "#666666",
+        "sourceColors": [
+          "#666666"
+        ],
+        "order": 60
+      },
+      {
+        "id": "barriers",
+        "label": "Barriers",
+        "color": "#3F3F3F",
+        "sourceColors": [
+          "#3F3F3F"
+        ],
+        "order": 70
+      },
+      {
+        "id": "leisure",
+        "label": "Leisure",
+        "color": "#2F6133",
+        "sourceColors": [
+          "#2F6133"
+        ],
+        "order": 80
+      },
+      {
+        "id": "sport",
+        "label": "Sport and play",
+        "color": "#008C0D",
+        "sourceColors": [
+          "#008C0D"
+        ],
+        "order": 90
+      },
+      {
+        "id": "terminals",
+        "label": "Transport terminals",
+        "color": "#8461C4",
+        "sourceColors": [
+          "#8461C4"
+        ],
+        "order": 100
+      },
+      {
+        "id": "worship",
+        "label": "Places of worship",
+        "color": "#000000",
+        "sourceColors": [
+          "#000000"
+        ],
+        "order": 110
+      }
+    ],
+    "preserve": [
+      "#FFFFFF"
+    ],
+    "overrides": {}
+  },
+  "roles": [
+    {
+      "id": "transport",
+      "label": "Transport, travel and lodging",
+      "color": "#0092DA",
+      "sourceColors": [
+        "#0092DA"
+      ],
+      "order": 10,
+      "iconCount": 14,
+      "classCount": 8,
+      "iconNames": [
+        "bicycle_parking",
+        "bus_stop.12",
+        "camping",
+        "car",
+        "chalet",
+        "charging_station",
+        "fuel",
+        "guest_house",
+        "hostel",
+        "hotel",
+        "motel",
+        "motorcycle",
+        "parking",
+        "taxi"
+      ],
+      "classes": [
+        {
+          "name": "bicycle_parking",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Transport"
+          ],
+          "icons": [
+            {
+              "name": "bicycle_parking",
+              "subclass": "bicycle_parking",
+              "subclasses": [
+                "bicycle_parking"
+              ],
+              "layers": [
+                "Transport"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "bus",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Bus station",
+            "Bus stop"
+          ],
+          "icons": [
+            {
+              "name": "bus_stop.12",
+              "subclass": "bus_station",
+              "subclasses": [
+                "bus_station",
+                "bus_stop"
+              ],
+              "layers": [
+                "Bus station",
+                "Bus stop"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "campsite",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Campsite"
+          ],
+          "icons": [
+            {
+              "name": "camping",
+              "subclass": "camp_site",
+              "subclasses": [
+                "camp_site",
+                "caravan_site"
+              ],
+              "layers": [
+                "Campsite"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "car",
+          "provenance": "schema",
+          "mappingKeys": [
+            "shop"
+          ],
+          "layers": [
+            "Transport"
+          ],
+          "icons": [
+            {
+              "name": "car",
+              "subclass": "car",
+              "subclasses": [
+                "car"
+              ],
+              "layers": [
+                "Transport"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            },
+            {
+              "name": "taxi",
+              "subclass": "taxi",
+              "subclasses": [
+                "taxi"
+              ],
+              "layers": [
+                "Transport"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "fuel",
+          "provenance": "schema",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Transport"
+          ],
+          "icons": [
+            {
+              "name": "charging_station",
+              "subclass": "charging_station",
+              "subclasses": [
+                "charging_station"
+              ],
+              "layers": [
+                "Transport"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            },
+            {
+              "name": "fuel",
+              "subclass": "fuel",
+              "subclasses": [
+                "fuel"
+              ],
+              "layers": [
+                "Transport"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "lodging",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Accommodation"
+          ],
+          "icons": [
+            {
+              "name": "chalet",
+              "subclass": "chalet",
+              "subclasses": [
+                "chalet"
+              ],
+              "layers": [
+                "Accommodation"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            },
+            {
+              "name": "guest_house",
+              "subclass": "guest_house",
+              "subclasses": [
+                "guest_house"
+              ],
+              "layers": [
+                "Accommodation"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            },
+            {
+              "name": "hostel",
+              "subclass": "hostel",
+              "subclasses": [
+                "hostel"
+              ],
+              "layers": [
+                "Accommodation"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            },
+            {
+              "name": "hotel",
+              "subclass": "hotel",
+              "subclasses": [
+                "hotel"
+              ],
+              "layers": [
+                "Accommodation"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            },
+            {
+              "name": "motel",
+              "subclass": "motel",
+              "subclasses": [
+                "motel"
+              ],
+              "layers": [
+                "Accommodation"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            }
+          ],
+          "missingCount": 3
+        },
+        {
+          "name": "parking",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Transport"
+          ],
+          "icons": [
+            {
+              "name": "parking",
+              "subclass": "parking",
+              "subclasses": [
+                "parking"
+              ],
+              "layers": [
+                "Transport"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "shop",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Shop"
+          ],
+          "icons": [
+            {
+              "name": "motorcycle",
+              "subclass": "motorcycle",
+              "subclasses": [
+                "motorcycle"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "transport",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            }
+          ],
+          "missingCount": 0
+        }
+      ]
+    },
+    {
+      "id": "food",
+      "label": "Food and drink",
+      "color": "#C77400",
+      "sourceColors": [
+        "#C77400"
+      ],
+      "order": 20,
+      "iconCount": 7,
+      "classCount": 6,
+      "iconNames": [
+        "bar",
+        "biergarten",
+        "cafe",
+        "fast_food",
+        "ice_cream",
+        "pub",
+        "restaurant"
+      ],
+      "classes": [
+        {
+          "name": "bar",
+          "provenance": "schema",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Food"
+          ],
+          "icons": [
+            {
+              "name": "bar",
+              "subclass": "bar",
+              "subclasses": [
+                "bar"
+              ],
+              "layers": [
+                "Food"
+              ],
+              "roleId": "food",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#C77400"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "beer",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Food"
+          ],
+          "icons": [
+            {
+              "name": "biergarten",
+              "subclass": "biergarten",
+              "subclasses": [
+                "biergarten"
+              ],
+              "layers": [
+                "Food"
+              ],
+              "roleId": "food",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#C77400"
+            },
+            {
+              "name": "pub",
+              "subclass": "pub",
+              "subclasses": [
+                "pub"
+              ],
+              "layers": [
+                "Food"
+              ],
+              "roleId": "food",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#C77400"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "cafe",
+          "provenance": "schema",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Food"
+          ],
+          "icons": [
+            {
+              "name": "cafe",
+              "subclass": "cafe",
+              "subclasses": [
+                "cafe"
+              ],
+              "layers": [
+                "Food"
+              ],
+              "roleId": "food",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#C77400"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "fast_food",
+          "provenance": "schema",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Food"
+          ],
+          "icons": [
+            {
+              "name": "fast_food",
+              "subclass": "fast_food",
+              "subclasses": [
+                "fast_food"
+              ],
+              "layers": [
+                "Food"
+              ],
+              "roleId": "food",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#C77400"
+            }
+          ],
+          "missingCount": 1
+        },
+        {
+          "name": "ice_cream",
+          "provenance": "schema",
+          "mappingKeys": [
+            "amenity",
+            "shop"
+          ],
+          "layers": [
+            "Food"
+          ],
+          "icons": [
+            {
+              "name": "ice_cream",
+              "subclass": "ice_cream",
+              "subclasses": [
+                "ice_cream"
+              ],
+              "layers": [
+                "Food"
+              ],
+              "roleId": "food",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#C77400"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "restaurant",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Food"
+          ],
+          "icons": [
+            {
+              "name": "restaurant",
+              "subclass": "restaurant",
+              "subclasses": [
+                "restaurant"
+              ],
+              "layers": [
+                "Food"
+              ],
+              "roleId": "food",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#C77400"
+            }
+          ],
+          "missingCount": 0
+        }
+      ]
+    },
+    {
+      "id": "health",
+      "label": "Health",
+      "color": "#BF0000",
+      "sourceColors": [
+        "#BF0000"
+      ],
+      "order": 30,
+      "iconCount": 4,
+      "classCount": 4,
+      "iconNames": [
+        "dentist",
+        "hospital",
+        "pharmacy",
+        "veterinary"
+      ],
+      "classes": [
+        {
+          "name": "dentist",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Health"
+          ],
+          "icons": [
+            {
+              "name": "dentist",
+              "subclass": "dentist",
+              "subclasses": [
+                "dentist"
+              ],
+              "layers": [
+                "Health"
+              ],
+              "roleId": "health",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#BF0000"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "hospital",
+          "provenance": "schema",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Health"
+          ],
+          "icons": [
+            {
+              "name": "hospital",
+              "subclass": "clinic",
+              "subclasses": [
+                "clinic",
+                "hospital",
+                "nursing_home"
+              ],
+              "layers": [
+                "Health"
+              ],
+              "roleId": "health",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#BF0000"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "pharmacy",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Health"
+          ],
+          "icons": [
+            {
+              "name": "pharmacy",
+              "subclass": "pharmacy",
+              "subclasses": [
+                "pharmacy"
+              ],
+              "layers": [
+                "Health"
+              ],
+              "roleId": "health",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#BF0000"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "veterinary",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Health"
+          ],
+          "icons": [
+            {
+              "name": "veterinary",
+              "subclass": "veterinary",
+              "subclasses": [
+                "veterinary"
+              ],
+              "layers": [
+                "Health"
+              ],
+              "roleId": "health",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#BF0000"
+            }
+          ],
+          "missingCount": 0
+        }
+      ]
+    },
+    {
+      "id": "shops",
+      "label": "Shops and commercial",
+      "color": "#AC39AC",
+      "sourceColors": [
+        "#AC39AC"
+      ],
+      "order": 40,
+      "iconCount": 58,
+      "classCount": 11,
+      "iconNames": [
+        "alcohol",
+        "bag",
+        "bakery",
+        "beauty",
+        "bed",
+        "beverages",
+        "bicycle",
+        "books",
+        "butcher",
+        "car_parts",
+        "car_repair",
+        "carpet",
+        "charity",
+        "chemist",
+        "clothes",
+        "coffee",
+        "computer",
+        "confectionery",
+        "convenience",
+        "copyshop",
+        "cosmetics",
+        "deli",
+        "department_store",
+        "electronics",
+        "fabric",
+        "florist",
+        "furniture",
+        "garden_centre",
+        "gift",
+        "greengrocer",
+        "hairdresser",
+        "hifi",
+        "interior_decoration",
+        "jewelry",
+        "marketplace",
+        "massage",
+        "mobile_phone",
+        "music",
+        "musical_instrument",
+        "newsagent",
+        "optician",
+        "outdoor",
+        "paint",
+        "perfumery",
+        "pet",
+        "photo",
+        "second_hand",
+        "shoes",
+        "shop",
+        "sports",
+        "stationery",
+        "supermarket",
+        "ticket",
+        "tobacco",
+        "toys",
+        "travel_agency",
+        "video",
+        "video_games"
+      ],
+      "classes": [
+        {
+          "name": "alcohol_shop",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Shop"
+          ],
+          "icons": [
+            {
+              "name": "alcohol",
+              "subclass": "alcohol",
+              "subclasses": [
+                "alcohol"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "beverages",
+              "subclass": "beverages",
+              "subclasses": [
+                "beverages"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            }
+          ],
+          "missingCount": 1
+        },
+        {
+          "name": "bakery",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "shop"
+          ],
+          "layers": [
+            "Shop"
+          ],
+          "icons": [
+            {
+              "name": "bakery",
+              "subclass": "bakery",
+              "subclasses": [
+                "bakery"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "bicycle",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "shop"
+          ],
+          "layers": [
+            "Shop"
+          ],
+          "icons": [
+            {
+              "name": "bicycle",
+              "subclass": "bicycle",
+              "subclasses": [
+                "bicycle"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "butcher",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "shop"
+          ],
+          "layers": [
+            "Shop"
+          ],
+          "icons": [
+            {
+              "name": "butcher",
+              "subclass": "butcher",
+              "subclasses": [
+                "butcher"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "car",
+          "provenance": "schema",
+          "mappingKeys": [
+            "shop"
+          ],
+          "layers": [
+            "Transport"
+          ],
+          "icons": [
+            {
+              "name": "car_parts",
+              "subclass": "car_parts",
+              "subclasses": [
+                "car_parts"
+              ],
+              "layers": [
+                "Transport"
+              ],
+              "roleId": "shops",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "car_repair",
+              "subclass": "car_repair",
+              "subclasses": [
+                "car_repair"
+              ],
+              "layers": [
+                "Transport"
+              ],
+              "roleId": "shops",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "clothing_store",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Shop"
+          ],
+          "icons": [
+            {
+              "name": "bag",
+              "subclass": "bag",
+              "subclasses": [
+                "bag"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "clothes",
+              "subclass": "clothes",
+              "subclasses": [
+                "clothes"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "grocery",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Shop"
+          ],
+          "icons": [
+            {
+              "name": "deli",
+              "subclass": "deli",
+              "subclasses": [
+                "deli"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "department_store",
+              "subclass": "department_store",
+              "subclasses": [
+                "department_store"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "greengrocer",
+              "subclass": "greengrocer",
+              "subclasses": [
+                "greengrocer"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "marketplace",
+              "subclass": "marketplace",
+              "subclasses": [
+                "marketplace"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "supermarket",
+              "subclass": "supermarket",
+              "subclasses": [
+                "supermarket"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            }
+          ],
+          "missingCount": 1
+        },
+        {
+          "name": "hairdresser",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "shop"
+          ],
+          "layers": [
+            "Shop"
+          ],
+          "icons": [
+            {
+              "name": "hairdresser",
+              "subclass": "hairdresser",
+              "subclasses": [
+                "hairdresser"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "library",
+          "provenance": "schema",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Shop"
+          ],
+          "icons": [
+            {
+              "name": "books",
+              "subclass": "books",
+              "subclasses": [
+                "books"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "music",
+          "provenance": "schema",
+          "mappingKeys": [
+            "shop"
+          ],
+          "layers": [
+            "Shop"
+          ],
+          "icons": [
+            {
+              "name": "music",
+              "subclass": "music",
+              "subclasses": [
+                "music"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "musical_instrument",
+              "subclass": "musical_instrument",
+              "subclasses": [
+                "musical_instrument"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "shop",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Mall",
+            "Shop"
+          ],
+          "icons": [
+            {
+              "name": "beauty",
+              "subclass": "beauty",
+              "subclasses": [
+                "beauty"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "bed",
+              "subclass": "bed",
+              "subclasses": [
+                "bed"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "carpet",
+              "subclass": "carpet",
+              "subclasses": [
+                "carpet"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "charity",
+              "subclass": "charity",
+              "subclasses": [
+                "charity"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "chemist",
+              "subclass": "chemist",
+              "subclasses": [
+                "chemist"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "coffee",
+              "subclass": "coffee",
+              "subclasses": [
+                "coffee"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "computer",
+              "subclass": "computer",
+              "subclasses": [
+                "computer"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "confectionery",
+              "subclass": "confectionery",
+              "subclasses": [
+                "confectionery"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "convenience",
+              "subclass": "convenience",
+              "subclasses": [
+                "convenience"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "copyshop",
+              "subclass": "copyshop",
+              "subclasses": [
+                "copyshop"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "cosmetics",
+              "subclass": "cosmetics",
+              "subclasses": [
+                "cosmetics"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "electronics",
+              "subclass": "electronics",
+              "subclasses": [
+                "electronics"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "fabric",
+              "subclass": "fabric",
+              "subclasses": [
+                "fabric"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "florist",
+              "subclass": "florist",
+              "subclasses": [
+                "florist"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "furniture",
+              "subclass": "furniture",
+              "subclasses": [
+                "furniture"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "garden_centre",
+              "subclass": "garden_centre",
+              "subclasses": [
+                "garden_centre"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "gift",
+              "subclass": "gift",
+              "subclasses": [
+                "gift"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "hifi",
+              "subclass": "hifi",
+              "subclasses": [
+                "hifi"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "interior_decoration",
+              "subclass": "interior_decoration",
+              "subclasses": [
+                "interior_decoration"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "jewelry",
+              "subclass": "jewelry",
+              "subclasses": [
+                "jewelry"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "massage",
+              "subclass": "massage",
+              "subclasses": [
+                "massage"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "mobile_phone",
+              "subclass": "mobile_phone",
+              "subclasses": [
+                "mobile_phone"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "newsagent",
+              "subclass": "newsagent",
+              "subclasses": [
+                "newsagent"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "optician",
+              "subclass": "optician",
+              "subclasses": [
+                "optician"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "outdoor",
+              "subclass": "outdoor",
+              "subclasses": [
+                "outdoor"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "paint",
+              "subclass": "paint",
+              "subclasses": [
+                "paint"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "perfumery",
+              "subclass": "perfumery",
+              "subclasses": [
+                "perfumery"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "pet",
+              "subclass": "pet",
+              "subclasses": [
+                "pet"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "photo",
+              "subclass": "photo",
+              "subclasses": [
+                "photo"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "second_hand",
+              "subclass": "second_hand",
+              "subclasses": [
+                "second_hand"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "shoes",
+              "subclass": "shoes",
+              "subclasses": [
+                "shoes"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "shop",
+              "subclass": "accessories",
+              "subclasses": [
+                "accessories",
+                "antiques",
+                "boutique",
+                "camera",
+                "chocolate",
+                "doityourself",
+                "erotic",
+                "frozen_food",
+                "general",
+                "hardware",
+                "hearing_aids",
+                "kiosk",
+                "lamps",
+                "locksmith",
+                "mall",
+                "perfume",
+                "tailor",
+                "tattoo",
+                "watches",
+                "weapons",
+                "wholesale"
+              ],
+              "layers": [
+                "Mall",
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "class",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "sports",
+              "subclass": "sports",
+              "subclasses": [
+                "sports"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "stationery",
+              "subclass": "stationery",
+              "subclasses": [
+                "stationery"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "ticket",
+              "subclass": "ticket",
+              "subclasses": [
+                "ticket"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "tobacco",
+              "subclass": "tobacco",
+              "subclasses": [
+                "tobacco"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "toys",
+              "subclass": "toys",
+              "subclasses": [
+                "toys"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "travel_agency",
+              "subclass": "travel_agency",
+              "subclasses": [
+                "travel_agency"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "video",
+              "subclass": "video",
+              "subclasses": [
+                "video"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            },
+            {
+              "name": "video_games",
+              "subclass": "video_games",
+              "subclasses": [
+                "video_games"
+              ],
+              "layers": [
+                "Shop"
+              ],
+              "roleId": "shops",
+              "fallback": "subclass",
+              "inSprite": true,
+              "primaryFill": "#AC39AC"
+            }
+          ],
+          "missingCount": 0
+        }
+      ]
+    },
+    {
+      "id": "public",
+      "label": "Public and cultural",
+      "color": "#734A08",
+      "sourceColors": [
+        "#734A08"
+      ],
+      "order": 50,
+      "iconCount": 24,
+      "classCount": 16,
+      "iconNames": [
+        "arts_centre",
+        "artwork",
+        "atm",
+        "audioguide",
+        "board",
+        "castle",
+        "cinema",
+        "community_centre",
+        "courthouse",
+        "drinking_water",
+        "gallery",
+        "guidepost",
+        "library",
+        "monument",
+        "museum",
+        "nightclub",
+        "police",
+        "post_box",
+        "post_office",
+        "public_building",
+        "recycling",
+        "theatre",
+        "toilets",
+        "townhall"
+      ],
+      "classes": [
+        {
+          "name": "art_gallery",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Cultural"
+          ],
+          "icons": [
+            {
+              "name": "arts_centre",
+              "subclass": "arts_centre",
+              "subclasses": [
+                "arts_centre"
+              ],
+              "layers": [
+                "Cultural"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            },
+            {
+              "name": "artwork",
+              "subclass": "artwork",
+              "subclasses": [
+                "artwork"
+              ],
+              "layers": [
+                "Cultural"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            },
+            {
+              "name": "gallery",
+              "subclass": "gallery",
+              "subclasses": [
+                "gallery"
+              ],
+              "layers": [
+                "Cultural"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "atm",
+          "provenance": "schema",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Public"
+          ],
+          "icons": [
+            {
+              "name": "atm",
+              "subclass": "atm",
+              "subclasses": [
+                "atm"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "bar",
+          "provenance": "schema",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Food"
+          ],
+          "icons": [
+            {
+              "name": "nightclub",
+              "subclass": "nightclub",
+              "subclasses": [
+                "nightclub"
+              ],
+              "layers": [
+                "Food"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "castle",
+          "provenance": "schema",
+          "mappingKeys": [
+            "historic"
+          ],
+          "layers": [
+            "Cultural"
+          ],
+          "icons": [
+            {
+              "name": "castle",
+              "subclass": "castle",
+              "subclasses": [
+                "castle"
+              ],
+              "layers": [
+                "Cultural"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 1
+        },
+        {
+          "name": "cinema",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Cultural",
+            "Public"
+          ],
+          "icons": [
+            {
+              "name": "cinema",
+              "subclass": "cinema",
+              "subclasses": [
+                "cinema"
+              ],
+              "layers": [
+                "Cultural",
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "drinking_water",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Waste"
+          ],
+          "icons": [
+            {
+              "name": "drinking_water",
+              "subclass": "drinking_water",
+              "subclasses": [
+                "drinking_water"
+              ],
+              "layers": [
+                "Waste"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "information",
+          "provenance": "dynamic",
+          "mappingKeys": [
+            "tourism"
+          ],
+          "layers": [
+            "Public"
+          ],
+          "icons": [
+            {
+              "name": "audioguide",
+              "subclass": "audioguide",
+              "subclasses": [
+                "audioguide"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            },
+            {
+              "name": "board",
+              "subclass": "board",
+              "subclasses": [
+                "board"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            },
+            {
+              "name": "guidepost",
+              "subclass": "guidepost",
+              "subclasses": [
+                "guidepost"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "library",
+          "provenance": "schema",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Cultural",
+            "Public"
+          ],
+          "icons": [
+            {
+              "name": "library",
+              "subclass": "library",
+              "subclasses": [
+                "library"
+              ],
+              "layers": [
+                "Cultural",
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "monument",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "historic"
+          ],
+          "layers": [
+            "Cultural"
+          ],
+          "icons": [
+            {
+              "name": "monument",
+              "subclass": "monument",
+              "subclasses": [
+                "monument"
+              ],
+              "layers": [
+                "Cultural"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "museum",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "tourism"
+          ],
+          "layers": [
+            "Cultural"
+          ],
+          "icons": [
+            {
+              "name": "museum",
+              "subclass": "museum",
+              "subclasses": [
+                "museum"
+              ],
+              "layers": [
+                "Cultural"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "police",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Public"
+          ],
+          "icons": [
+            {
+              "name": "police",
+              "subclass": "police",
+              "subclasses": [
+                "police"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "post",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Public"
+          ],
+          "icons": [
+            {
+              "name": "post_box",
+              "subclass": "post_box",
+              "subclasses": [
+                "post_box"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            },
+            {
+              "name": "post_office",
+              "subclass": "post_office",
+              "subclasses": [
+                "post_office"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 1
+        },
+        {
+          "name": "recycling",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Waste"
+          ],
+          "icons": [
+            {
+              "name": "recycling",
+              "subclass": "recycling",
+              "subclasses": [
+                "recycling"
+              ],
+              "layers": [
+                "Waste"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "theatre",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Public"
+          ],
+          "icons": [
+            {
+              "name": "theatre",
+              "subclass": "theatre",
+              "subclasses": [
+                "theatre"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "toilets",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Waste"
+          ],
+          "icons": [
+            {
+              "name": "toilets",
+              "subclass": "toilets",
+              "subclasses": [
+                "toilets"
+              ],
+              "layers": [
+                "Waste"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "town_hall",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Public"
+          ],
+          "icons": [
+            {
+              "name": "community_centre",
+              "subclass": "community_centre",
+              "subclasses": [
+                "community_centre"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            },
+            {
+              "name": "courthouse",
+              "subclass": "courthouse",
+              "subclasses": [
+                "courthouse"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            },
+            {
+              "name": "public_building",
+              "subclass": "public_building",
+              "subclasses": [
+                "public_building"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            },
+            {
+              "name": "townhall",
+              "subclass": "townhall",
+              "subclasses": [
+                "townhall"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "public",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#734A08"
+            }
+          ],
+          "missingCount": 0
+        }
+      ]
+    },
+    {
+      "id": "infrastructure",
+      "label": "Infrastructure",
+      "color": "#666666",
+      "sourceColors": [
+        "#666666"
+      ],
+      "order": 60,
+      "iconCount": 3,
+      "classCount": 2,
+      "iconNames": [
+        "map",
+        "terminal",
+        "waste_basket"
+      ],
+      "classes": [
+        {
+          "name": "information",
+          "provenance": "dynamic",
+          "mappingKeys": [
+            "tourism"
+          ],
+          "layers": [
+            "Public"
+          ],
+          "icons": [
+            {
+              "name": "map",
+              "subclass": "map",
+              "subclasses": [
+                "map"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "infrastructure",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#666666"
+            },
+            {
+              "name": "terminal",
+              "subclass": "terminal",
+              "subclasses": [
+                "terminal"
+              ],
+              "layers": [
+                "Public"
+              ],
+              "roleId": "infrastructure",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#666666"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "waste_basket",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Waste"
+          ],
+          "icons": [
+            {
+              "name": "waste_basket",
+              "subclass": "waste_basket",
+              "subclasses": [
+                "waste_basket"
+              ],
+              "layers": [
+                "Waste"
+              ],
+              "roleId": "infrastructure",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#666666"
+            }
+          ],
+          "missingCount": 0
+        }
+      ]
+    },
+    {
+      "id": "barriers",
+      "label": "Barriers",
+      "color": "#3F3F3F",
+      "sourceColors": [
+        "#3F3F3F"
+      ],
+      "order": 70,
+      "iconCount": 2,
+      "classCount": 2,
+      "iconNames": [
+        "gate",
+        "stile"
+      ],
+      "classes": [
+        {
+          "name": "gate",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "barrier"
+          ],
+          "layers": [
+            "Outdoor"
+          ],
+          "icons": [
+            {
+              "name": "gate",
+              "subclass": "gate",
+              "subclasses": [
+                "gate"
+              ],
+              "layers": [
+                "Outdoor"
+              ],
+              "roleId": "barriers",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#3F3F3F"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "stile",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "barrier"
+          ],
+          "layers": [
+            "Outdoor"
+          ],
+          "icons": [
+            {
+              "name": "stile",
+              "subclass": "stile",
+              "subclasses": [
+                "stile"
+              ],
+              "layers": [
+                "Outdoor"
+              ],
+              "roleId": "barriers",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#3F3F3F"
+            }
+          ],
+          "missingCount": 0
+        }
+      ]
+    },
+    {
+      "id": "leisure",
+      "label": "Leisure",
+      "color": "#2F6133",
+      "sourceColors": [
+        "#2F6133"
+      ],
+      "order": 80,
+      "iconCount": 1,
+      "classCount": 1,
+      "iconNames": [
+        "miniature_golf"
+      ],
+      "classes": [
+        {
+          "name": "golf",
+          "provenance": "schema",
+          "mappingKeys": [
+            "sport"
+          ],
+          "layers": [
+            "Sport"
+          ],
+          "icons": [
+            {
+              "name": "miniature_golf",
+              "subclass": "miniature_golf",
+              "subclasses": [
+                "miniature_golf"
+              ],
+              "layers": [
+                "Sport"
+              ],
+              "roleId": "leisure",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#2F6133"
+            }
+          ],
+          "missingCount": 1
+        }
+      ]
+    },
+    {
+      "id": "sport",
+      "label": "Sport and play",
+      "color": "#008C0D",
+      "sourceColors": [
+        "#008C0D"
+      ],
+      "order": 90,
+      "iconCount": 3,
+      "classCount": 4,
+      "iconNames": [
+        "golf",
+        "playground",
+        "water_park"
+      ],
+      "classes": [
+        {
+          "name": "golf",
+          "provenance": "schema",
+          "mappingKeys": [
+            "sport"
+          ],
+          "layers": [
+            "Sport"
+          ],
+          "icons": [
+            {
+              "name": "golf",
+              "subclass": "golf",
+              "subclasses": [
+                "golf"
+              ],
+              "layers": [
+                "Sport"
+              ],
+              "roleId": "sport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#008C0D"
+            }
+          ],
+          "missingCount": 1
+        },
+        {
+          "name": "pitch",
+          "provenance": "dynamic",
+          "mappingKeys": [
+            "leisure"
+          ],
+          "layers": [
+            "Outdoor"
+          ],
+          "icons": [
+            {
+              "name": "golf",
+              "subclass": "golf",
+              "subclasses": [
+                "golf"
+              ],
+              "layers": [
+                "Outdoor"
+              ],
+              "roleId": "sport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#008C0D"
+            }
+          ],
+          "missingCount": 77
+        },
+        {
+          "name": "playground",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "leisure"
+          ],
+          "layers": [
+            "Outdoor"
+          ],
+          "icons": [
+            {
+              "name": "playground",
+              "subclass": "playground",
+              "subclasses": [
+                "playground"
+              ],
+              "layers": [
+                "Outdoor"
+              ],
+              "roleId": "sport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#008C0D"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "water_park",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "leisure"
+          ],
+          "layers": [
+            "Sport"
+          ],
+          "icons": [
+            {
+              "name": "water_park",
+              "subclass": "water_park",
+              "subclasses": [
+                "water_park"
+              ],
+              "layers": [
+                "Sport"
+              ],
+              "roleId": "sport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#008C0D"
+            }
+          ],
+          "missingCount": 0
+        }
+      ]
+    },
+    {
+      "id": "terminals",
+      "label": "Transport terminals",
+      "color": "#8461C4",
+      "sourceColors": [
+        "#8461C4"
+      ],
+      "order": 100,
+      "iconCount": 2,
+      "classCount": 2,
+      "iconNames": [
+        "ferry",
+        "square_train"
+      ],
+      "classes": [
+        {
+          "name": "ferry_terminal",
+          "provenance": "runtime",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Ferry"
+          ],
+          "icons": [
+            {
+              "name": "ferry",
+              "subclass": "ferry_terminal",
+              "subclasses": [
+                "ferry_terminal"
+              ],
+              "layers": [
+                "Ferry"
+              ],
+              "roleId": "terminals",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#8461C4"
+            }
+          ],
+          "missingCount": 0
+        },
+        {
+          "name": "railway",
+          "provenance": "schema",
+          "mappingKeys": [],
+          "layers": [
+            "Train"
+          ],
+          "icons": [
+            {
+              "name": "square_train",
+              "subclass": "halt",
+              "subclasses": [
+                "halt",
+                "station",
+                "subway",
+                "tram_stop"
+              ],
+              "layers": [
+                "Train"
+              ],
+              "roleId": "terminals",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#8461C4"
+            }
+          ],
+          "missingCount": 0
+        }
+      ]
+    },
+    {
+      "id": "worship",
+      "label": "Places of worship",
+      "color": "#000000",
+      "sourceColors": [
+        "#000000"
+      ],
+      "order": 110,
+      "iconCount": 11,
+      "classCount": 1,
+      "iconNames": [
+        "buddhist",
+        "christian",
+        "cross",
+        "hinduist",
+        "jewish",
+        "multifaith",
+        "muslim",
+        "place_of_worship",
+        "shintoist",
+        "sikhist",
+        "taoist"
+      ],
+      "classes": [
+        {
+          "name": "place_of_worship",
+          "provenance": "dynamic",
+          "mappingKeys": [
+            "amenity"
+          ],
+          "layers": [
+            "Place of worship"
+          ],
+          "icons": [
+            {
+              "name": "buddhist",
+              "subclass": "buddhist",
+              "subclasses": [
+                "buddhist"
+              ],
+              "layers": [
+                "Place of worship"
+              ],
+              "roleId": "worship",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#000000"
+            },
+            {
+              "name": "christian",
+              "subclass": "christian",
+              "subclasses": [
+                "christian"
+              ],
+              "layers": [
+                "Place of worship"
+              ],
+              "roleId": "worship",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#000000"
+            },
+            {
+              "name": "cross",
+              "subclass": "cross",
+              "subclasses": [
+                "cross"
+              ],
+              "layers": [
+                "Place of worship"
+              ],
+              "roleId": "worship",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#000000"
+            },
+            {
+              "name": "hinduist",
+              "subclass": "hinduist",
+              "subclasses": [
+                "hinduist"
+              ],
+              "layers": [
+                "Place of worship"
+              ],
+              "roleId": "worship",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#000000"
+            },
+            {
+              "name": "jewish",
+              "subclass": "jewish",
+              "subclasses": [
+                "jewish"
+              ],
+              "layers": [
+                "Place of worship"
+              ],
+              "roleId": "worship",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#000000"
+            },
+            {
+              "name": "multifaith",
+              "subclass": "multifaith",
+              "subclasses": [
+                "multifaith"
+              ],
+              "layers": [
+                "Place of worship"
+              ],
+              "roleId": "worship",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#000000"
+            },
+            {
+              "name": "muslim",
+              "subclass": "muslim",
+              "subclasses": [
+                "muslim"
+              ],
+              "layers": [
+                "Place of worship"
+              ],
+              "roleId": "worship",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#000000"
+            },
+            {
+              "name": "place_of_worship",
+              "subclass": "place_of_worship",
+              "subclasses": [
+                "place_of_worship"
+              ],
+              "layers": [
+                "Place of worship"
+              ],
+              "roleId": "worship",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#000000"
+            },
+            {
+              "name": "shintoist",
+              "subclass": "shintoist",
+              "subclasses": [
+                "shintoist"
+              ],
+              "layers": [
+                "Place of worship"
+              ],
+              "roleId": "worship",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#000000"
+            },
+            {
+              "name": "sikhist",
+              "subclass": "sikhist",
+              "subclasses": [
+                "sikhist"
+              ],
+              "layers": [
+                "Place of worship"
+              ],
+              "roleId": "worship",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#000000"
+            },
+            {
+              "name": "taoist",
+              "subclass": "taoist",
+              "subclasses": [
+                "taoist"
+              ],
+              "layers": [
+                "Place of worship"
+              ],
+              "roleId": "worship",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#000000"
+            }
+          ],
+          "missingCount": 0
+        }
+      ]
+    }
+  ],
+  "missingGroups": [
+    {
+      "class": "alcohol_shop",
+      "items": [
+        {
+          "name": "dot",
+          "classes": [
+            "alcohol_shop",
+            "grocery"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "castle",
+      "items": [
+        {
+          "name": "ruins",
+          "classes": [
+            "castle"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "fast_food",
+      "items": [
+        {
+          "name": "food_court",
+          "classes": [
+            "fast_food"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "fire_station",
+      "items": [
+        {
+          "name": "fire_station",
+          "classes": [
+            "fire_station"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "garden",
+      "items": [
+        {
+          "name": "garden",
+          "classes": [
+            "garden"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "golf",
+      "items": [
+        {
+          "name": "golf_course",
+          "classes": [
+            "golf"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "lodging",
+      "items": [
+        {
+          "name": "alpine_hut",
+          "classes": [
+            "lodging"
+          ]
+        },
+        {
+          "name": "bed_and_breakfast",
+          "classes": [
+            "lodging"
+          ]
+        },
+        {
+          "name": "dormitory",
+          "classes": [
+            "lodging"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "pitch",
+      "items": [
+        {
+          "name": "american_football",
+          "classes": [
+            "pitch",
+            "stadium"
+          ]
+        },
+        {
+          "name": "archery",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "athletics",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "australian_football",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "badminton",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "baseball",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "basketball",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "beachvolleyball",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "billiards",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "bmx",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "boules",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "bowls",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "boxing",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "canadian_football",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "canoe",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "chess",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "climbing",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "climbing_adventure",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "cricket",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "cricket_nets",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "croquet",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "curling",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "cycling",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "disc_golf",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "diving",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "dog_racing",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "equestrian",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "fatsal",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "field_hockey",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "free_flying",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "gaelic_games",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "gymnastics",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "handball",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "hockey",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "horse_racing",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "horseshoes",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "ice_hockey",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "ice_stock",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "judo",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "karting",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "korfball",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "long_jump",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "model_aerodrome",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "motocross",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "motor",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "multi",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "netball",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "orienteering",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "paddle_tennis",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "paintball",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "paragliding",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "pelota",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "racquet",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "rc_car",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "rowing",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "rugby",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "rugby_league",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "rugby_union",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "running",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "sailing",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "scuba_diving",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "shooting",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "shooting_range",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "skateboard",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "skating",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "skiing",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "soccer",
+          "classes": [
+            "pitch",
+            "stadium"
+          ]
+        },
+        {
+          "name": "surfing",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "swimming",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "table_soccer",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "table_tennis",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "team_handball",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "tennis",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "toboggan",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "volleyball",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "water_ski",
+          "classes": [
+            "pitch"
+          ]
+        },
+        {
+          "name": "yoga",
+          "classes": [
+            "pitch"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "post",
+      "items": [
+        {
+          "name": "parcel_locker",
+          "classes": [
+            "post"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "sports_centre",
+      "items": [
+        {
+          "name": "sports_centre",
+          "classes": [
+            "sports_centre"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "stadium",
+      "items": [
+        {
+          "name": "stadium",
+          "classes": [
+            "stadium"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "swimming_pool",
+      "items": [
+        {
+          "name": "swimming_pool",
+          "classes": [
+            "swimming_pool"
+          ]
+        }
+      ]
+    },
+    {
+      "class": "zoo",
+      "items": [
+        {
+          "name": "zoo",
+          "classes": [
+            "zoo"
+          ]
+        }
+      ]
+    }
+  ],
+  "missingNames": [
+    "alpine_hut",
+    "american_football",
+    "archery",
+    "athletics",
+    "australian_football",
+    "badminton",
+    "baseball",
+    "basketball",
+    "beachvolleyball",
+    "bed_and_breakfast",
+    "billiards",
+    "bmx",
+    "boules",
+    "bowls",
+    "boxing",
+    "canadian_football",
+    "canoe",
+    "chess",
+    "climbing",
+    "climbing_adventure",
+    "cricket",
+    "cricket_nets",
+    "croquet",
+    "curling",
+    "cycling",
+    "disc_golf",
+    "diving",
+    "dog_racing",
+    "dormitory",
+    "dot",
+    "equestrian",
+    "fatsal",
+    "field_hockey",
+    "fire_station",
+    "food_court",
+    "free_flying",
+    "gaelic_games",
+    "garden",
+    "golf_course",
+    "gymnastics",
+    "handball",
+    "hockey",
+    "horse_racing",
+    "horseshoes",
+    "ice_hockey",
+    "ice_stock",
+    "judo",
+    "karting",
+    "korfball",
+    "long_jump",
+    "model_aerodrome",
+    "motocross",
+    "motor",
+    "multi",
+    "netball",
+    "orienteering",
+    "paddle_tennis",
+    "paintball",
+    "paragliding",
+    "parcel_locker",
+    "pelota",
+    "racquet",
+    "rc_car",
+    "rowing",
+    "rugby",
+    "rugby_league",
+    "rugby_union",
+    "ruins",
+    "running",
+    "sailing",
+    "scuba_diving",
+    "shooting",
+    "shooting_range",
+    "skateboard",
+    "skating",
+    "skiing",
+    "soccer",
+    "sports_centre",
+    "stadium",
+    "surfing",
+    "swimming",
+    "swimming_pool",
+    "table_soccer",
+    "table_tennis",
+    "team_handball",
+    "tennis",
+    "toboggan",
+    "volleyball",
+    "water_ski",
+    "yoga",
+    "zoo"
+  ],
+  "phantoms": [
+    {
+      "name": "arts_centre",
+      "reason": "schema-subclass",
+      "schemaClass": "art_gallery",
+      "text": "Subclass of art_gallery"
+    },
+    {
+      "name": "gallery",
+      "reason": "schema-subclass",
+      "schemaClass": "art_gallery",
+      "text": "Subclass of art_gallery"
+    },
+    {
+      "name": "seafood",
+      "reason": "not-in-mapping-values",
+      "schemaClass": null,
+      "text": "Unreachable filter literal"
+    }
+  ],
+  "layers": [
+    {
+      "id": "Shop",
+      "order": 0,
+      "iconImage": [
+        "coalesce",
+        [
+          "image",
+          [
+            "get",
+            "subclass"
+          ]
+        ],
+        [
+          "image",
+          [
+            "get",
+            "class"
+          ]
+        ],
+        [
+          "image",
+          "dot"
+        ]
+      ],
+      "textOnly": false
+    },
+    {
+      "id": "Waste",
+      "order": 1,
+      "iconImage": "{subclass}",
+      "textOnly": false
+    },
+    {
+      "id": "Mortuary",
+      "order": 2,
+      "iconImage": null,
+      "textOnly": true
+    },
+    {
+      "id": "Education",
+      "order": 3,
+      "iconImage": null,
+      "textOnly": true
+    },
+    {
+      "id": "Outdoor",
+      "order": 4,
+      "iconImage": "{subclass}",
+      "textOnly": false
+    },
+    {
+      "id": "Sport",
+      "order": 5,
+      "iconImage": "{subclass}",
+      "textOnly": false
+    },
+    {
+      "id": "Ferry",
+      "order": 6,
+      "iconImage": "ferry",
+      "textOnly": false
+    },
+    {
+      "id": "Food",
+      "order": 7,
+      "iconImage": "{subclass}",
+      "textOnly": false
+    },
+    {
+      "id": "Public",
+      "order": 8,
+      "iconImage": "{subclass}",
+      "textOnly": false
+    },
+    {
+      "id": "Cultural",
+      "order": 9,
+      "iconImage": "{subclass}",
+      "textOnly": false
+    },
+    {
+      "id": "Attraction",
+      "order": 10,
+      "iconImage": null,
+      "textOnly": true
+    },
+    {
+      "id": "Transport",
+      "order": 11,
+      "iconImage": "{subclass}",
+      "textOnly": false
+    },
+    {
+      "id": "Health",
+      "order": 12,
+      "iconImage": "{class}",
+      "textOnly": false
+    },
+    {
+      "id": "Campsite",
+      "order": 13,
+      "iconImage": "camping",
+      "textOnly": false
+    },
+    {
+      "id": "Accommodation",
+      "order": 14,
+      "iconImage": "{subclass}",
+      "textOnly": false
+    },
+    {
+      "id": "Place of worship",
+      "order": 15,
+      "iconImage": "{subclass}",
+      "textOnly": false
+    },
+    {
+      "id": "Bus stop",
+      "order": 16,
+      "iconImage": "bus_stop.12",
+      "textOnly": false
+    },
+    {
+      "id": "Bus station",
+      "order": 17,
+      "iconImage": "{subclass}",
+      "textOnly": false
+    },
+    {
+      "id": "Harbor",
+      "order": 18,
+      "iconImage": null,
+      "textOnly": true
+    },
+    {
+      "id": "Mall",
+      "order": 19,
+      "iconImage": null,
+      "textOnly": true
+    },
+    {
+      "id": "Train",
+      "order": 20,
+      "iconImage": "square_train",
+      "textOnly": false
+    },
+    {
+      "id": "Local park",
+      "order": 21,
+      "iconImage": null,
+      "textOnly": true
+    },
+    {
+      "id": "Zoo",
+      "order": 22,
+      "iconImage": "{subclass}",
+      "textOnly": false
+    }
+  ],
+  "summary": {
+    "roles": 11,
+    "classes": 68,
+    "features": 331,
+    "existingIcons": 129,
+    "missingIcons": 91,
+    "phantoms": 3,
+    "layers": 23,
+    "iconLayers": 17,
+    "textLayers": 6
+  },
+  "modelSummary": {
+    "classes": 68,
+    "schemaClasses": 36,
+    "runtimeClasses": 32,
+    "dynamicClasses": 3,
+    "phantomClasses": 3,
+    "iconCapableClasses": 57,
+    "features": 331,
+    "featureProvenance": {
+      "schema": 208,
+      "runtime": 29,
+      "dynamic": 94
+    },
+    "layers": 23,
+    "iconLayers": 17,
+    "textOnlyLayers": 6,
+    "resolved": 251,
+    "textOnly": 11,
+    "noLayer": 69,
+    "candidates": 220,
+    "icons": 129,
+    "existingIcons": 129,
+    "missingSprite": 91,
+    "spriteIcons": 306,
+    "svgIcons": 306,
+    "roles": 11,
+    "roleCounts": {
+      "transport": 14,
+      "food": 7,
+      "health": 4,
+      "shops": 58,
+      "public": 24,
+      "infrastructure": 3,
+      "barriers": 2,
+      "leisure": 1,
+      "sport": 3,
+      "terminals": 2,
+      "worship": 11
+    },
+    "issues": 90,
+    "errors": 0,
+    "warnings": 15,
+    "infos": 75,
+    "schema": {
+      "classes": 36,
+      "rows": 208,
+      "resolved": 128,
+      "textOnly": 11,
+      "noLayer": 69,
+      "icons": 89,
+      "selectedNames": 100,
+      "missingSprite": 11
+    }
+  }
+}

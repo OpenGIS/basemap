@@ -1,0 +1,124 @@
+// Base elements.
+//
+// Typography, prose measure, links, focus rings and rules that apply to the
+// document regardless of Pico or any component.
+
+body {
+  font-size: var(--ogis-body-size);
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.5em;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  margin-bottom: 0.75rem;
+  font-size: 2rem;
+}
+
+h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+}
+
+h3 {
+  margin-top: 1.9rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.1875rem;
+}
+
+h4 {
+  margin-top: 1.5rem;
+  font-size: 1.0625rem;
+}
+
+h5,
+h6 {
+  font-size: 1rem;
+  color: var(--ogis-muted);
+}
+
+p,
+ul,
+ol,
+blockquote,
+.table-wrap {
+  margin-bottom: 1rem;
+}
+
+// Keep prose at a comfortable measure; code and tables may run wider.
+main > :is(p, ul, ol),
+.ogis-band > :is(p, ul, ol) {
+  max-width: 88ch;
+}
+
+main a {
+  text-decoration: underline dotted;
+  text-decoration-thickness: 1px;
+  text-decoration-color: currentColor;
+  text-underline-offset: 0.15em;
+  transition:
+    color 0.15s ease,
+    text-decoration-color 0.15s ease;
+}
+
+main a:hover,
+main a:focus-visible {
+  text-decoration-style: solid;
+}
+
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--ogis-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+// The header band is dark in both themes, so its focus ring must be the
+// bright brand green rather than the theme's (dark) accent.
+.site-header a:focus-visible {
+  outline-color: var(--ogis-header-fg-hover);
+}
+
+// Anchored headings land below the stuck nav. `--ogis-nav-height` is measured
+// by the UI module; the fallback covers the no-JS case.
+:where(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: calc(var(--ogis-nav-height, 3rem) + 0.75rem);
+}
+
+// Heading anchors: the whole heading links to itself. Restrained by default —
+// it inherits the heading colour and only reveals the orange hash on hover or
+// keyboard focus.
+.heading-anchor {
+  color: inherit;
+  text-decoration: none;
+}
+
+.heading-anchor::after {
+  content: "#" / "";
+  margin-left: 0.35em;
+  color: var(--ogis-orange);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.heading-anchor:hover::after,
+.heading-anchor:focus-visible::after {
+  opacity: 1;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--ogis-border);
+}

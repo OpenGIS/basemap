@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "inputsHash": "sha256:007aef0ab4dc7bc902d6c662f10b93d69737262ae0f79c695b3686ac505be31d",
+  "files": {
+    "palette.json": "sha256:a303c9336c2a2b7dc106331afe02ead0b02ad1e7d01d0b99037058c6bbcfde93",
+    "icons.json": "sha256:afa851189fbcb4fd4d6911773ddd04c79016b75a919fbed4ae020b76fa3c3a57"
+  }
+}

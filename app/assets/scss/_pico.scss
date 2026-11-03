@@ -1,0 +1,155 @@
+// Pico CSS variable overrides.
+//
+// Everything in this file maps the ogis tokens in _tokens.scss onto
+// Pico's own custom properties. Consumers must load their own Pico CSS
+// before ogis.css for these to take effect. Keep Pico-specific
+// customisations here so the Pico relationship is obvious at a glance.
+//
+// Pico already understands data-theme: it serves its light defaults under
+// :root:not([data-theme=dark]) and [data-theme=light], and its dark defaults
+// both under the OS media query and the forced [data-theme=dark] selector.
+// The blocks below mirror that shape so the mapped tokens switch with it.
+
+@mixin ogis-light-pico {
+  --pico-font-family: var(--ogis-font);
+  --pico-font-size: 100%;
+  --pico-line-height: 1.65;
+  --pico-border-radius: var(--ogis-radius);
+
+  --pico-background-color: var(--ogis-bg);
+  --pico-color: var(--ogis-fg);
+  --pico-muted-color: var(--ogis-muted);
+  --pico-muted-border-color: var(--ogis-border);
+
+  --pico-card-background-color: var(--ogis-surface);
+  --pico-card-border-color: var(--ogis-border);
+  --pico-card-sectioning-background-color: var(--ogis-bg-alt);
+  --pico-card-box-shadow: none;
+
+  --pico-primary: var(--ogis-accent);
+  --pico-primary-background: var(--ogis-accent);
+  --pico-primary-border: var(--ogis-accent);
+  --pico-primary-underline: rgba(10, 125, 10, 0.5);
+  --pico-primary-hover: var(--ogis-accent-hover);
+  --pico-primary-hover-background: var(--ogis-accent-hover);
+  --pico-primary-hover-border: var(--ogis-accent-hover);
+  --pico-primary-hover-underline: var(--ogis-accent-hover);
+  --pico-primary-focus: var(--ogis-focus);
+  --pico-primary-inverse: #ffffff;
+
+  // Secondary controls use a quiet neutral fill so they support rather
+  // than compete with the green CTA. The border keeps the button readable
+  // when the fill sits close to a band surface.
+  --pico-secondary: var(--ogis-fg);
+  --pico-secondary-background: var(--ogis-btn-secondary-bg);
+  --pico-secondary-border: var(--ogis-border);
+  --pico-secondary-underline: var(--ogis-focus);
+  --pico-secondary-hover: var(--ogis-fg);
+  --pico-secondary-hover-background: var(--ogis-btn-secondary-hover);
+  --pico-secondary-hover-border: var(--ogis-border);
+  --pico-secondary-hover-underline: var(--ogis-btn-secondary-hover);
+  --pico-secondary-focus: var(--ogis-focus);
+  --pico-secondary-inverse: var(--ogis-fg);
+
+  --pico-h1-color: var(--ogis-heading);
+  --pico-h2-color: var(--ogis-heading);
+  --pico-h3-color: var(--ogis-heading);
+  --pico-h4-color: var(--ogis-heading);
+  --pico-h5-color: var(--ogis-heading);
+  --pico-h6-color: var(--ogis-heading);
+
+  --pico-code-background-color: var(--ogis-code-bg);
+  --pico-code-color: var(--ogis-code-color);
+  --pico-form-element-background-color: var(--ogis-surface);
+  --pico-form-element-border-color: var(--ogis-border);
+  --pico-form-element-color: var(--ogis-fg);
+  --pico-form-element-placeholder-color: var(--ogis-muted);
+  --pico-form-element-active-border-color: var(--ogis-accent);
+  --pico-form-element-active-background-color: var(--ogis-surface);
+  --pico-form-element-valid-border-color: #166b2e;
+  --pico-form-element-invalid-border-color: #a3262f;
+  --pico-form-element-focus-color: var(--ogis-focus);
+  --pico-table-row-stripped-background-color: rgba(10, 125, 10, 0.04);
+  --pico-mark-background-color: rgba(10, 125, 10, 0.18);
+  --pico-mark-color: #10240f;
+  --pico-text-selection-color: rgba(10, 125, 10, 0.2);
+}
+
+@mixin ogis-dark-pico {
+  --pico-font-family: var(--ogis-font);
+  --pico-font-size: 100%;
+  --pico-line-height: 1.65;
+  --pico-border-radius: var(--ogis-radius);
+
+  --pico-background-color: var(--ogis-bg);
+  --pico-color: var(--ogis-fg);
+  --pico-muted-color: var(--ogis-muted);
+  --pico-muted-border-color: var(--ogis-border);
+
+  --pico-card-background-color: var(--ogis-surface);
+  --pico-card-border-color: var(--ogis-border);
+  --pico-card-sectioning-background-color: var(--ogis-bg-alt);
+  --pico-card-box-shadow: none;
+
+  --pico-primary: var(--ogis-accent);
+  --pico-primary-background: var(--ogis-accent);
+  --pico-primary-border: var(--ogis-accent);
+  --pico-primary-underline: rgba(13, 215, 13, 0.5);
+  --pico-primary-hover: var(--ogis-accent-hover);
+  --pico-primary-hover-background: var(--ogis-accent-hover);
+  --pico-primary-hover-border: var(--ogis-accent-hover);
+  --pico-primary-hover-underline: var(--ogis-accent-hover);
+  --pico-primary-focus: var(--ogis-focus);
+  --pico-primary-inverse: var(--ogis-bg);
+
+  // Secondary controls use a quiet neutral fill so they support rather
+  // than compete with the green CTA. The border keeps the button readable
+  // when the fill sits close to a band surface.
+  --pico-secondary: var(--ogis-fg);
+  --pico-secondary-background: var(--ogis-btn-secondary-bg);
+  --pico-secondary-border: var(--ogis-border);
+  --pico-secondary-underline: var(--ogis-focus);
+  --pico-secondary-hover: var(--ogis-fg);
+  --pico-secondary-hover-background: var(--ogis-btn-secondary-hover);
+  --pico-secondary-hover-border: var(--ogis-border);
+  --pico-secondary-hover-underline: var(--ogis-btn-secondary-hover);
+  --pico-secondary-focus: var(--ogis-focus);
+  --pico-secondary-inverse: var(--ogis-fg);
+
+  --pico-h1-color: var(--ogis-heading);
+  --pico-h2-color: var(--ogis-heading);
+  --pico-h3-color: var(--ogis-heading);
+  --pico-h4-color: var(--ogis-heading);
+  --pico-h5-color: var(--ogis-heading);
+  --pico-h6-color: var(--ogis-heading);
+
+  --pico-code-background-color: var(--ogis-code-bg);
+  --pico-code-color: var(--ogis-code-color);
+  --pico-form-element-background-color: var(--ogis-surface);
+  --pico-form-element-border-color: var(--ogis-border);
+  --pico-form-element-color: var(--ogis-fg);
+  --pico-form-element-placeholder-color: var(--ogis-muted);
+  --pico-form-element-active-border-color: var(--ogis-accent);
+  --pico-form-element-active-background-color: var(--ogis-bg-alt);
+  --pico-form-element-valid-border-color: #20c997;
+  --pico-form-element-invalid-border-color: #ffa07a;
+  --pico-form-element-focus-color: var(--ogis-focus);
+  --pico-table-row-stripped-background-color: rgba(13, 215, 13, 0.04);
+  --pico-mark-background-color: rgba(13, 215, 13, 0.22);
+  --pico-mark-color: #eaf6ec;
+  --pico-text-selection-color: rgba(13, 215, 13, 0.25);
+}
+
+:root:not([data-theme="dark"]) {
+  @include ogis-light-pico;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    @include ogis-dark-pico;
+  }
+}
+
+:root[data-theme="dark"] {
+  @include ogis-dark-pico;
+}

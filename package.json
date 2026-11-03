@@ -3,11 +3,25 @@
   "private": true,
   "description": "Self-hosted MapLibre GL style — OpenMapTiles OSM repointed at OpenFreeMap tiles",
   "scripts": {
+    "dev": "nuxt dev --port 11100",
+    "generate": "nuxt generate",
+    "site:generate": "nuxt generate",
+    "site:build": "node scripts/site-build.js",
     "build": "./scripts/build.sh",
+    "test": "node --test scripts/*.test.js",
+    "palette:apply": "node scripts/palette.js --apply",
+    "palette:data": "node scripts/palette-data.js",
+    "palette:data:check": "node scripts/palette-data.js --check",
     "screenshot": "node scripts/screenshot.js",
     "screenshot:random": "node scripts/random-map.js"
   },
+  "dependencies": {
+    "@picocss/pico": "2.1.1",
+    "maplibre-gl": "6.5.0",
+    "nuxt": "4.3.1"
+  },
   "devDependencies": {
-    "playwright": "^1.62.1"
+    "playwright": "^1.62.1",
+    "sass": "^1.105.1"
   }
 }

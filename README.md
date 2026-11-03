@@ -2,31 +2,33 @@
 
 > A self-hosted MapLibre GL style: the OpenMapTiles "OSM" vector style (v3.16) repointed at OpenFreeMap's worldwide vector tiles, with all fonts, sprites and icons served from GitHub Pages.
 
-> [!NOTE] > **Canonical host is www.ogis.org** — never use the org's legacy `*.github.io` Pages host. It 301-redirects to www.ogis.org, and the redirect hop breaks CORS in browsers, so every published URL points at www.ogis.org directly.
+> [!NOTE]
+> **Canonical host is www.ogis.org** — never use the org's legacy `*.github.io` Pages host. It 301-redirects to www.ogis.org, and the redirect hop breaks CORS in browsers, so every published URL points at www.ogis.org directly.
 
 ## Screenshot
 
 ![Random basemap render](screenshot.png)
 
 > [!NOTE]
-> Regenerated on every build — each `./scripts/build.sh` run renders a fresh random map (a random land point anywhere on Earth, quality-gated). Run `npm run screenshot:random` any time for a new one without the full build.
+> Regenerated on every build — each `./scripts/build.sh` run renders a fresh random map (a random land point anywhere on Earth, quality-gated). To make a new one without the full map build, run `npm run site:build` first, then `npm run screenshot:random`.
 
 ## Overview
 
 Basemap vendors the OpenMapTiles "OSM" vector style (v3.16 — the vector equivalent of the official openstreetmap-carto raster) and repoints it at OpenFreeMap's worldwide, free OpenMapTiles-schema vector tiles. All fonts, sprites and icons are self-hosted on GitHub Pages with open CORS, so anyone can use the style or its assets directly.
 
-The style is built from vendored upstream sources with the same docker tooling OpenMapTiles uses (`openmaptiles-tools:7.2`), then rewritten to point at the published URLs. See [docs/2.build.md](docs/2.build.md) for the pipeline.
+The same root Nuxt site serves the map demo at `/` and the palette editor at `/palette/` under the `/basemap/` base path. The style is built from vendored upstream sources with the same docker tooling OpenMapTiles uses (`openmaptiles-tools:7.2`), then rewritten to point at the published URLs. See [docs/2.build.md](docs/2.build.md) for the pipeline.
 
 ## Live URLs
 
-| Asset  | URL                                                        |
-| ------ | ---------------------------------------------------------- |
-| Demo   | https://www.ogis.org/basemap/                              |
-| Style  | https://www.ogis.org/basemap/style.json                    |
-| Glyphs | https://www.ogis.org/basemap/fonts/{fontstack}/{range}.pbf |
-| Sprite | https://www.ogis.org/basemap/sprite                        |
-| Icons  | https://www.ogis.org/basemap/icons/{name}.svg              |
-| Tiles  | https://tiles.openfreemap.org/planet                       |
+| Asset   | URL                                                        |
+| ------- | ---------------------------------------------------------- |
+| Demo    | https://www.ogis.org/basemap/                              |
+| Palette | https://www.ogis.org/basemap/palette/ ([source](app/))     |
+| Style   | https://www.ogis.org/basemap/style.json                    |
+| Glyphs  | https://www.ogis.org/basemap/fonts/{fontstack}/{range}.pbf |
+| Sprite  | https://www.ogis.org/basemap/sprite                        |
+| Icons   | https://www.ogis.org/basemap/icons/{name}.svg              |
+| Tiles   | https://tiles.openfreemap.org/planet                       |
 
 ## Usage
 
@@ -57,19 +59,20 @@ const map = new maplibregl.Map({
 
 ### Remixing
 
-Edit the vendored layer styles under `vendor/openmaptiles/layers/*/style.json`, then rebuild:
+Edit the vendored layer styles under `vendor/openmaptiles/layers/*/style.json` for style changes. Palette target colours are edited in `palette.json`; `./scripts/build.sh` stages recoloured icons in `build/icons` and then rebuilds the style, sprite and published icons:
 
 ```bash
 ./scripts/build.sh
 ```
 
-See [docs/3.remixing.md](docs/3.remixing.md) for details.
+To rebuild the site and palette editor after changing the palette, run `npm run site:build`; use `npm run dev` for a live preview at <http://127.0.0.1:11100/basemap/>. See [docs/3.remixing.md](docs/3.remixing.md), [docs/5.palette.md](docs/5.palette.md) and [docs/6.site.md](docs/6.site.md).
 
 ### Screenshots
 
-Render the demo harness to a PNG with Playwright:
+Render the demo page to a PNG with Playwright after building the site:
 
 ```bash
+npm run site:build
 npm run screenshot -- --lat 51.5074 --lng -0.1278 --zoom 12 --pitch 45 --rotation 20 --width 1200 --height 630 --out london.png
 ```
 
@@ -96,4 +99,6 @@ Attribution is baked into the published style: **OpenFreeMap · © OpenMapTiles 
 - [Build pipeline](docs/2.build.md)
 - [Remixing the style](docs/3.remixing.md)
 - [Screenshot pipeline](docs/4.screenshots.md)
+- [Icon palette](docs/5.palette.md)
+- [Site and palette editor](docs/6.site.md)
 - [Full docs index](docs/README.md)

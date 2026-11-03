@@ -21,9 +21,13 @@ IMAGE="openmaptiles/openmaptiles-tools:7.2"
 
 mkdir -p "$ROOT/build/style"
 
+# Stage the palette-recoloured icon copy; the vendor tree stays pinned.
+node "$ROOT/scripts/palette.js" --apply
+
 docker run --rm --user="$(id -u):$(id -g)" \
   -v "$ROOT":/tileset \
   -v "$ROOT/vendor/openmaptiles/style":/style \
+  -v "$ROOT/build/icons":/style/icons \
   -w /tileset \
   "$IMAGE" \
   bash -c 'style-tools recompose vendor/openmaptiles/openmaptiles.yaml build/style/style.json vendor/openmaptiles/style/style-header.json \
@@ -48,11 +52,24 @@ cp "$ROOT/build/style/style.json" "$ROOT/style.json"
 cp "$ROOT/build/style/sprite.json" "$ROOT/build/style/sprite.png" \
   "$ROOT/build/style/sprite@2x.json" "$ROOT/build/style/sprite@2x.png" \
   "$ROOT/"
-cp "$ROOT/vendor/openmaptiles/style/icons/"*.svg "$ROOT/icons/"
+cp "$ROOT/build/icons/"*.svg "$ROOT/icons/"
+
+# Remove published icons that are no longer present in the staged palette copy.
+for icon in "$ROOT/icons/"*.svg; do
+  [ -e "$icon" ] || continue
+  name="$(basename "$icon")"
+  if [ ! -e "$ROOT/build/icons/$name" ]; then
+    rm -f "$icon"
+  fi
+done
 
 # Merge comma-joined text-font stacks from style.json into single comma-named
 # glyph directories so GitHub Pages can serve them without server-side merging.
 node "$ROOT/scripts/merge-fonts.js"
+
+# Build the static site artifact so the screenshot harness serves the published
+# layout (.output/public under /basemap/).
+node "$ROOT/scripts/site-build.js"
 
 # Render a fresh random basemap screenshot for the README (see scripts/random-map.js).
 node "$ROOT/scripts/random-map.js"

@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 //
-// Captures a PNG screenshot of the basemap harness (index.html) for a given
-// map state, using Playwright.
+// Captures a PNG screenshot of the built basemap site for a given map state,
+// using Playwright.
 //
 // Chromium blocks file:// fetches of style.json, so this script serves the
-// repo root over a tiny throwaway static server (Node http + fs) on an
-// ephemeral 127.0.0.1 port, then loads the harness with the state encoded in
-// the query string and waits for the map's ready signal before shooting.
+// generated artifact in .output/public over a tiny throwaway static server
+// (Node http + fs) on an ephemeral 127.0.0.1 port. Every request must live
+// under /basemap/, matching GitHub Pages, and the prefix is stripped to map
+// onto the artifact directory. Run `npm run site:build` first.
 //
 // Zero-dependency aside from Playwright. Exports capture() so that
 // scripts/random-map.js can reuse the same flow for a series of states.
@@ -22,8 +23,11 @@ const fs = require('fs');
 const http = require('http');
 const path = require('path');
 const { chromium } = require('playwright');
+const { mapRequestToFile, SITE_PREFIX } = require('./site-build.js');
 
 const ROOT = path.join(__dirname, '..');
+const SITE_ROOT = path.join(ROOT, '.output', 'public');
+const SITE_INDEX = path.join(SITE_ROOT, 'index.html');
 const DEFAULTS = {
   lat: 0,
   lng: 20,
@@ -51,27 +55,29 @@ const MIME = {
 
 function startServer() {
   const server = http.createServer((req, res) => {
-    let urlPath;
+    let requestPath;
     try {
-      urlPath = decodeURIComponent(new URL(req.url, 'http://127.0.0.1').pathname);
+      requestPath = decodeURIComponent(new URL(req.url, 'http://127.0.0.1').pathname);
     } catch (err) {
       res.writeHead(400);
       res.end('Bad request');
       return;
     }
-    const filePath = path.normalize(path.join(ROOT, urlPath));
-    if (filePath !== ROOT && !filePath.startsWith(ROOT + path.sep)) {
-      res.writeHead(403);
-      res.end('Forbidden');
+
+    const mapped = mapRequestToFile(requestPath, SITE_ROOT);
+    if (mapped.status !== 200) {
+      res.writeHead(mapped.status);
+      res.end(mapped.status === 404 ? 'Not found' : 'Forbidden');
       return;
     }
-    fs.readFile(filePath, (err, data) => {
+
+    fs.readFile(mapped.filePath, (err, data) => {
       if (err) {
         res.writeHead(404);
         res.end('Not found');
         return;
       }
-      const type = MIME[path.extname(filePath)] || 'application/octet-stream';
+      const type = MIME[path.extname(mapped.filePath)] || 'application/octet-stream';
       res.writeHead(200, { 'Content-Type': type });
       res.end(data);
     });
@@ -87,6 +93,12 @@ async function capture(opts) {
   const state = { ...DEFAULTS, ...opts };
   const qualityMode = Boolean(state.quality);
 
+  if (!fs.existsSync(SITE_INDEX)) {
+    throw new Error(
+      `Missing site build at ${SITE_INDEX} — run npm run site:build first`
+    );
+  }
+
   const server = await startServer();
   const port = server.address().port;
   const query = new URLSearchParams({
@@ -100,7 +112,7 @@ async function capture(opts) {
     style: state.style,
   });
   if (qualityMode) query.set('quality', '1');
-  const url = `http://127.0.0.1:${port}/index.html?${query}`;
+  const url = `http://127.0.0.1:${port}${SITE_PREFIX}index.html?${query}`;
 
   let quality = null;
   const browser = await chromium.launch();
@@ -138,6 +150,8 @@ async function capture(opts) {
 
 function printUsage() {
   console.log(`Usage: node scripts/screenshot.js [options]
+
+Serves .output/public under /basemap/; run npm run site:build first.
 
 Options:
   --lat <n>       latitude in degrees (default ${DEFAULTS.lat})
