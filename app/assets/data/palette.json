@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "inputsHash": "sha256:007aef0ab4dc7bc902d6c662f10b93d69737262ae0f79c695b3686ac505be31d",
+  "inputsHash": "sha256:8880981db6a8aed8e73a3a0524bcb1ba763d8455934ace23832c0d2a83703110",
   "palette": {
     "version": 1,
     "roles": [
@@ -118,10 +118,11 @@
         "#0092DA"
       ],
       "order": 10,
-      "iconCount": 14,
+      "iconCount": 15,
       "classCount": 8,
       "iconNames": [
         "bicycle_parking",
+        "bus_station",
         "bus_stop.12",
         "camping",
         "car",
@@ -174,14 +175,26 @@
           ],
           "icons": [
             {
-              "name": "bus_stop.12",
+              "name": "bus_station",
               "subclass": "bus_station",
               "subclasses": [
-                "bus_station",
+                "bus_station"
+              ],
+              "layers": [
+                "Bus station"
+              ],
+              "roleId": "transport",
+              "fallback": null,
+              "inSprite": true,
+              "primaryFill": "#0092DA"
+            },
+            {
+              "name": "bus_stop.12",
+              "subclass": "bus_stop",
+              "subclasses": [
                 "bus_stop"
               ],
               "layers": [
-                "Bus station",
                 "Bus stop"
               ],
               "roleId": "transport",
@@ -959,6 +972,7 @@
             "shop"
           ],
           "layers": [
+            "Shop",
             "Transport"
           ],
           "icons": [
@@ -969,10 +983,10 @@
                 "car_parts"
               ],
               "layers": [
-                "Transport"
+                "Shop"
               ],
               "roleId": "shops",
-              "fallback": null,
+              "fallback": "subclass",
               "inSprite": true,
               "primaryFill": "#AC39AC"
             },
@@ -1662,6 +1676,7 @@
                 "chocolate",
                 "doityourself",
                 "erotic",
+                "farm",
                 "frozen_food",
                 "general",
                 "hardware",
@@ -3868,8 +3883,8 @@
   "summary": {
     "roles": 11,
     "classes": 68,
-    "features": 331,
-    "existingIcons": 129,
+    "features": 342,
+    "existingIcons": 130,
     "missingIcons": 91,
     "phantoms": 3,
     "layers": 23,
@@ -3878,32 +3893,32 @@
   },
   "modelSummary": {
     "classes": 68,
-    "schemaClasses": 36,
-    "runtimeClasses": 32,
+    "schemaClasses": 37,
+    "runtimeClasses": 31,
     "dynamicClasses": 3,
     "phantomClasses": 3,
     "iconCapableClasses": 57,
-    "features": 331,
+    "features": 342,
     "featureProvenance": {
-      "schema": 208,
-      "runtime": 29,
+      "schema": 220,
+      "runtime": 28,
       "dynamic": 94
     },
     "layers": 23,
     "iconLayers": 17,
     "textOnlyLayers": 6,
-    "resolved": 251,
+    "resolved": 252,
     "textOnly": 11,
-    "noLayer": 69,
-    "candidates": 220,
-    "icons": 129,
-    "existingIcons": 129,
+    "noLayer": 79,
+    "candidates": 221,
+    "icons": 130,
+    "existingIcons": 130,
     "missingSprite": 91,
     "spriteIcons": 306,
     "svgIcons": 306,
     "roles": 11,
     "roleCounts": {
-      "transport": 14,
+      "transport": 15,
       "food": 7,
       "health": 4,
       "shops": 58,
@@ -3915,19 +3930,144 @@
       "terminals": 2,
       "worship": 11
     },
-    "issues": 90,
+    "issues": 100,
     "errors": 0,
     "warnings": 15,
-    "infos": 75,
+    "infos": 85,
     "schema": {
-      "classes": 36,
-      "rows": 208,
-      "resolved": 128,
+      "classes": 37,
+      "rows": 220,
+      "resolved": 130,
       "textOnly": 11,
-      "noLayer": 69,
-      "icons": 89,
-      "selectedNames": 100,
-      "missingSprite": 11
+      "noLayer": 79,
+      "icons": 90,
+      "selectedNames": 102,
+      "missingSprite": 12
+    }
+  },
+  "themes": {
+    "dark": {
+      "palette": {
+        "version": 1,
+        "roles": [
+          {
+            "id": "transport",
+            "label": "Transport, travel and lodging",
+            "color": "#79C0FF",
+            "sourceColors": [
+              "#0092DA"
+            ],
+            "order": 10
+          },
+          {
+            "id": "food",
+            "label": "Food and drink",
+            "color": "#DC8F4E",
+            "sourceColors": [
+              "#C77400"
+            ],
+            "order": 20
+          },
+          {
+            "id": "health",
+            "label": "Health",
+            "color": "#F85149",
+            "sourceColors": [
+              "#BF0000"
+            ],
+            "order": 30
+          },
+          {
+            "id": "shops",
+            "label": "Shops and commercial",
+            "color": "#E879F9",
+            "sourceColors": [
+              "#AC39AC"
+            ],
+            "order": 40
+          },
+          {
+            "id": "public",
+            "label": "Public and cultural",
+            "color": "#D29922",
+            "sourceColors": [
+              "#734A08"
+            ],
+            "order": 50
+          },
+          {
+            "id": "infrastructure",
+            "label": "Infrastructure",
+            "color": "#9BB0A3",
+            "sourceColors": [
+              "#666666"
+            ],
+            "order": 60
+          },
+          {
+            "id": "barriers",
+            "label": "Barriers",
+            "color": "#C9D1D9",
+            "sourceColors": [
+              "#3F3F3F"
+            ],
+            "order": 70
+          },
+          {
+            "id": "leisure",
+            "label": "Leisure",
+            "color": "#5CF05C",
+            "sourceColors": [
+              "#2F6133"
+            ],
+            "order": 80
+          },
+          {
+            "id": "sport",
+            "label": "Sport and play",
+            "color": "#3FB950",
+            "sourceColors": [
+              "#008C0D"
+            ],
+            "order": 90
+          },
+          {
+            "id": "terminals",
+            "label": "Transport terminals",
+            "color": "#A371F7",
+            "sourceColors": [
+              "#8461C4"
+            ],
+            "order": 100
+          },
+          {
+            "id": "worship",
+            "label": "Places of worship",
+            "color": "#EEEEEE",
+            "sourceColors": [
+              "#000000"
+            ],
+            "order": 110
+          }
+        ],
+        "preserve": [
+          "#FFFFFF"
+        ],
+        "overrides": {}
+      },
+      "colours": {
+        "transport": "#79C0FF",
+        "food": "#DC8F4E",
+        "health": "#F85149",
+        "shops": "#E879F9",
+        "public": "#D29922",
+        "infrastructure": "#9BB0A3",
+        "barriers": "#C9D1D9",
+        "leisure": "#5CF05C",
+        "sport": "#3FB950",
+        "terminals": "#A371F7",
+        "worship": "#EEEEEE"
+      }
     }
   }
 }

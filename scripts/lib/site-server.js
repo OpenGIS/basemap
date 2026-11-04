@@ -34,7 +34,7 @@ function contentTypeFor(filePath) {
   return MIME[path.extname(filePath).toLowerCase()] || 'application/octet-stream';
 }
 
-function createRequestHandler(siteRoot) {
+function createRequestHandler(siteRoot, { overrides = {} } = {}) {
   return (req, res) => {
     let requestPath;
     try {
@@ -42,6 +42,22 @@ function createRequestHandler(siteRoot) {
     } catch (error) {
       res.writeHead(400);
       res.end('Bad request');
+      return;
+    }
+
+    const override = overrides[requestPath];
+    if (override !== undefined) {
+      const body = override && typeof override === 'object' && !Buffer.isBuffer(override)
+        ? override.body
+        : override;
+      const contentType =
+        override && typeof override === 'object' && !Buffer.isBuffer(override)
+          ? override.contentType
+          : null;
+      res.writeHead(200, {
+        'Content-Type': contentType || contentTypeFor(requestPath),
+      });
+      res.end(body);
       return;
     }
 
@@ -64,8 +80,8 @@ function createRequestHandler(siteRoot) {
   };
 }
 
-function startSiteServer({ siteRoot, port = 0, host = '127.0.0.1' } = {}) {
-  const server = http.createServer(createRequestHandler(siteRoot));
+function startSiteServer({ siteRoot, port = 0, host = '127.0.0.1', overrides = {} } = {}) {
+  const server = http.createServer(createRequestHandler(siteRoot, { overrides }));
   return new Promise((resolve, reject) => {
     const onError = (error) => reject(error);
     server.once('error', onError);

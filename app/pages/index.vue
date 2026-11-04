@@ -35,14 +35,45 @@ const poiLayerIds = paletteData.layers
   .filter((layer) => !layer.textOnly)
   .map((layer) => layer.id)
 
-const roleColours = reactive(
-  Object.fromEntries(
-    paletteData.roles.map((role) => [
-      role.id,
-      normaliseHex(role.color) || role.color
-    ])
-  )
-)
+function clonePaletteDocument(document) {
+  return JSON.parse(JSON.stringify(document))
+}
+
+function paletteRoleColours(document) {
+  const colours = {}
+  for (const role of paletteData.roles) {
+    const themeRole = (document.roles || []).find(
+      (candidate) => candidate.id === role.id
+    )
+    colours[role.id] =
+      normaliseHex(themeRole?.color) ||
+      normaliseHex(role.color) ||
+      role.color
+  }
+  return colours
+}
+
+const paletteDocuments = {
+  light: reactive(clonePaletteDocument(paletteData.palette)),
+  dark: reactive(clonePaletteDocument(paletteData.themes.dark.palette))
+}
+
+const originalRoleColours = {
+  light: paletteRoleColours(paletteDocuments.light),
+  dark: paletteRoleColours(paletteDocuments.dark)
+}
+
+const theme = ref('dark')
+const roleColourState = reactive({
+  light: { ...originalRoleColours.light },
+  dark: { ...originalRoleColours.dark }
+})
+
+const activePalette = computed(() => paletteDocuments[theme.value])
+const roleColours = computed(() => roleColourState[theme.value])
+
+let styleOverride = ''
+let styleLoadToken = 0
 
 const inspectMode = ref(false)
 const selected = ref(null)
@@ -61,11 +92,11 @@ let selectionMarker = null
 const selectedPreview = computed(() => {
   if (!selected.value) return ''
   const template = iconTemplates[selected.value.iconName]
-  return iconDataUri(template, roleColours[selected.value.roleId])
+  return iconDataUri(template, roleColours.value[selected.value.roleId])
 })
 
 const selectedColour = computed(() =>
-  selected.value ? roleColours[selected.value.roleId] : '#000000'
+  selected.value ? roleColours.value[selected.value.roleId] : '#000000'
 )
 
 function clearHintTimer() {
@@ -129,7 +160,7 @@ function queueImageUpdate(name, colour) {
 
 function applyAllImages() {
   const tasks = paletteData.roles.map((role) => {
-    const colour = roleColours[role.id]
+    const colour = roleColours.value[role.id]
     return role.iconNames.reduce(
       (chain, name) => chain.then(() => queueImageUpdate(name, colour)),
       Promise.resolve()
@@ -145,7 +176,7 @@ function applyRoleImages(roleId) {
   const role = paletteData.roles.find((candidate) => candidate.id === roleId)
   if (!role) return Promise.resolve()
 
-  const colour = roleColours[roleId]
+  const colour = roleColours.value[roleId]
   return role.iconNames
     .reduce(
       (chain, name) => chain.then(() => queueImageUpdate(name, colour)),
@@ -157,7 +188,9 @@ function applyRoleImages(roleId) {
 }
 
 function setRoleColour(roleId, value) {
-  if (!Object.prototype.hasOwnProperty.call(roleColours, roleId)) return false
+  if (!Object.prototype.hasOwnProperty.call(roleColours.value, roleId)) {
+    return false
+  }
 
   const hex = normaliseHex(value)
   if (!hex) {
@@ -166,7 +199,7 @@ function setRoleColour(roleId, value) {
   }
 
   colourError.value = ''
-  roleColours[roleId] = hex
+  roleColours.value[roleId] = hex
   applyRoleImages(roleId)
   return true
 }
@@ -174,24 +207,23 @@ function setRoleColour(roleId, value) {
 function onColourInput(event) {
   if (!selected.value) return
   const applied = setRoleColour(selected.value.roleId, event.target.value)
-  if (applied) hexInput.value = roleColours[selected.value.roleId]
+  if (applied) hexInput.value = roleColours.value[selected.value.roleId]
 }
 
 function commitHex() {
   if (!selected.value) return
   const applied = setRoleColour(selected.value.roleId, hexInput.value)
-  if (applied) hexInput.value = roleColours[selected.value.roleId]
+  if (applied) hexInput.value = roleColours.value[selected.value.roleId]
 }
 
 function resetSelectedRole() {
   if (!selected.value) return
-  const role = paletteData.roles.find(
-    (candidate) => candidate.id === selected.value.roleId
-  )
-  if (!role) return
+  const roleId = selected.value.roleId
+  const original = originalRoleColours[theme.value][roleId]
+  if (!original) return
 
-  setRoleColour(role.id, role.color)
-  hexInput.value = roleColours[role.id]
+  setRoleColour(roleId, original)
+  hexInput.value = roleColours.value[roleId]
 }
 
 function clearSelectionMarker() {
@@ -204,7 +236,7 @@ function clearSelectionMarker() {
 function openInspector(match, lngLat) {
   selected.value = match
   colourError.value = ''
-  hexInput.value = roleColours[match.roleId]
+  hexInput.value = roleColours.value[match.roleId]
   hint.value = ''
   clearHintTimer()
 
@@ -259,7 +291,7 @@ function handleMapClick(event) {
 }
 
 function exportPalette() {
-  const text = buildPaletteDocument(paletteData.palette, roleColours)
+  const text = buildPaletteDocument(activePalette.value, roleColours.value)
   const blob = new Blob([text], { type: 'application/json' })
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
@@ -270,6 +302,78 @@ function exportPalette() {
   link.remove()
   setTimeout(() => URL.revokeObjectURL(url), 1000)
   setStatus('Palette exported.')
+}
+
+function resolveTheme(value) {
+  return value === 'light' ? 'light' : 'dark'
+}
+
+function themeStyleUrl(value) {
+  return value === 'light'
+    ? `${baseURL}style-light.json`
+    : `${baseURL}style.json`
+}
+
+function applyThemeAttributes(value) {
+  theme.value = value
+  document.documentElement.dataset.theme = value
+  document.body.dataset.mapTheme = value
+}
+
+function clearTransientMessages() {
+  hint.value = ''
+  clearHintTimer()
+  actionStatus.value = ''
+  if (statusTimer) {
+    clearTimeout(statusTimer)
+    statusTimer = null
+  }
+}
+
+async function applyPaletteAfterSwitch(token) {
+  await applyAllImages()
+  if (!map || token !== styleLoadToken) return
+  map.triggerRepaint()
+  document.body.dataset.mapReady = '1'
+}
+
+function switchMapTheme() {
+  closeInspector()
+  clearTransientMessages()
+
+  if (!map) return
+
+  const camera = {
+    center: [map.getCenter().lng, map.getCenter().lat],
+    zoom: map.getZoom(),
+    pitch: map.getPitch(),
+    bearing: map.getBearing()
+  }
+  const token = ++styleLoadToken
+  document.body.dataset.mapReady = '0'
+
+  if (styleOverride) {
+    applyPaletteAfterSwitch(token)
+    return
+  }
+
+  map.once('idle', async () => {
+    if (!map || token !== styleLoadToken) return
+    map.jumpTo(camera)
+    await applyPaletteAfterSwitch(token)
+    if (!map || token !== styleLoadToken) return
+    map.jumpTo(camera)
+  })
+
+  map.setStyle(themeStyleUrl(theme.value))
+}
+
+function selectTheme(value) {
+  const next = resolveTheme(value)
+  if (next === theme.value) return
+
+  applyThemeAttributes(next)
+  switchMapTheme()
 }
 
 onMounted(() => {
@@ -287,7 +391,10 @@ onMounted(() => {
   const { lat, lng, zoom, pitch, rotation } = initialState
   const width = finite(params.get('width'), NaN)
   const height = finite(params.get('height'), NaN)
-  const styleUrl = params.get('style') || `${baseURL}style.json`
+  styleOverride = params.get('style') || ''
+  const initialTheme = resolveTheme(params.get('theme'))
+  applyThemeAttributes(initialTheme)
+  const styleUrl = styleOverride || themeStyleUrl(initialTheme)
   const qualityMode = Boolean(params.get('quality'))
 
   delete document.body.dataset.mapReady
@@ -354,11 +461,12 @@ onMounted(() => {
   }
   window.addEventListener('hashchange', hashChangeHandler)
 
+  const initialToken = styleLoadToken
   map.once('idle', async () => {
-    if (!map) return
+    if (!map || initialToken !== styleLoadToken) return
 
     await applyAllImages()
-    if (!map) return
+    if (!map || initialToken !== styleLoadToken) return
 
     document.body.dataset.mapReady = '1'
 
@@ -434,6 +542,25 @@ onUnmounted(() => {
       <p class="home-brand__description">
         A live Open GIS palette. Inspect a POI to recolour its whole role.
       </p>
+
+      <div class="home-theme" role="group" aria-label="Site theme">
+        <button
+          type="button"
+          class="home-theme__option"
+          :aria-pressed="theme === 'dark' ? 'true' : 'false'"
+          @click="selectTheme('dark')"
+        >
+          Dark
+        </button>
+        <button
+          type="button"
+          class="home-theme__option"
+          :aria-pressed="theme === 'light' ? 'true' : 'false'"
+          @click="selectTheme('light')"
+        >
+          Light
+        </button>
+      </div>
 
       <div class="home-brand__actions">
         <button

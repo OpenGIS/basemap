@@ -6,6 +6,37 @@ const path = require('node:path');
 const { buildModel } = require('./lib/palette');
 const { recolourIcons } = require('./lib/recolour');
 
+const DEFAULT_OUTPUT = path.join('build', 'icons');
+
+const THEMES = {
+  light: {
+    palette: 'palette.json',
+    output: path.join('build', 'light', 'icons')
+  },
+  dark: {
+    palette: path.join('themes', 'dark', 'palette.json'),
+    output: path.join('build', 'dark', 'icons')
+  }
+};
+
+function resolveTheme(themeName) {
+  if (!Object.prototype.hasOwnProperty.call(THEMES, themeName)) {
+    throw new Error(
+      `Unknown theme: ${themeName}. Expected one of: ${Object.keys(THEMES).join(', ')}`
+    );
+  }
+  return THEMES[themeName];
+}
+
+function resolveThemePalette(root, themeName) {
+  return path.join(root, resolveTheme(themeName).palette);
+}
+
+function resolveDefaultOutput(root, themeName) {
+  if (!themeName) return path.join(root, DEFAULT_OUTPUT);
+  return path.join(root, resolveTheme(themeName).output);
+}
+
 function formatIssues(issues) {
   return issues.map((issue) => `  [${issue.level}] ${issue.code}: ${issue.message}`);
 }
@@ -48,16 +79,25 @@ function usage() {
     '',
     'Options:',
     '  --summary            Print the palette model summary (default)',
-    '  --apply              Write palette-recoloured icons to build/icons',
+    '  --apply              Write palette-recoloured icons',
+    '  --theme <name>       Use a theme palette (light or dark); defaults to',
+    '                       build/light/icons or build/dark/icons',
     '  --out <dir>          Output directory; must be a strict subdirectory of',
     '                       build/ or .opencode/tmp/',
-    '  --palette <path>     Use an alternative palette JSON file',
+    '  --palette <path>     Use an alternative palette JSON file; cannot be',
+    '                       combined with --theme',
     '  --help, -h           Show this help'
   ].join('\n');
 }
 
 function parseArguments(argv) {
-  const options = { summary: true, apply: false, help: false, out: null, palette: null };
+  const options = {
+    summary: true,
+    apply: false,
+    help: false,
+    out: null,
+    palette: null
+  };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === '--summary') {
@@ -74,12 +114,22 @@ function parseArguments(argv) {
       index += 1;
       if (index >= argv.length) throw new Error('--palette requires a file path');
       options.palette = argv[index];
+    } else if (argument === '--theme') {
+      index += 1;
+      if (index >= argv.length || argv[index] === '') {
+        throw new Error('--theme requires a theme name (light or dark)');
+      }
+      options.theme = argv[index];
     } else if (argument === '--help' || argument === '-h') {
       options.help = true;
     } else {
       throw new Error(`Unknown option: ${argument}`);
     }
   }
+  if (options.theme && options.palette) {
+    throw new Error('--theme and --palette cannot be used together');
+  }
+  if (options.theme) resolveTheme(options.theme);
   return options;
 }
 
@@ -109,7 +159,9 @@ function main(argv = process.argv.slice(2)) {
   let palette;
 
   try {
-    palette = loadPalette(root, options.palette);
+    palette = options.theme
+      ? JSON.parse(fs.readFileSync(resolveThemePalette(root, options.theme), 'utf8'))
+      : loadPalette(root, options.palette);
   } catch (error) {
     console.error(`Unable to read palette: ${error.message}`);
     process.exitCode = 1;
@@ -119,7 +171,7 @@ function main(argv = process.argv.slice(2)) {
   if (options.apply) {
     const outDir = options.out
       ? path.resolve(process.cwd(), options.out)
-      : path.join(root, 'build', 'icons');
+      : resolveDefaultOutput(root, options.theme);
 
     try {
       const result = recolourIcons({ root, palette, outDir });
@@ -144,4 +196,16 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { formatSummary, formatIssues, parseArguments, loadPalette, main, usage };
+module.exports = {
+  DEFAULT_OUTPUT,
+  THEMES,
+  formatSummary,
+  formatIssues,
+  parseArguments,
+  loadPalette,
+  main,
+  usage,
+  resolveTheme,
+  resolveThemePalette,
+  resolveDefaultOutput
+};

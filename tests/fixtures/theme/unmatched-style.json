@@ -1,0 +1,24 @@
+{
+  "version": 8,
+  "name": "strict-error-fixture",
+  "layers": [
+    {
+      "id": "Known",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "water",
+      "paint": {
+        "fill-color": "#000000"
+      }
+    },
+    {
+      "id": "Missing",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "paint": {
+        "line-color": "#ffffff"
+      }
+    }
+  ]
+}

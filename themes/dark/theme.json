@@ -1,0 +1,825 @@
+{
+  "version": 1,
+  "name": "dark",
+  "tokens": {
+    "void": "#000b00",
+    "land": "#001800",
+    "landAlt": "#001c00",
+    "border": "#0e3111",
+    "ink": "#eeeeee",
+    "heading": "#e8f5ea",
+    "muted": "#9bb0a3",
+    "housenumber": "#7f8f84",
+    "accent": "#0dd70d",
+    "accentHover": "#5cf05c",
+    "orange": "#dc8f4e",
+    "deepOrange": "#b3571f",
+    "noteBlue": "#79c0ff",
+    "cream": "#fcfaf5",
+    "water": "#07303d",
+    "waterLine": "#14657b",
+    "park": "#0b3214",
+    "woodland": "#082a0e",
+    "grass": "#0f3818",
+    "farmland": "#1b2c12",
+    "sand": "#2a2414",
+    "rock": "#1f211d",
+    "ice": "#b9cfd0",
+    "urban": "#022006",
+    "urbanAlt": "#03260a",
+    "industrial": "#142018",
+    "building": "#0f2410",
+    "buildingOutline": "#2a4a2e",
+    "roadMajor": "#dc8f4e",
+    "roadPrimary": "#b3571f",
+    "roadSecondary": "#6b4e2e",
+    "roadMinor": "#4c5b4f",
+    "roadMinorCasing": "#101f14",
+    "roadService": "#2c3c30",
+    "roadPath": "#6f7f75",
+    "roadPathCasing": "#0a160d",
+    "rail": "#6b7d72",
+    "railHatch": "#8fa295",
+    "countryBorder": "#2b5a34",
+    "disputedBorder": "#dc8f4e",
+    "labelHalo": "#001300"
+  },
+  "rules": [
+    {
+      "layer": "Background",
+      "property": "background-color",
+      "to": "@void"
+    },
+    {
+      "layer": "Water*",
+      "property": "fill-color",
+      "to": "@water"
+    },
+    {
+      "layer": "Wetland*",
+      "property": "fill-color",
+      "to": "@woodland"
+    },
+    {
+      "layer": "Marsh",
+      "property": "fill-color",
+      "to": "@woodland"
+    },
+    {
+      "layer": "Mangrove",
+      "property": "fill-color",
+      "to": "@woodland"
+    },
+    {
+      "layer": "Wood*",
+      "property": "fill-color",
+      "to": "@woodland"
+    },
+    {
+      "layer": "Forest*",
+      "property": "fill-color",
+      "to": "@woodland"
+    },
+    {
+      "layer": "Heath",
+      "property": "fill-color",
+      "to": "@woodland"
+    },
+    {
+      "layer": "Scrub",
+      "property": "fill-color",
+      "to": "@woodland"
+    },
+    {
+      "layer": "Park",
+      "property": "fill-color",
+      "to": "@park"
+    },
+    {
+      "layer": "Garden",
+      "property": "fill-color",
+      "to": "@park"
+    },
+    {
+      "layer": "Grass*",
+      "property": "fill-color",
+      "to": "@grass"
+    },
+    {
+      "layer": "Meadow",
+      "property": "fill-color",
+      "to": "@grass"
+    },
+    {
+      "layer": "Recreation ground",
+      "property": "fill-color",
+      "to": "@park"
+    },
+    {
+      "layer": "Stadium",
+      "property": "fill-color",
+      "to": "@park"
+    },
+    {
+      "layer": "Pitch",
+      "property": "fill-color",
+      "to": "@park"
+    },
+    {
+      "layer": "Cemetery",
+      "property": "fill-color",
+      "to": "@park"
+    },
+    {
+      "layer": "Orchard and vineyard",
+      "property": "fill-color",
+      "to": "@farmland"
+    },
+    {
+      "layer": "Allotments",
+      "property": "fill-color",
+      "to": "@farmland"
+    },
+    {
+      "layer": "Farmland*",
+      "property": "fill-color",
+      "to": "@farmland"
+    },
+    {
+      "layer": "Farm",
+      "property": "fill-color",
+      "to": "@farmland"
+    },
+    {
+      "layer": "Sand*",
+      "property": "fill-color",
+      "to": "@sand"
+    },
+    {
+      "layer": "Beach",
+      "property": "fill-color",
+      "to": "@sand"
+    },
+    {
+      "layer": "Dune",
+      "property": "fill-color",
+      "to": "@sand"
+    },
+    {
+      "layer": "Tidalflat",
+      "property": "fill-color",
+      "to": "@sand"
+    },
+    {
+      "layer": "Rock*",
+      "property": "fill-color",
+      "to": "@rock"
+    },
+    {
+      "layer": "Bare rock",
+      "property": "fill-color",
+      "to": "@rock"
+    },
+    {
+      "layer": "Scree",
+      "property": "fill-color",
+      "to": "@rock"
+    },
+    {
+      "layer": "Glacier",
+      "property": "fill-color",
+      "to": "@ice"
+    },
+    {
+      "layer": "Residential",
+      "property": "fill-color",
+      "to": "@land"
+    },
+    {
+      "layer": "Garage",
+      "property": "fill-color",
+      "to": "@urban"
+    },
+    {
+      "layer": "Quarry",
+      "property": "fill-color",
+      "to": "@industrial"
+    },
+    {
+      "layer": "Industrial",
+      "property": "fill-color",
+      "to": "@industrial"
+    },
+    {
+      "layer": "Railway",
+      "property": "fill-color",
+      "to": "@industrial"
+    },
+    {
+      "layer": "Dam",
+      "property": "fill-color",
+      "to": "@industrial"
+    },
+    {
+      "layer": "Retail",
+      "property": "fill-color",
+      "to": "@urbanAlt"
+    },
+    {
+      "layer": "Commercial",
+      "property": "fill-color",
+      "to": "@urbanAlt"
+    },
+    {
+      "layer": "Education and Health",
+      "property": "fill-color",
+      "to": "@urbanAlt"
+    },
+    {
+      "layer": "Military",
+      "property": "fill-color",
+      "to": "@urbanAlt"
+    },
+    {
+      "layer": "Aeroway",
+      "property": "fill-color",
+      "to": "@landAlt"
+    },
+    {
+      "layer": "Bridge area",
+      "property": "fill-color",
+      "to": "@urbanAlt"
+    },
+    {
+      "layer": "Platform area",
+      "property": "fill-color",
+      "to": "@urbanAlt"
+    },
+    {
+      "layer": "Pedestrian area",
+      "property": "fill-color",
+      "to": "@urbanAlt"
+    },
+    {
+      "layer": "Pier",
+      "property": "fill-color",
+      "to": "@roadService"
+    },
+    {
+      "layer": "Landuse pattern",
+      "property": "fill-color",
+      "to": "@void"
+    },
+    {
+      "layer": "Building",
+      "property": "fill-color",
+      "to": "@building"
+    },
+    {
+      "layer": "Industrial",
+      "property": "fill-outline-color",
+      "to": "@border"
+    },
+    {
+      "layer": "Commercial",
+      "property": "fill-outline-color",
+      "to": "@border"
+    },
+    {
+      "layer": "Landuse pattern",
+      "property": "fill-outline-color",
+      "to": "@border"
+    },
+    {
+      "layer": "Platform area",
+      "property": "fill-outline-color",
+      "to": "@border"
+    },
+    {
+      "layer": "Building",
+      "property": "fill-outline-color",
+      "to": "@buildingOutline"
+    },
+    {
+      "layer": "Other border",
+      "property": "line-color",
+      "to": "@border"
+    },
+    {
+      "layer": "Country border",
+      "property": "line-color",
+      "to": "@countryBorder"
+    },
+    {
+      "layer": "Disputed border",
+      "property": "line-color",
+      "to": "@disputedBorder"
+    },
+    {
+      "layer": "River*",
+      "property": "line-color",
+      "to": "@waterLine"
+    },
+    {
+      "layer": "*waterway*",
+      "property": "line-color",
+      "to": "@waterLine"
+    },
+    {
+      "layer": "Minor rail hatching",
+      "property": "line-color",
+      "to": "@railHatch"
+    },
+    {
+      "layer": "*hatching*",
+      "property": "line-color",
+      "from": "hsla(0, 0%, 45%, 0.44)",
+      "to": "@railHatch"
+    },
+    {
+      "layer": "*hatching*",
+      "property": "line-color",
+      "from": "hsl(0, 0%, 73%)",
+      "to": "@railHatch"
+    },
+    {
+      "layer": "*hatching*",
+      "property": "line-color",
+      "from": "hsl(0, 0%, 78%)",
+      "to": "@railHatch"
+    },
+    {
+      "layer": "Subway line",
+      "property": "line-color",
+      "to": "@rail"
+    },
+    {
+      "layer": "*rail*",
+      "property": "line-color",
+      "to": "@rail"
+    },
+    {
+      "layer": "Cablecar*",
+      "property": "line-color",
+      "to": "@rail"
+    },
+    {
+      "layer": "Landcover outline",
+      "property": "line-color",
+      "to": "@border"
+    },
+    {
+      "layer": "Landuse outline",
+      "property": "line-color",
+      "to": "@border"
+    },
+    {
+      "layer": "National parks",
+      "property": "line-color",
+      "to": "@countryBorder"
+    },
+    {
+      "layer": "National park outline",
+      "property": "line-color",
+      "to": "@countryBorder"
+    },
+    {
+      "layer": "Glacier outline",
+      "property": "line-color",
+      "to": "@waterLine"
+    },
+    {
+      "layer": "Ferry line",
+      "property": "line-color",
+      "to": "@noteBlue"
+    },
+    {
+      "layer": "Runway",
+      "property": "line-color",
+      "to": "@roadMinor"
+    },
+    {
+      "layer": "Taxiway",
+      "property": "line-color",
+      "to": "@roadMinor"
+    },
+    {
+      "layer": "*path*outline*",
+      "property": "line-color",
+      "to": "@roadPathCasing"
+    },
+    {
+      "layer": "Highway*outline*",
+      "property": "line-color",
+      "to": "@deepOrange"
+    },
+    {
+      "layer": "Trunk*outline*",
+      "property": "line-color",
+      "to": "@deepOrange"
+    },
+    {
+      "layer": "Primary*outline*",
+      "property": "line-color",
+      "to": "@deepOrange"
+    },
+    {
+      "layer": "*outline*",
+      "property": "line-color",
+      "to": "@roadMinorCasing"
+    },
+    {
+      "layer": "*path*",
+      "property": "line-color",
+      "to": "@roadPath"
+    },
+    {
+      "layer": "Cycleway*",
+      "property": "line-color",
+      "to": "@roadPath"
+    },
+    {
+      "layer": "Bridleway*",
+      "property": "line-color",
+      "to": "@roadPath"
+    },
+    {
+      "layer": "Footway*",
+      "property": "line-color",
+      "to": "@roadPath"
+    },
+    {
+      "layer": "Theme park",
+      "property": "line-color",
+      "to": "@border"
+    },
+    {
+      "layer": "Highway*",
+      "property": "line-color",
+      "to": "@roadMajor"
+    },
+    {
+      "layer": "Trunk*",
+      "property": "line-color",
+      "to": "@roadMajor"
+    },
+    {
+      "layer": "Primary*",
+      "property": "line-color",
+      "to": "@roadPrimary"
+    },
+    {
+      "layer": "Secondary*",
+      "property": "line-color",
+      "to": "@roadSecondary"
+    },
+    {
+      "layer": "Tertiary*",
+      "property": "line-color",
+      "to": "@roadMinor"
+    },
+    {
+      "layer": "Track*",
+      "property": "line-color",
+      "to": "@roadMinor"
+    },
+    {
+      "layer": "Minor*",
+      "property": "line-color",
+      "to": "@roadMinor"
+    },
+    {
+      "layer": "Service*",
+      "property": "line-color",
+      "to": "@roadService"
+    },
+    {
+      "layer": "Link*",
+      "property": "line-color",
+      "to": "@roadService"
+    },
+    {
+      "layer": "Pedestrian*",
+      "property": "line-color",
+      "to": "@roadPath"
+    },
+    {
+      "layer": "Raceway*",
+      "property": "line-color",
+      "to": "@roadMinor"
+    },
+    {
+      "layer": "Pier road",
+      "property": "line-color",
+      "to": "@roadService"
+    },
+    {
+      "layer": "*",
+      "property": "icon-color",
+      "from": "hsl(0, 0%, 0%)",
+      "to": "@cream"
+    },
+    {
+      "layer": "*",
+      "property": "icon-color",
+      "from": "hsla(0, 0%, 0%, 0.98)",
+      "to": "@cream"
+    },
+    {
+      "layer": "*",
+      "property": "icon-halo-color",
+      "from": "hsl(0, 0%, 100%)",
+      "to": "@void"
+    },
+    {
+      "layer": "Capital city labels",
+      "property": "text-color",
+      "to": "@accent"
+    },
+    {
+      "layer": "Country labels",
+      "property": "text-color",
+      "to": "@heading"
+    },
+    {
+      "layer": "State labels",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "City labels",
+      "property": "text-color",
+      "to": "@heading"
+    },
+    {
+      "layer": "Town labels",
+      "property": "text-color",
+      "to": "@ink"
+    },
+    {
+      "layer": "Village labels",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "River labels",
+      "property": "text-color",
+      "to": "@noteBlue"
+    },
+    {
+      "layer": "Lakeline labels",
+      "property": "text-color",
+      "to": "@noteBlue"
+    },
+    {
+      "layer": "Water labels",
+      "property": "text-color",
+      "to": "@noteBlue"
+    },
+    {
+      "layer": "National park labels",
+      "property": "text-color",
+      "to": "@accentHover"
+    },
+    {
+      "layer": "Local park",
+      "property": "text-color",
+      "to": "@accentHover"
+    },
+    {
+      "layer": "Volcano peak labels",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Mountain peak labels",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Major airport labels",
+      "property": "text-color",
+      "to": "@noteBlue"
+    },
+    {
+      "layer": "Airport labels",
+      "property": "text-color",
+      "to": "@ink"
+    },
+    {
+      "layer": "Airport gate labels",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "House number labels",
+      "property": "text-color",
+      "to": "@housenumber"
+    },
+    {
+      "layer": "Road labels",
+      "property": "text-color",
+      "to": "@ink"
+    },
+    {
+      "layer": "Tertiary road shield",
+      "property": "text-color",
+      "to": "@roadMinor"
+    },
+    {
+      "layer": "Secondary road shield",
+      "property": "text-color",
+      "to": "@roadSecondary"
+    },
+    {
+      "layer": "Primary road shield",
+      "property": "text-color",
+      "to": "@roadPrimary"
+    },
+    {
+      "layer": "Trunk road shield",
+      "property": "text-color",
+      "to": "@roadMajor"
+    },
+    {
+      "layer": "Highway shield",
+      "property": "text-color",
+      "to": "@roadMajor"
+    },
+    {
+      "layer": "Shop",
+      "property": "text-color",
+      "to": "@ink"
+    },
+    {
+      "layer": "Waste",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Mortuary",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Education",
+      "property": "text-color",
+      "to": "@heading"
+    },
+    {
+      "layer": "Outdoor",
+      "property": "text-color",
+      "to": "@accentHover"
+    },
+    {
+      "layer": "Sport",
+      "property": "text-color",
+      "to": "@accentHover"
+    },
+    {
+      "layer": "Ferry",
+      "property": "text-color",
+      "to": "@noteBlue"
+    },
+    {
+      "layer": "Food",
+      "property": "text-color",
+      "to": "@orange"
+    },
+    {
+      "layer": "Public",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Cultural",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Attraction",
+      "property": "text-color",
+      "to": "@orange"
+    },
+    {
+      "layer": "Transport",
+      "property": "text-color",
+      "to": "@noteBlue"
+    },
+    {
+      "layer": "Health",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Campsite",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Accommodation",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Place of worship",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Bus stop",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Bus station",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Harbor",
+      "property": "text-color",
+      "to": "@noteBlue"
+    },
+    {
+      "layer": "Mall",
+      "property": "text-color",
+      "to": "@muted"
+    },
+    {
+      "layer": "Train",
+      "property": "text-color",
+      "to": "@noteBlue"
+    },
+    {
+      "layer": "Ferry labels",
+      "property": "text-color",
+      "to": "@noteBlue"
+    },
+    {
+      "layer": "Other labels",
+      "property": "text-color",
+      "from": "hsl(0, 0%, 13%)",
+      "to": "@ink"
+    },
+    {
+      "layer": "Other labels",
+      "property": "text-color",
+      "from": "hsl(0, 0%, 47%)",
+      "to": "@muted"
+    },
+    {
+      "layer": "Zoo",
+      "property": "text-color",
+      "to": "@orange"
+    },
+    {
+      "layer": "*",
+      "property": "text-halo-color",
+      "from": "hsl(0, 0%, 100%)",
+      "to": "@labelHalo"
+    },
+    {
+      "layer": "*",
+      "property": "text-halo-color",
+      "from": "hsla(0, 0%, 100%, 0.6)",
+      "to": "@labelHalo"
+    },
+    {
+      "layer": "*",
+      "property": "text-halo-color",
+      "from": "hsla(0, 0%, 100%, 0.7)",
+      "to": "@labelHalo"
+    },
+    {
+      "layer": "*",
+      "property": "text-halo-color",
+      "from": "hsla(0, 0%, 100%, 0.8)",
+      "to": "@labelHalo"
+    },
+    {
+      "layer": "*",
+      "property": "text-halo-color",
+      "from": "hsla(0, 0%, 100%, 0.97)",
+      "to": "@labelHalo"
+    },
+    {
+      "layer": "*",
+      "property": "text-halo-color",
+      "from": "hsl(100, 100%, 96%)",
+      "to": "@labelHalo"
+    },
+    {
+      "layer": "*",
+      "property": "text-halo-color",
+      "from": "hsl(110, 83%, 88%)",
+      "to": "@labelHalo"
+    },
+    {
+      "layer": "*",
+      "property": "text-halo-color",
+      "from": "hsl(195, 45%, 77%)",
+      "to": "@labelHalo"
+    }
+  ]
+}

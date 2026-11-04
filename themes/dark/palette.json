@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "roles": [
+    {
+      "id": "transport",
+      "label": "Transport, travel and lodging",
+      "color": "#79C0FF",
+      "sourceColors": ["#0092DA"],
+      "order": 10
+    },
+    {
+      "id": "food",
+      "label": "Food and drink",
+      "color": "#DC8F4E",
+      "sourceColors": ["#C77400"],
+      "order": 20
+    },
+    {
+      "id": "health",
+      "label": "Health",
+      "color": "#F85149",
+      "sourceColors": ["#BF0000"],
+      "order": 30
+    },
+    {
+      "id": "shops",
+      "label": "Shops and commercial",
+      "color": "#E879F9",
+      "sourceColors": ["#AC39AC"],
+      "order": 40
+    },
+    {
+      "id": "public",
+      "label": "Public and cultural",
+      "color": "#D29922",
+      "sourceColors": ["#734A08"],
+      "order": 50
+    },
+    {
+      "id": "infrastructure",
+      "label": "Infrastructure",
+      "color": "#9BB0A3",
+      "sourceColors": ["#666666"],
+      "order": 60
+    },
+    {
+      "id": "barriers",
+      "label": "Barriers",
+      "color": "#C9D1D9",
+      "sourceColors": ["#3F3F3F"],
+      "order": 70
+    },
+    {
+      "id": "leisure",
+      "label": "Leisure",
+      "color": "#5CF05C",
+      "sourceColors": ["#2F6133"],
+      "order": 80
+    },
+    {
+      "id": "sport",
+      "label": "Sport and play",
+      "color": "#3FB950",
+      "sourceColors": ["#008C0D"],
+      "order": 90
+    },
+    {
+      "id": "terminals",
+      "label": "Transport terminals",
+      "color": "#A371F7",
+      "sourceColors": ["#8461C4"],
+      "order": 100
+    },
+    {
+      "id": "worship",
+      "label": "Places of worship",
+      "color": "#EEEEEE",
+      "sourceColors": ["#000000"],
+      "order": 110
+    }
+  ],
+  "preserve": ["#FFFFFF"],
+  "overrides": {}
+}

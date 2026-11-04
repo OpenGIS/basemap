@@ -6,6 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {
   MAP_FILES,
+  STYLE_FILES,
   SITE_PREFIX,
   mapRequestToFile,
   validateArtifact,
@@ -42,6 +43,28 @@ function pageHtml(assets) {
 </html>`;
 }
 
+function styleDocument(theme) {
+  return JSON.stringify({
+    version: 8,
+    name: theme === 'dark' ? 'Basemap Dark' : 'Basemap Light',
+    sources: {
+      openmaptiles: {
+        type: 'vector',
+        url: 'https://tiles.openfreemap.org/planet',
+        attribution: 'OpenFreeMap'
+      }
+    },
+    sprite: theme === 'dark' ? 'https://www.ogis.org/basemap/sprite' : 'https://www.ogis.org/basemap/sprite-light',
+    glyphs: 'https://www.ogis.org/basemap/fonts/{fontstack}/{range}.pbf',
+    metadata: { 'ogis:theme': theme, 'ogis:upstreamCommit': 'abc123' },
+    layers: [{ id: 'Background', type: 'background', paint: { 'background-color': '#000000' } }]
+  });
+}
+
+function spriteDocument() {
+  return JSON.stringify({ example: { width: 1, height: 1, x: 0, y: 0, pixelRatio: 1 } });
+}
+
 function createArtifact(name) {
   const root = scratch(name);
   write(
@@ -53,9 +76,16 @@ function createArtifact(name) {
     )
   );
   for (const file of MAP_FILES) {
-    write(root, file, file.endsWith('.json') ? '{}' : '');
+    if (STYLE_FILES.includes(file)) {
+      write(root, file, styleDocument(file === 'style.json' ? 'dark' : 'light'));
+    } else if (file.endsWith('.json')) {
+      write(root, file, spriteDocument());
+    } else {
+      write(root, file, 'png');
+    }
   }
   write(root, 'icons/example.svg', '<svg></svg>');
+  write(root, 'icons-light/example.svg', '<svg></svg>');
   write(root, 'fonts/Noto Sans Regular/0-255.pbf', '');
   write(root, 'nuxt-assets/app.js', '');
   write(root, 'nuxt-assets/app.css', '');
@@ -133,6 +163,69 @@ test('artifact checks report missing required paths', (t) => {
   const errors = validateArtifact(root);
 
   assert.ok(errors.some((error) => error.includes('missing map file style.json')), errors.join('\n'));
+});
+
+test('artifact checks report a missing light style', (t) => {
+  const root = createArtifact('missing-light-style');
+  cleanup(t, root);
+  fs.unlinkSync(path.join(root, 'style-light.json'));
+
+  const errors = validateArtifact(root);
+
+  assert.ok(errors.some((error) => error.includes('missing map file style-light.json')), errors.join('\n'));
+});
+
+test('artifact checks report a missing light sprite set', (t) => {
+  const root = createArtifact('missing-light-sprite');
+  cleanup(t, root);
+  fs.unlinkSync(path.join(root, 'sprite-light@2x.png'));
+
+  const errors = validateArtifact(root);
+
+  assert.ok(errors.some((error) => error.includes('missing map file sprite-light@2x.png')), errors.join('\n'));
+});
+
+test('artifact checks report invalid style JSON', (t) => {
+  const root = createArtifact('invalid-style');
+  cleanup(t, root);
+  write(root, 'style-light.json', '{not json');
+
+  const errors = validateArtifact(root);
+
+  assert.ok(errors.some((error) => error.includes('invalid style style-light.json')), errors.join('\n'));
+});
+
+test('artifact checks report a style without required fields', (t) => {
+  const root = createArtifact('style-fields');
+  cleanup(t, root);
+  write(root, 'style.json', '{}');
+
+  const errors = validateArtifact(root);
+
+  assert.ok(errors.some((error) => error.includes('missing sources.openmaptiles')), errors.join('\n'));
+  assert.ok(errors.some((error) => error.includes('missing sprite')), errors.join('\n'));
+  assert.ok(errors.some((error) => error.includes('missing glyphs')), errors.join('\n'));
+  assert.ok(errors.some((error) => error.includes('missing layers')), errors.join('\n'));
+});
+
+test('artifact checks require style.json to be the dark default', (t) => {
+  const root = createArtifact('dark-default');
+  cleanup(t, root);
+  write(root, 'style.json', styleDocument('light'));
+
+  const errors = validateArtifact(root);
+
+  assert.ok(errors.some((error) => error.includes('not the dark default')), errors.join('\n'));
+});
+
+test('artifact checks report a missing light icon directory', (t) => {
+  const root = createArtifact('missing-light-icons');
+  cleanup(t, root);
+  fs.rmSync(path.join(root, 'icons-light'), { recursive: true, force: true });
+
+  const errors = validateArtifact(root);
+
+  assert.ok(errors.some((error) => error.includes('missing icons-light directory')), errors.join('\n'));
 });
 
 test('artifact checks reject _payload.json anywhere in the output', (t) => {

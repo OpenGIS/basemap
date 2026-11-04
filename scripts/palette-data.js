@@ -10,12 +10,14 @@ const { recolourSvg } = require('./lib/recolour');
 const DEFAULT_ROOT = path.resolve(__dirname, '..');
 const OUTPUT_DIR = path.join('app', 'assets', 'data');
 const ICON_DIRECTORY = 'vendor/openmaptiles/style/icons';
+const DARK_PALETTE = 'themes/dark/palette.json';
 const SENTINEL = '#FE01FE';
 const PLACEHOLDER = '__PALETTE_ROLE__';
 const DATA_VERSION = 1;
 
 const HASHED_STATIC_FILES = [
   'palette.json',
+  DARK_PALETTE,
   'scripts/lib/palette.js',
   'scripts/lib/recolour.js',
   'scripts/palette-data.js',
@@ -47,6 +49,26 @@ function sha256Hex(value) {
 
 function stringify(value) {
   return `${JSON.stringify(value, null, 2)}\n`;
+}
+
+function loadThemePalette(root, relativePath) {
+  const filePath = path.join(root, relativePath);
+  let text;
+
+  try {
+    text = fs.readFileSync(filePath, 'utf8');
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      throw new Error(`Dark palette is missing: ${relativePath}`);
+    }
+    throw error;
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    throw new Error(`Dark palette ${relativePath} is not valid JSON: ${error.message}`);
+  }
 }
 
 function hashInputPaths(root) {
@@ -400,11 +422,33 @@ function buildAppData({ root = DEFAULT_ROOT, model } = {}) {
     );
   }
 
+  const darkPalette = loadThemePalette(resolvedRoot, DARK_PALETTE);
+  const darkModel = buildModel({ root: resolvedRoot, palette: darkPalette });
+  const darkErrors = darkModel.issues.filter((issue) => issue.level === 'error');
+
+  if (darkErrors.length) {
+    throw new Error(
+      `Dark palette model has ${darkErrors.length} hard error(s): ${darkErrors
+        .map((issue) => `${issue.code}: ${issue.message}`)
+        .join('; ')}`
+    );
+  }
+
   const inputsHash = computeInputsHash({ root: resolvedRoot });
+  const darkPaletteData = buildPaletteData({ model: darkModel });
+  const darkColours = {};
+  for (const role of darkPaletteData.palette.roles) darkColours[role.id] = role.color;
+
   const paletteDocument = {
     version: DATA_VERSION,
     inputsHash,
-    ...buildPaletteData({ model: builtModel })
+    ...buildPaletteData({ model: builtModel }),
+    themes: {
+      dark: {
+        palette: darkPaletteData.palette,
+        colours: darkColours
+      }
+    }
   };
   const icons = buildIconTemplates({ root: resolvedRoot, model: builtModel });
   const paletteText = stringify(paletteDocument);
@@ -583,6 +627,7 @@ if (require.main === module) {
 
 module.exports = {
   DATA_VERSION,
+  DARK_PALETTE,
   DEFAULT_ROOT,
   HASHED_STATIC_FILES,
   ICON_DIRECTORY,

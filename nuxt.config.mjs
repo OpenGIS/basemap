@@ -15,7 +15,8 @@ export default defineNuxtConfig({
     buildAssetsDir: '/nuxt-assets/',
     head: {
       htmlAttrs: {
-        lang: 'en-GB'
+        lang: 'en-GB',
+        'data-theme': 'dark'
       },
       title: 'Basemap — Open GIS',
       meta: [
@@ -26,7 +27,7 @@ export default defineNuxtConfig({
         },
         {
           name: 'color-scheme',
-          content: 'light dark'
+          content: 'dark light'
         }
       ],
       link: [
@@ -59,14 +60,20 @@ export default defineNuxtConfig({
         name: 'basemap-root-style',
         apply: 'serve',
         configureServer(server) {
+          const styleFiles = {
+            '/basemap/style.json': 'style.json',
+            '/basemap/style-light.json': 'style-light.json'
+          }
+
           server.middlewares.use(async (req, res, next) => {
             const path = (req.url || '').split('?')[0]
-            if (path !== '/basemap/style.json') {
+            const styleFile = styleFiles[path]
+            if (!styleFile) {
               return next()
             }
 
             try {
-              const body = await readFile(resolve(rootDir, 'style.json'))
+              const body = await readFile(resolve(rootDir, styleFile))
               res.statusCode = 200
               res.setHeader('Content-Type', 'application/json; charset=utf-8')
               res.setHeader('Cache-Control', 'no-store')

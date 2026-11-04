@@ -31,6 +31,9 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Verify upstream mirror
+        run: npm run upstream:verify
+
       - name: Check generated app data
         run: npm run palette:data:check
 

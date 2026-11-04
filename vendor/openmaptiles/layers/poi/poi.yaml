@@ -19,7 +19,7 @@ layer:
         shop:
           subclass: ['accessories', 'antiques', 'beauty', 'bed', 'boutique', 'camera', 'carpet', 'charity', 'chemist', 'chocolate', 
                      'coffee', 'computer', 'convenience', 'confectionery', 'copyshop', 'cosmetics', 'garden_centre', 'doityourself',
-                     'erotic', 'electronics', 'fabric', 'florist', 'frozen_food', 'furniture', 'video_games', 'video',
+                     'erotic', 'electronics', 'fabric', 'farm', 'florist', 'frozen_food', 'furniture', 'video_games', 'video',
                      'general', 'gift', 'hardware', 'hearing_aids', 'hifi', 'interior_decoration',
                      'jewelry', 'kiosk', 'locksmith', 'lamps', 'mall', 'massage', 'motorcycle', 'mobile_phone',
                      'newsagent', 'optician', 'outdoor', 'paint', 'perfumery', 'perfume', 'pet', 'photo', 'second_hand', 
@@ -108,6 +108,8 @@ layer:
           subclass: ['atm']
         fuel:
           subclass: ['fuel', 'charging_station']
+        zoo:
+          subclass: ['zoo', enclosure', 'petting_zoo', 'aviary', 'wildlife_park', 'birds', 'safari_park', 'butterfly', 'falconry', 'reptile', 'terrarium']
     subclass:
       description: |
           Original value of either the
@@ -126,8 +128,9 @@ layer:
           [`aerialway`](http://wiki.openstreetmap.org/wiki/Key:aerialway),
           [`building`](http://wiki.openstreetmap.org/wiki/Key:building),
           [`highway`](http://wiki.openstreetmap.org/wiki/Key:highway),
-          [`office`](https://wiki.openstreetmap.org/wiki/Key:office)
-          or [`waterway`](http://wiki.openstreetmap.org/wiki/Key:waterway)
+          [`office`](https://wiki.openstreetmap.org/wiki/Key:office),
+          [`waterway`](http://wiki.openstreetmap.org/wiki/Key:waterway)
+          or [`zoo`](http://wiki.openstreetmap.org/wiki/Key:zoo)
           tag.  Use this to do more precise styling.
     rank: |
         The POIs are ranked ascending according to their importance within a grid. The `rank` value shows the

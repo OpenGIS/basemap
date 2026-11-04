@@ -26,15 +26,32 @@ const SITE_PREFIX = '/basemap/';
 const ASSET_DIR = 'nuxt-assets';
 const PAGES = ['index.html'];
 
-const MAP_FILES = [
-  'style.json',
-  'sprite.json',
-  'sprite.png',
-  'sprite@2x.json',
-  'sprite@2x.png'
+const STYLE_FILES = ['style.json', 'style-light.json'];
+
+const SPRITE_SETS = [
+  {
+    theme: 'dark',
+    json: 'sprite.json',
+    png: 'sprite.png',
+    retinaJson: 'sprite@2x.json',
+    retinaPng: 'sprite@2x.png'
+  },
+  {
+    theme: 'light',
+    json: 'sprite-light.json',
+    png: 'sprite-light.png',
+    retinaJson: 'sprite-light@2x.json',
+    retinaPng: 'sprite-light@2x.png'
+  }
 ];
 
-const MAP_DIRECTORIES = ['icons', 'fonts'];
+const MAP_FILES = [
+  ...STYLE_FILES,
+  ...SPRITE_SETS.flatMap((set) => [set.json, set.png, set.retinaJson, set.retinaPng])
+];
+
+const ICON_DIRECTORIES = ['icons', 'icons-light'];
+const MAP_DIRECTORIES = [...ICON_DIRECTORIES, 'fonts'];
 
 // MapLibre derives its worker URL from the bundled module URL, so the worker
 // and its shared chunk must sit beside the hashed Nuxt assets.
@@ -189,6 +206,77 @@ function validateAssetPaths(html, { pageUrlPath = SITE_PREFIX, outputDir = OUTPU
   return errors;
 }
 
+function isPlainObject(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function readJSONFile(filePath) {
+  try {
+    return { document: JSON.parse(fs.readFileSync(filePath, 'utf8')), error: null };
+  } catch (error) {
+    return { document: null, error: error.message };
+  }
+}
+
+function validateStyleDocument(style, file) {
+  const errors = [];
+
+  if (!isPlainObject(style)) {
+    return [`invalid style ${file}: expected a JSON object`];
+  }
+  if (!isPlainObject(style.sources) || !isPlainObject(style.sources.openmaptiles)) {
+    errors.push(`invalid style ${file}: missing sources.openmaptiles`);
+  }
+  if (typeof style.sprite !== 'string' || !style.sprite.trim()) {
+    errors.push(`invalid style ${file}: missing sprite`);
+  }
+  if (typeof style.glyphs !== 'string' || !style.glyphs.trim()) {
+    errors.push(`invalid style ${file}: missing glyphs`);
+  }
+  if (!Array.isArray(style.layers) || style.layers.length === 0) {
+    errors.push(`invalid style ${file}: missing layers`);
+  }
+
+  return errors;
+}
+
+function validateStyleFile(outputDir, file) {
+  const filePath = path.join(outputDir, file);
+  if (!isFile(filePath)) return { errors: [`missing map file ${file}`], style: null };
+
+  const { document, error } = readJSONFile(filePath);
+  if (error) return { errors: [`invalid style ${file}: ${error}`], style: null };
+
+  return { errors: validateStyleDocument(document, file), style: document };
+}
+
+function validateSpriteSet(outputDir, set) {
+  const errors = [];
+
+  for (const file of [set.json, set.png, set.retinaJson, set.retinaPng]) {
+    const filePath = path.join(outputDir, file);
+    if (!isFile(filePath)) {
+      errors.push(`missing map file ${file}`);
+      continue;
+    }
+    if (file.endsWith('.png')) {
+      if (fs.statSync(filePath).size === 0) {
+        errors.push(`invalid sprite ${file}: empty PNG`);
+      }
+      continue;
+    }
+
+    const { document, error } = readJSONFile(filePath);
+    if (error) {
+      errors.push(`invalid sprite ${file}: ${error}`);
+    } else if (!isPlainObject(document) || Object.keys(document).length === 0) {
+      errors.push(`invalid sprite ${file}: expected a non-empty JSON object`);
+    }
+  }
+
+  return errors;
+}
+
 function validateArtifact(outputDir = OUTPUT_DIR) {
   const errors = [];
 
@@ -202,10 +290,24 @@ function validateArtifact(outputDir = OUTPUT_DIR) {
     errors.push(...validateAssetPaths(html, { pageUrlPath: pageUrlPathFor(page), outputDir }));
   }
 
-  for (const file of MAP_FILES) {
-    if (!isFile(path.join(outputDir, file))) {
-      errors.push(`missing map file ${file}`);
-    }
+  const styles = new Map();
+  for (const file of STYLE_FILES) {
+    const result = validateStyleFile(outputDir, file);
+    errors.push(...result.errors);
+    if (result.style) styles.set(file, result.style);
+  }
+
+  const defaultStyle = styles.get('style.json');
+  if (defaultStyle && (!defaultStyle.metadata || defaultStyle.metadata['ogis:theme'] !== 'dark')) {
+    errors.push('style.json is not the dark default (ogis:theme must be dark)');
+  }
+  const lightStyle = styles.get('style-light.json');
+  if (lightStyle && (!lightStyle.metadata || lightStyle.metadata['ogis:theme'] !== 'light')) {
+    errors.push('style-light.json is not the light style (ogis:theme must be light)');
+  }
+
+  for (const set of SPRITE_SETS) {
+    errors.push(...validateSpriteSet(outputDir, set));
   }
 
   for (const file of MAPLIBRE_WORKER_FILES) {
@@ -214,13 +316,14 @@ function validateArtifact(outputDir = OUTPUT_DIR) {
     }
   }
 
-  const iconCount = countFiles(path.join(outputDir, 'icons'), (name) =>
-    name.toLowerCase().endsWith('.svg')
-  );
-  if (!isDirectory(path.join(outputDir, 'icons'))) {
-    errors.push('missing icons directory');
-  } else if (iconCount === 0) {
-    errors.push('icons directory is empty');
+  for (const directory of ICON_DIRECTORIES) {
+    const directoryPath = path.join(outputDir, directory);
+    const iconCount = countFiles(directoryPath, (name) => name.toLowerCase().endsWith('.svg'));
+    if (!isDirectory(directoryPath)) {
+      errors.push(`missing ${directory} directory`);
+    } else if (iconCount === 0) {
+      errors.push(`${directory} directory is empty`);
+    }
   }
 
   const fontFileCount = countFiles(path.join(outputDir, 'fonts'));
@@ -247,6 +350,9 @@ function summariseArtifact(outputDir = OUTPUT_DIR) {
     outputDir,
     pages: PAGES.slice(),
     iconCount: countFiles(path.join(outputDir, 'icons'), (name) =>
+      name.toLowerCase().endsWith('.svg')
+    ),
+    lightIconCount: countFiles(path.join(outputDir, 'icons-light'), (name) =>
       name.toLowerCase().endsWith('.svg')
     ),
     fontFileCount: countFiles(path.join(outputDir, 'fonts')),
@@ -278,6 +384,30 @@ function run(command, args) {
   execFileSync(command, args, { cwd: ROOT, stdio: 'inherit', env: process.env });
 }
 
+function syncIconDirectory(sourceDir, targetDir) {
+  fs.mkdirSync(targetDir, { recursive: true });
+
+  const sourceNames = new Set(
+    fs
+      .readdirSync(sourceDir, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
+      .map((entry) => entry.name)
+  );
+  if (sourceNames.size === 0) {
+    throw new Error(`No SVG icons found in ${path.relative(ROOT, sourceDir)}/`);
+  }
+
+  for (const name of fs.readdirSync(targetDir)) {
+    if (sourceNames.has(name)) continue;
+    fs.rmSync(path.join(targetDir, name), { recursive: true, force: true });
+  }
+  for (const name of sourceNames) {
+    fs.copyFileSync(path.join(sourceDir, name), path.join(targetDir, name));
+  }
+
+  return sourceNames.size;
+}
+
 function copyMapData(outputDir = OUTPUT_DIR) {
   for (const file of MAP_FILES) {
     const source = path.join(ROOT, file);
@@ -285,11 +415,11 @@ function copyMapData(outputDir = OUTPUT_DIR) {
       throw new Error(`Missing map file at ${source}`);
     }
   }
-  if (!isDirectory(path.join(ROOT, 'icons'))) {
-    throw new Error(`Missing icons directory at ${path.join(ROOT, 'icons')}`);
-  }
-  if (!isDirectory(path.join(ROOT, 'fonts'))) {
-    throw new Error(`Missing fonts directory at ${path.join(ROOT, 'fonts')}`);
+  for (const directory of MAP_DIRECTORIES) {
+    const source = path.join(ROOT, directory);
+    if (!isDirectory(source)) {
+      throw new Error(`Missing ${directory} directory at ${source}`);
+    }
   }
 
   fs.mkdirSync(outputDir, { recursive: true });
@@ -308,16 +438,8 @@ function copyMapData(outputDir = OUTPUT_DIR) {
     fs.copyFileSync(source, path.join(assetsTarget, file));
   }
 
-  const iconsTarget = path.join(outputDir, 'icons');
-  fs.mkdirSync(iconsTarget, { recursive: true });
-  let iconCount = 0;
-  for (const entry of fs.readdirSync(path.join(ROOT, 'icons'), { withFileTypes: true })) {
-    if (!entry.isFile() || !entry.name.toLowerCase().endsWith('.svg')) continue;
-    fs.copyFileSync(path.join(ROOT, 'icons', entry.name), path.join(iconsTarget, entry.name));
-    iconCount += 1;
-  }
-  if (iconCount === 0) {
-    throw new Error('No SVG icons found in icons/');
+  for (const directory of ICON_DIRECTORIES) {
+    syncIconDirectory(path.join(ROOT, directory), path.join(outputDir, directory));
   }
 
   fs.cpSync(path.join(ROOT, 'fonts'), path.join(outputDir, 'fonts'), { recursive: true });
@@ -348,7 +470,7 @@ function buildSite() {
   console.log('Site build complete');
   console.log(`  Output: ${summary.outputDir}`);
   console.log(`  Pages:  ${summary.pages.join(', ')}`);
-  console.log(`  Icons:  ${summary.iconCount}`);
+  console.log(`  Icons:  ${summary.iconCount} dark, ${summary.lightIconCount} light`);
   console.log(`  Fonts:  ${summary.fontFileCount} files`);
   console.log(`  Size:   ${formatBytes(summary.totalBytes)}`);
 
@@ -363,7 +485,7 @@ function usage() {
 Builds the static GitHub Pages artifact in .output/public:
   1. regenerates app/assets/data with scripts/palette-data.js
   2. runs npm run generate (nuxt generate)
-  3. copies style.json, sprites, icons/ and fonts/ into .output/public
+  3. copies both styles, both sprite sets, icons/, icons-light/ and fonts/
   4. validates page paths, assets and required map files
 
 Options:
@@ -397,9 +519,12 @@ if (require.main === module) {
 
 module.exports = {
   ASSET_DIR,
+  ICON_DIRECTORIES,
   MAPLIBRE_WORKER_FILES,
   MAP_DIRECTORIES,
   MAP_FILES,
+  SPRITE_SETS,
+  STYLE_FILES,
   OUTPUT_DIR,
   PAGES,
   ROOT,
@@ -408,11 +533,17 @@ module.exports = {
   collectAssetReferences,
   copyMapData,
   countFiles,
+  isPlainObject,
+  readJSONFile,
   formatBytes,
   mapRequestToFile,
   summariseArtifact,
+  syncIconDirectory,
   totalSize,
   validateArtifact,
   validateAssetPaths,
+  validateSpriteSet,
+  validateStyleDocument,
+  validateStyleFile,
   walkFiles
 };

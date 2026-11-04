@@ -1,9 +1,8 @@
 // ogis design tokens (--ogis-*).
 //
-// Light is the default. With no attribute the theme follows the operating
-// system through prefers-color-scheme; a page can force a scheme by setting
-// data-theme="light" or data-theme="dark" on the root element. Auto (no
-// attribute) is the only state that follows the OS, and nothing is persisted.
+// Dark is the default: :root carries the dark token set. The light theme is an
+// explicit override via data-theme="light" on the root element. There is no
+// automatic OS preference handling and nothing is persisted.
 
 :root {
   --ogis-font:
@@ -25,7 +24,7 @@
   --ogis-brand-accent: #0dd70d;
 }
 
-// --- Light theme (default, and forced via data-theme="light") --------------
+// --- Light theme (explicit override) --------------------------------------
 
 @mixin ogis-light-tokens {
   --ogis-bg: #fcfaf5;
@@ -89,7 +88,7 @@
   --ogis-caution-bg: var(--ogis-alert-bg);
 }
 
-// --- Dark theme (org surfaces) --------------------------------------------
+// --- Dark theme (default) -------------------------------------------------
 
 @mixin ogis-dark-tokens {
   --ogis-bg: #000b00;
@@ -151,20 +150,14 @@
   --ogis-caution-bg: var(--ogis-alert-bg);
 }
 
-// Light is the default and also applies when the attribute explicitly asks
-// for it, whatever the OS says.
-:root:not([data-theme="dark"]) {
-  @include ogis-light-tokens;
-}
-
-// Dark follows the OS only while no attribute is set.
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    @include ogis-dark-tokens;
-  }
-}
-
-// Dark forced by the attribute wins over the OS in either direction.
-:root[data-theme="dark"] {
+// Dark is the default token set for the document.
+:root {
+  color-scheme: dark;
   @include ogis-dark-tokens;
+}
+
+// Light is applied only when the root explicitly asks for it.
+:root[data-theme="light"] {
+  color-scheme: light;
+  @include ogis-light-tokens;
 }

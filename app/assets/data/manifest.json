@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "inputsHash": "sha256:007aef0ab4dc7bc902d6c662f10b93d69737262ae0f79c695b3686ac505be31d",
+  "inputsHash": "sha256:8880981db6a8aed8e73a3a0524bcb1ba763d8455934ace23832c0d2a83703110",
   "files": {
-    "palette.json": "sha256:a303c9336c2a2b7dc106331afe02ead0b02ad1e7d01d0b99037058c6bbcfde93",
-    "icons.json": "sha256:afa851189fbcb4fd4d6911773ddd04c79016b75a919fbed4ae020b76fa3c3a57"
+    "palette.json": "sha256:823b7676e6e08a597d623f774f9c61b8aa3439c185279315de46714ea0f3f6b9",
+    "icons.json": "sha256:af7f24230f1add98219378d2551e8f9a06aa0f4429bdbecb6357bbb9bbfb06ef"
   }
 }

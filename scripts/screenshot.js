@@ -13,12 +13,13 @@
 // screenshots.
 //
 // Map state (lat, lng, zoom, pitch, rotation) is written to the URL hash;
-// width, height, style and quality are the only query parameters.
+// width, height, theme, style and quality are the only query parameters.
+// Without an explicit --style, --theme selects the matching native style.
 //
 // Usage:
 //   node scripts/screenshot.js [--lat <n>] [--lng <n>] [--zoom <n>]
 //     [--pitch <n>] [--rotation <n>] [--width <n>] [--height <n>]
-//     [--style <url>] [--out <path>] [--help]
+//     [--theme dark|light] [--style <url>] [--out <path>] [--help]
 
 'use strict';
 
@@ -34,6 +35,18 @@ const {
 
 const ROOT = path.join(__dirname, '..');
 const SITE_ROOT = path.join(ROOT, '.output', 'public');
+const LOCAL_STYLES = Object.freeze([
+  {
+    source: 'style.json',
+    sprite: 'sprite',
+    name: 'screenshot-style.json',
+  },
+  {
+    source: 'style-light.json',
+    sprite: 'sprite-light',
+    name: 'screenshot-light-style.json',
+  },
+]);
 const DEFAULTS = {
   lat: 51.5154,
   lng: -0.1755,
@@ -42,7 +55,8 @@ const DEFAULTS = {
   rotation: 0,
   width: 1200,
   height: 630,
-  style: './style.json',
+  theme: 'dark',
+  style: null,
   out: 'screenshots/home.png',
 };
 
@@ -53,25 +67,55 @@ function imageFormat(out) {
   return extension === '.jpg' || extension === '.jpeg' ? 'jpeg' : 'png';
 }
 
-function prepareLocalStyle(style, port) {
-  if (style !== './style.json' && style !== 'style.json') return style;
+function resolveTheme(value) {
+  return value === 'light' ? 'light' : 'dark';
+}
 
-  const source = path.join(SITE_ROOT, 'style.json');
+function themeStyle(theme) {
+  return theme === 'light' ? './style-light.json' : './style.json';
+}
+
+function localStyleMapping(style) {
+  const normalised = String(style || '').replace(/^\.\//, '');
+  return LOCAL_STYLES.find((entry) => entry.source === normalised) || null;
+}
+
+function buildLocalStyle(style, port, { siteRoot = SITE_ROOT } = {}) {
+  const mapping = localStyleMapping(style);
+  if (!mapping) return null;
+
+  const source = path.join(siteRoot, mapping.source);
   if (!fs.existsSync(source)) {
     throw new Error(`Missing ${source}; run npm run site:build first`);
   }
 
   const local = JSON.parse(fs.readFileSync(source, 'utf8'));
-  local.sprite = `http://127.0.0.1:${port}${SITE_PREFIX}sprite`;
+  local.sprite = `http://127.0.0.1:${port}${SITE_PREFIX}${mapping.sprite}`;
   local.glyphs = `http://127.0.0.1:${port}${SITE_PREFIX}fonts/{fontstack}/{range}.pbf`;
 
-  const name = 'screenshot-style.json';
-  fs.writeFileSync(path.join(SITE_ROOT, name), `${JSON.stringify(local)}\n`);
-  return `./${name}`;
+  return { name: mapping.name, document: local };
+}
+
+function prepareLocalStyle(style, port, { siteRoot = SITE_ROOT } = {}) {
+  const prepared = buildLocalStyle(style, port, { siteRoot });
+  if (!prepared) return style;
+
+  fs.writeFileSync(
+    path.join(siteRoot, prepared.name),
+    `${JSON.stringify(prepared.document)}\n`
+  );
+  return `./${prepared.name}`;
+}
+
+function removeLocalStyles({ siteRoot = SITE_ROOT } = {}) {
+  for (const mapping of LOCAL_STYLES) {
+    fs.rmSync(path.join(siteRoot, mapping.name), { force: true });
+  }
 }
 
 async function capture(opts) {
   const state = { ...DEFAULTS, ...opts };
+  state.theme = resolveTheme(state.theme);
   const qualityMode = Boolean(state.quality);
   const format = imageFormat(state.out);
 
@@ -84,26 +128,34 @@ async function capture(opts) {
   fs.mkdirSync(path.dirname(path.resolve(state.out)), { recursive: true });
 
   const server = await startSiteServer({ siteRoot: SITE_ROOT });
-  const port = server.address().port;
-  state.style = prepareLocalStyle(state.style, port);
-  const query = new URLSearchParams({
-    width: state.width,
-    height: state.height,
-    style: state.style,
-  });
-  if (qualityMode) query.set('quality', '1');
-  const hash = formatMapHash({
-    zoom: state.zoom,
-    lat: state.lat,
-    lng: state.lng,
-    pitch: state.pitch,
-    rotation: state.rotation,
-  });
-  const url = `http://127.0.0.1:${port}${SITE_PREFIX}index.html?${query}${hash}`;
-
+  let browser = null;
+  let url = '';
   let quality = null;
-  const browser = await chromium.launch();
+
   try {
+    const port = server.address().port;
+    state.style = prepareLocalStyle(
+      state.style || themeStyle(state.theme),
+      port
+    );
+
+    const query = new URLSearchParams({
+      width: state.width,
+      height: state.height,
+      theme: state.theme,
+      style: state.style,
+    });
+    if (qualityMode) query.set('quality', '1');
+    const hash = formatMapHash({
+      zoom: state.zoom,
+      lat: state.lat,
+      lng: state.lng,
+      pitch: state.pitch,
+      rotation: state.rotation,
+    });
+    url = `http://127.0.0.1:${port}${SITE_PREFIX}index.html?${query}${hash}`;
+
+    browser = await chromium.launch();
     const page = await browser.newPage({
       viewport: { width: state.width, height: state.height },
     });
@@ -130,11 +182,14 @@ async function capture(opts) {
       await page.screenshot({ path: state.out, type: 'png' });
     }
   } finally {
-    await browser.close();
-    server.close();
+    if (browser) {
+      await browser.close().catch(() => {});
+    }
+    await new Promise((resolve) => server.close(resolve));
+    removeLocalStyles();
   }
 
-  return { url, out: state.out, format, quality };
+  return { url, out: state.out, format, quality, theme: state.theme };
 }
 
 // --- CLI ------------------------------------------------------------------
@@ -145,8 +200,9 @@ function printUsage() {
 Serves .output/public under /basemap/; run npm run site:build first.
 
 Map state (lat, lng, zoom, pitch, rotation) is written to the URL hash.
-Only rendering options — width, height, style and quality — are query
-parameters.
+Only rendering options — width, height, theme, style and quality — are query
+parameters. Without --style, --theme selects ./style.json (dark) or
+./style-light.json (light).
 
 Options:
   --lat <n>       latitude in degrees (default ${DEFAULTS.lat})
@@ -156,7 +212,8 @@ Options:
   --rotation <n>  bearing in degrees (default ${DEFAULTS.rotation})
   --width <n>     viewport width in px (default ${DEFAULTS.width})
   --height <n>    viewport height in px (default ${DEFAULTS.height})
-  --style <url>   style JSON URL (default ${DEFAULTS.style})
+  --theme <name>  dark or light (default ${DEFAULTS.theme})
+  --style <url>   style JSON URL; overrides the theme's style
   --out <path>    output image path; .jpg/.jpeg uses JPEG quality 80
                   (default ${DEFAULTS.out})
   --help          show this message`);
@@ -178,7 +235,7 @@ function parseArgs(argv) {
       value = argv[++i];
       if (value === undefined) throw new Error(`Missing value for --${key}`);
     }
-    if (key !== 'style' && key !== 'out') {
+    if (key !== 'style' && key !== 'out' && key !== 'theme') {
       const num = Number(value);
       if (!Number.isFinite(num)) throw new Error(`--${key} expects a number, got "${value}"`);
       value = num;
@@ -194,20 +251,46 @@ async function main() {
     printUsage();
     return;
   }
-  const state = { ...DEFAULTS, ...opts };
+
+  const theme = resolveTheme(opts.theme);
+  if (opts.theme !== undefined && opts.theme !== 'dark' && opts.theme !== 'light') {
+    throw new Error(`--theme expects dark or light, got "${opts.theme}"`);
+  }
+  const style = opts.style || themeStyle(theme);
+  const state = { ...DEFAULTS, ...opts, theme, style };
+
+  const cleanup = () => removeLocalStyles();
+  process.once('SIGINT', () => {
+    cleanup();
+    process.exit(130);
+  });
+  process.once('SIGTERM', () => {
+    cleanup();
+    process.exit(143);
+  });
+
   const { url, out } = await capture(state);
   console.log(
     `Captured ${out} (${state.width}x${state.height}) — lat ${state.lat}, lng ${state.lng}, ` +
-    `zoom ${state.zoom}, pitch ${state.pitch}, rotation ${state.rotation}, style ${state.style}`
+    `zoom ${state.zoom}, pitch ${state.pitch}, rotation ${state.rotation}, ` +
+    `theme ${state.theme}, style ${state.style}`
   );
   console.log(url);
 }
 
 if (require.main === module) {
   main().catch((err) => {
+    removeLocalStyles();
     console.error(`Error: ${err.message}`);
     process.exitCode = 1;
   });
 }
 
-module.exports = { capture, prepareLocalStyle };
+module.exports = {
+  capture,
+  LOCAL_STYLES,
+  buildLocalStyle,
+  localStyleMapping,
+  prepareLocalStyle,
+  removeLocalStyles,
+};

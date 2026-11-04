@@ -1,0 +1,15 @@
+{
+  "upstream": "https://github.com/openmaptiles/openmaptiles",
+  "ref": "master",
+  "commit": "6c11838d38030148832c039c2ea367274db86a87",
+  "syncedAt": "2026-11-03T23:46:12.110Z",
+  "toolsVersion": "7.2",
+  "paths": [
+    "LICENSE.md",
+    "layers",
+    "openmaptiles.yaml",
+    "style"
+  ],
+  "fileCount": 462,
+  "manifestHash": "sha256:214e489f66c727e75956354fa060aa9c6951724b6d8c4b5f2c7312d64b6d8541"
+}

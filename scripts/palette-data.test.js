@@ -7,6 +7,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 const {
+  DARK_PALETTE,
+  HASHED_STATIC_FILES,
   PLACEHOLDER,
   SENTINEL,
   buildAppData,
@@ -17,6 +19,7 @@ const {
 const root = path.resolve(__dirname, '..');
 const cliPath = path.join(root, 'scripts', 'palette-data.js');
 const scratchBase = path.join(root, '.opencode', 'tmp');
+const darkPalette = JSON.parse(fs.readFileSync(path.join(root, DARK_PALETTE), 'utf8'));
 const data = buildAppData({ root });
 
 fs.mkdirSync(scratchBase, { recursive: true });
@@ -37,8 +40,8 @@ test('summary counts match the runtime POI model', () => {
   assert.deepEqual(data.palette.summary, {
     roles: 11,
     classes: 68,
-    features: 331,
-    existingIcons: 129,
+    features: 342,
+    existingIcons: 130,
     missingIcons: 91,
     phantoms: 3,
     layers: 23,
@@ -65,8 +68,8 @@ test('every role hierarchy icon has one template', () => {
     }
   }
 
-  assert.equal(names.size, 129);
-  assert.equal(Object.keys(data.icons).length, 129);
+  assert.equal(names.size, 130);
+  assert.equal(Object.keys(data.icons).length, 130);
 
   for (const name of names) {
     assert.ok(Object.prototype.hasOwnProperty.call(data.icons, name), `${name} has no template`);
@@ -196,4 +199,62 @@ test('output directories outside the generated allowlist are refused', (t) => {
     /Refusing to write palette app data/
   );
   assert.equal(fs.existsSync(unsafe), false);
+});
+
+test('generated data includes the dark theme alongside the light data', () => {
+  const themes = data.palette.themes;
+  assert.ok(themes, 'expected a themes object');
+  assert.ok(themes.dark, 'expected a dark theme');
+
+  const dark = themes.dark;
+  const roleIds = dark.palette.roles.map((role) => role.id);
+  assert.equal(roleIds.length, 11);
+  assert.deepEqual(Object.keys(dark.colours), roleIds);
+
+  for (const role of dark.palette.roles) {
+    assert.equal(dark.colours[role.id], role.color);
+    const source = darkPalette.roles.find((candidate) => candidate.id === role.id);
+    assert.ok(source, `${role.id} should exist in the dark palette source`);
+    assert.equal(role.color, source.color.toUpperCase());
+  }
+
+  const light = data.palette.palette;
+  assert.equal(dark.palette.version, light.version);
+  assert.deepEqual(dark.palette.preserve, light.preserve);
+  assert.deepEqual(dark.palette.overrides, light.overrides);
+  assert.equal(dark.palette.roles.length, light.roles.length);
+
+  for (let index = 0; index < light.roles.length; index += 1) {
+    const lightRole = light.roles[index];
+    const darkRole = dark.palette.roles[index];
+    assert.equal(darkRole.id, lightRole.id);
+    assert.equal(darkRole.label, lightRole.label);
+    assert.equal(darkRole.order, lightRole.order);
+    assert.deepEqual(darkRole.sourceColors, lightRole.sourceColors);
+    assert.notEqual(darkRole.color, lightRole.color);
+  }
+});
+
+test('top-level light palette and roles are retained', () => {
+  assert.deepEqual(
+    data.palette.palette.roles.map((role) => role.id),
+    data.model.roles.map((role) => role.id)
+  );
+  assert.deepEqual(
+    data.palette.palette.roles.map((role) => role.color),
+    data.model.roles.map((role) => role.color)
+  );
+  assert.deepEqual(
+    data.palette.roles.map((role) => role.id),
+    data.model.roles.map((role) => role.id)
+  );
+  assert.deepEqual(
+    data.palette.roles.map((role) => role.color),
+    data.model.roles.map((role) => role.color)
+  );
+});
+
+test('the dark palette is part of the hashed inputs', () => {
+  assert.ok(HASHED_STATIC_FILES.includes('themes/dark/palette.json'));
+  assert.equal(data.manifest.inputsHash, data.palette.inputsHash);
 });

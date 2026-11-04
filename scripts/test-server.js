@@ -10,24 +10,50 @@
 
 const path = require('node:path');
 const {
+  SITE_PREFIX,
   assertSiteRoot,
   startSiteServer,
 } = require('./lib/site-server.js');
-const { prepareLocalStyle } = require('./screenshot.js');
+const {
+  buildLocalStyle,
+  removeLocalStyles,
+} = require('./screenshot.js');
 
 const ROOT = path.join(__dirname, '..');
 const SITE_ROOT = path.join(ROOT, '.output', 'public');
 const HOST = '127.0.0.1';
 const PORT = 11101;
 
+function localStyleOverride(style, port, siteRoot) {
+  const prepared = buildLocalStyle(style, port, { siteRoot });
+  if (!prepared) {
+    throw new Error(`No local style mapping for ${style}`);
+  }
+  return {
+    name: prepared.name,
+    body: `${JSON.stringify(prepared.document)}\n`,
+    contentType: 'application/json',
+  };
+}
+
 async function main() {
   assertSiteRoot(SITE_ROOT);
-  prepareLocalStyle('./style.json', PORT);
+  removeLocalStyles({ siteRoot: SITE_ROOT });
+
+  const dark = localStyleOverride('./style.json', PORT, SITE_ROOT);
+  const light = localStyleOverride('./style-light.json', PORT, SITE_ROOT);
+  const overrides = {
+    [`${SITE_PREFIX}style.json`]: dark,
+    [`${SITE_PREFIX}style-light.json`]: light,
+    [`${SITE_PREFIX}${dark.name}`]: dark,
+    [`${SITE_PREFIX}${light.name}`]: light,
+  };
 
   const server = await startSiteServer({
     siteRoot: SITE_ROOT,
     port: PORT,
     host: HOST,
+    overrides,
   });
 
   const address = server.address();
@@ -36,6 +62,7 @@ async function main() {
   );
 
   const shutdown = () => {
+    removeLocalStyles({ siteRoot: SITE_ROOT });
     server.close(() => process.exit(0));
     setTimeout(() => process.exit(0), 2000).unref();
   };

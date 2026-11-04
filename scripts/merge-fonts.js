@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //
-// Pre-merges comma-joined text-font stacks from style.json into on-disk
-// comma-named glyph directories under fonts/.
+// Pre-merges comma-joined text-font stacks from style.json and
+// style-light.json into on-disk comma-named glyph directories under fonts/.
 //
 // MapLibre GL requests glyphs with the text-font array joined by commas as
 // the {fontstack} URL segment, e.g. ["Open Sans Semibold","Noto Sans Bold"]
@@ -21,7 +21,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const STYLE_JSON = path.join(ROOT, 'style.json');
+const STYLE_FILES = ['style.json', 'style-light.json'];
 const FONTS_DIR = path.join(ROOT, 'fonts');
 
 const WIRE_VARINT = 0;
@@ -162,18 +162,34 @@ ByteWriter.prototype.toBuffer = function () {
 // --- merge logic -----------------------------------------------------------
 
 function distinctTextFonts(style) {
-  const seen = new Set();
   const stacks = [];
   for (const layer of style.layers || []) {
     if (layer.type !== 'symbol' || !layer.layout) continue;
     const fonts = layer.layout['text-font'];
     if (!Array.isArray(fonts) || fonts.length === 0) continue;
-    const key = fonts.join('\u0000');
-    if (seen.has(key)) continue;
-    seen.add(key);
     stacks.push(fonts);
   }
+  return stacks;
+}
+
+function collectTextFonts(styles) {
+  const seen = new Set();
+  const stacks = [];
+  for (const style of styles) {
+    for (const fonts of distinctTextFonts(style)) {
+      const key = fonts.join('\u0000');
+      if (seen.has(key)) continue;
+      seen.add(key);
+      stacks.push(fonts);
+    }
+  }
   return stacks.sort((a, b) => a.join(' ').localeCompare(b.join(' ')));
+}
+
+function readStyles(styleFiles = STYLE_FILES.map((file) => path.join(ROOT, file))) {
+  return styleFiles
+    .filter((filePath) => fs.existsSync(filePath))
+    .map((filePath) => JSON.parse(fs.readFileSync(filePath, 'utf8')));
 }
 
 function readRangeGlyphs(font, rangeName) {
@@ -193,9 +209,10 @@ function readRangeGlyphs(font, rangeName) {
   return glyphs;
 }
 
-function main() {
-  const style = JSON.parse(fs.readFileSync(STYLE_JSON, 'utf8'));
-  const stacks = distinctTextFonts(style);
+function main(styleFiles) {
+  const styles = readStyles(styleFiles);
+  if (!styles.length) throw new Error('No published style files found for font merging');
+  const stacks = collectTextFonts(styles);
 
   let mergedCount = 0;
   let writtenRanges = 0;
@@ -252,6 +269,23 @@ function main() {
   }
 
   console.log(`\nMerged ${mergedCount} multi-font stacks into fonts/, wrote ${writtenRanges} range PBFs.`);
+
+  return { stacks, mergedCount, writtenRanges };
 }
 
-main();
+if (require.main === module) {
+  try {
+    main();
+  } catch (error) {
+    console.error(`Font merge failed: ${error.message}`);
+    process.exitCode = 1;
+  }
+}
+
+module.exports = {
+  STYLE_FILES,
+  collectTextFonts,
+  distinctTextFonts,
+  main,
+  readStyles
+};

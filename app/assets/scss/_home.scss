@@ -100,6 +100,47 @@ body {
   font-size: 0.75rem;
 }
 
+.home-theme {
+  display: inline-flex;
+  gap: 2px;
+  margin: 0 0 0.65rem;
+  padding: 2px;
+  background: var(--ogis-bg-alt);
+  border: 1px solid var(--ogis-border);
+  border-radius: 4px;
+}
+
+.home-theme__option {
+  padding: 0.2rem 0.55rem;
+  color: var(--ogis-muted);
+  background: transparent;
+  border: 0;
+  border-radius: 3px;
+  font: inherit;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.home-theme__option:hover {
+  color: var(--ogis-fg);
+  background: var(--ogis-btn-secondary-hover);
+}
+
+.home-theme__option[aria-pressed="true"] {
+  color: var(--ogis-cta-fg);
+  background: var(--ogis-cta-bg);
+}
+
+.home-theme__option[aria-pressed="true"]:hover {
+  background: var(--ogis-cta-hover-bg);
+}
+
+.home-theme__option:focus-visible {
+  outline: 2px solid var(--ogis-focus);
+  outline-offset: 1px;
+}
+
 .home-brand__actions {
   display: flex;
   flex-wrap: wrap;
@@ -351,4 +392,89 @@ body {
     border-left: 0;
     border-radius: var(--ogis-radius) var(--ogis-radius) 0 0;
   }
+}
+
+// --- MapLibre controls ----------------------------------------------------
+//
+// MapLibre renders its controls outside the overlay, so these rules stay
+// global. They consume the site tokens: dark is the default token set and
+// light is the explicit data-theme override. Selectors are scoped through
+// .maplibregl-map so they reliably beat MapLibre's own defaults.
+
+.maplibregl-map .maplibregl-ctrl-group {
+  background: var(--ogis-surface);
+  border-radius: 4px;
+}
+
+.maplibregl-map .maplibregl-ctrl-group:not(:empty) {
+  box-shadow: 0 0 0 2px var(--ogis-border);
+}
+
+.maplibregl-map .maplibregl-ctrl-group button {
+  color: var(--ogis-fg);
+}
+
+.maplibregl-map .maplibregl-ctrl-group button + button {
+  border-top: 1px solid var(--ogis-border);
+}
+
+.maplibregl-map .maplibregl-ctrl button:not(:disabled):hover,
+.maplibregl-map .maplibregl-ctrl button:not(:disabled):active {
+  background-color: var(--ogis-btn-secondary-hover);
+}
+
+.maplibregl-map .maplibregl-ctrl-group button:focus:focus-visible,
+.maplibregl-map .maplibregl-ctrl-attrib-button:focus-visible {
+  outline: 2px solid var(--ogis-focus);
+  outline-offset: -2px;
+  box-shadow: none;
+}
+
+// MapLibre's icon bitmaps are dark; brighten them in the default dark theme
+// and leave them untouched in the light theme.
+.maplibregl-map .maplibregl-ctrl-icon,
+.maplibregl-map a.maplibregl-ctrl-logo {
+  filter: invert(1) brightness(1.4);
+}
+
+:root[data-theme="light"] .maplibregl-map .maplibregl-ctrl-icon,
+:root[data-theme="light"] .maplibregl-map a.maplibregl-ctrl-logo {
+  filter: none;
+}
+
+.maplibregl-map .maplibregl-ctrl.maplibregl-ctrl-attrib,
+.maplibregl-map .maplibregl-ctrl-attrib.maplibregl-compact {
+  color: var(--ogis-fg);
+  background-color: var(--ogis-surface);
+  border: 1px solid var(--ogis-border);
+}
+
+.maplibregl-map .maplibregl-ctrl-attrib a {
+  color: var(--ogis-accent);
+}
+
+.maplibregl-map .maplibregl-ctrl-attrib a:hover {
+  color: var(--ogis-accent-hover);
+}
+
+.maplibregl-map .maplibregl-ctrl-attrib-button,
+.maplibregl-map
+  .maplibregl-ctrl-attrib.maplibregl-compact-show
+  .maplibregl-ctrl-attrib-button {
+  background-color: transparent;
+  background-image: none;
+}
+
+// Render the compact attribution glyph with the foreground token so it stays
+// legible without filtering the button's chip background or focus ring.
+.maplibregl-map .maplibregl-ctrl-attrib-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--ogis-fg);
+  -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M4%2010a6%206%200%201%200%2012%200%206%206%200%201%200-12%200m5-3a1%201%200%201%200%202%200%201%201%200%201%200-2%200m0%203a1%201%200%201%201%202%200v3a1%201%200%201%201-2%200%22%2F%3E%3C%2Fsvg%3E")
+    center / 20px 20px no-repeat;
+  mask: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M4%2010a6%206%200%201%200%2012%200%206%206%200%201%200-12%200m5-3a1%201%200%201%200%202%200%201%201%200%201%200-2%200m0%203a1%201%200%201%201%202%200v3a1%201%200%201%201-2%200%22%2F%3E%3C%2Fsvg%3E")
+    center / 20px 20px no-repeat;
+  pointer-events: none;
 }

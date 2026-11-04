@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "name": "unmatched-layer",
+  "tokens": {
+    "ink": "#eeeeee"
+  },
+  "rules": [
+    {
+      "layer": "Known",
+      "property": "fill-color",
+      "to": "@ink"
+    }
+  ]
+}
