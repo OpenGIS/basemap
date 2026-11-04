@@ -1,11 +1,11 @@
 ---
-git_hash: "00f22d99d438d0e0805164180299efc232a2add2"
+git_hash: "688378719ef7bb47197627e189ac6fcd570ea909"
 modified: "2026-11-04"
 ---
 
 # Basemap Documentation
 
-Developer-focused documentation for the [Basemap](../README.md) codebase — a dark-first, self-hosted MapLibre GL basemap built from the OpenMapTiles "OSM" vector style and OpenFreeMap tiles. It publishes a dark default and a light variant, each with its own sprite and icon set, and serves a single root Nuxt site whose homepage is a full-screen basemap with a live, theme-aware palette inspector.
+Developer-focused documentation for the [Basemap](../README.md) codebase — a dark-first, self-hosted MapLibre GL basemap built from the OpenMapTiles "OSM" vector style and OpenFreeMap tiles. The live distribution serves Basemap Dark as the default at `/basemap/style.json` and Basemap Light at `/basemap/style-light.json`, each with its own sprite and icon set, and serves a single root Nuxt site whose homepage is a full-screen basemap with a live, theme-aware palette inspector.
 
 ## Reading Order
 
@@ -51,7 +51,6 @@ Developer-focused documentation for the [Basemap](../README.md) codebase — a d
 - [Vendored upstream sources and sync](../vendor/README.md)
 - [Upstream lock file](../vendor/openmaptiles.lock.json)
 - [Upstream sync CLI](../scripts/sync-upstream.js)
-- [Third-party notices](../THIRD_PARTY_NOTICES.md)
 
 ## Documentation Coverage
 

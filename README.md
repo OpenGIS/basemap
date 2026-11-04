@@ -3,7 +3,7 @@
 > A dark-first, self-hosted MapLibre GL basemap: the OpenMapTiles "OSM" vector style repointed at OpenFreeMap's worldwide vector tiles, with dark and light styles, sprites, icons and shared fonts served from GitHub Pages.
 
 > [!IMPORTANT]
-> **Both styles ship together** — the Pages artefact contains the dark default `style.json`, the light `style-light.json`, both sprite sets, `icons/`, `icons-light/` and the shared `fonts/`. Deploy the whole `.output/public`; an origin that predates the dual-style build only serves the dark assets.
+> **Both styles ship together** — the live site serves Basemap Dark as the default at `/basemap/style.json` and Basemap Light at `/basemap/style-light.json`, with both sprite sets, `icons/`, `icons-light/` and the shared `fonts/`. A rebuild must deploy the whole `.output/public`; the Pages workflow does this.
 
 > [!NOTE]
 > **Canonical host is www.ogis.org** — never use the org's legacy `*.github.io` Pages host. It 301-redirects to www.ogis.org, and the redirect hop breaks CORS in browsers, so every published URL points at www.ogis.org directly.
@@ -39,7 +39,7 @@ The map artefacts are built from vendored upstream sources with the same docker 
 | Light icons | https://www.ogis.org/basemap/icons-light/{name}.svg |
 | Tiles | https://tiles.openfreemap.org/planet |
 
-The light style and its asset URLs become available when the dual-style artefact is deployed; until then the origin may serve only the dark style and its assets.
+The live origin serves Basemap Dark as the default at `/basemap/style.json` and Basemap Light at `/basemap/style-light.json`. The light sprite (`/basemap/sprite-light`) and icon tree (`/basemap/icons-light/`) are live, and both styles share the glyphs under `/basemap/fonts/`.
 
 ## Usage
 
@@ -55,7 +55,7 @@ const map = new maplibregl.Map({
 ### Light
 
 ```js
-// Light — available once the dual-style artefact is deployed
+// Light
 const map = new maplibregl.Map({
   container: "map",
   style: "https://www.ogis.org/basemap/style-light.json",
@@ -95,7 +95,7 @@ The build stages both icon palettes, runs one Docker recompose, builds four spri
 > [!NOTE]
 > `vendor/openmaptiles/` is a pristine mirror of upstream `master`; `npm run upstream:sync` replaces it, `npm run upstream:verify` checks it offline and `npm run upstream:check` compares the locked commit with upstream. Provenance is in [`vendor/openmaptiles.lock.json`](vendor/openmaptiles.lock.json); see [vendor/README.md](vendor/README.md) for the mirrored paths. Syncing source does not rebuild the published styles — run `./scripts/build.sh` afterwards. Both workflows run `npm run upstream:verify` after `npm test`.
 
-To preview palette changes without a build, open the [demo](https://www.ogis.org/basemap/) after the dual-style deployment, or use a local build, choose **Dark** or **Light**, turn on **Inspect POIs**, click a POI and change its role colour. Every icon in the role updates live; **Export palette** downloads a `palette.json` for the active palette. Copy a light export into the root `palette.json` or a dark export into `themes/dark/palette.json` before running the full build.
+To preview palette changes without a build, open the [demo](https://www.ogis.org/basemap/) or use a local build, choose **Dark** or **Light**, turn on **Inspect POIs**, click a POI and change its role colour. Every icon in the role updates live; **Export palette** downloads a `palette.json` for the active palette. Copy a light export into the root `palette.json` or a dark export into `themes/dark/palette.json` before running the full build.
 
 To rebuild only the deployable site after app or palette-data changes that do not need new map artefacts, run `npm run site:build`; use `npm run dev` for a live preview at <http://127.0.0.1:11100/basemap/>. See [docs/3.remixing.md](docs/3.remixing.md), [docs/5.palette.md](docs/5.palette.md) and [docs/6.site.md](docs/6.site.md).
 
@@ -112,7 +112,7 @@ Pass `--theme light` for the light style and site palette. Full flag reference a
 
 ## Attribution and Licences
 
-Attribution is baked into both published styles: **OpenFreeMap · © OpenMapTiles · Data from OpenStreetMap**. Keep it when remixing. The dark map theme and dark POI icon palette derive from the Open GIS branding palette and design tokens; the site design tokens adapt the same material. See [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for the full notices.
+Attribution is baked into both published styles: **OpenFreeMap · © OpenMapTiles · Data from OpenStreetMap**. Keep it when remixing. The dark map theme and dark POI icon palette derive from the Open GIS branding palette and design tokens; the site design tokens adapt the same material.
 
 | Project | Component | Licence |
 | --- | --- | --- |
